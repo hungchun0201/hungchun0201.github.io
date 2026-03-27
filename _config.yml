@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Hung-Chun Lin / Academic Page"
+title                    : "Hung-Chun Lin"
 title_separator          : "-"
 name                     : &name "Hung-Chun Lin"
-description              : &description "personal description"
+description              : &description "Ph.D. student at Georgia Tech, researching wireless communications, mobile networks, and machine learning."
 url                      : https://hungchun0201.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hungchun0201/hungchun0201.github.io"
@@ -82,12 +82,11 @@ analytics:
 author:
   name             : "Hung-Chun Lin"
   avatar           : "profile.jpg"
-  bio              : "Your biography for the left-hand sidebar"
-  location         : "Taiwan, Taipei"
-  employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  bio              : "Ph.D. student at Georgia Tech ECE. Research interests in wireless communications, mobile networks, and machine learning."
+  location         : "Atlanta, GA"
+  employer         : "Georgia Institute of Technology"
   googlescholar    : "https://scholar.google.com/citations?user=_Y-8ak0AAAAJ&hl=en"
-  email            :
+  email            : "penguin7296@gmail.com"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -103,13 +102,13 @@ author:
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         :
-  orcid            : 
+  orcid            :
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : 
+  twitter          :
   vine             :
   weibo            :
   xing             :
@@ -255,7 +254,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Los_Angeles # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Taipei # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
