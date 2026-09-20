@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Hung-Chun Lin"
 title_separator          : "-"
 name                     : &name "Hung-Chun Lin"
-description              : &description "Ph.D. student at Georgia Tech, researching wireless communications, mobile networks, and machine learning."
+description              : &description "Ph.D. student at Georgia Tech, researching efficient LLM inference, KV caching, and wireless networks."
 url                      : https://hungchun0201.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "hungchun0201/hungchun0201.github.io"
@@ -82,11 +82,11 @@ analytics:
 author:
   name             : "Hung-Chun Lin"
   avatar           : "profile.jpg"
-  bio              : "Ph.D. student at Georgia Tech ECE. Research interests in wireless communications, mobile networks, and machine learning."
+  bio              : "Ph.D. student in ECE at Georgia Tech. Efficient LLM inference, KV caching, and wireless networks."
   location         : "Atlanta, GA"
   employer         : "Georgia Institute of Technology"
   googlescholar    : "https://scholar.google.com/citations?user=_Y-8ak0AAAAJ&hl=en"
-  email            : "penguin7296@gmail.com"
+  email            : "hlin464@gatech.edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :

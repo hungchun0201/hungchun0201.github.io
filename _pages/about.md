@@ -12,7 +12,8 @@ I am a Ph.D. student in the [School of Electrical and Computer Engineering](http
 
 Prior to GT, I received my M.S. from the [Graduate Institute of Communication Engineering](https://comm.ntu.edu.tw/en/), [National Taiwan University](https://www.ntu.edu.tw/english/) in 2024, advised by [Prof. Hung-Yu Wei](https://www.ee.ntu.edu.tw/profile1.php?id=100138), and my B.S. in Electrical Engineering from NTU in 2021. I was also a graduate exchange student at the [University of Wisconsin-Madison](https://www.wisc.edu/) in Spring 2023.
 
-My research interests lie in **wireless communications**, **mobile networks**, and **machine learning**, with a focus on:
+My research interests lie in **efficient LLM inference**, **KV caching**, and **wireless networks**, with a focus on:
+- KV-cache transfer and networking for disaggregated LLM inference
 - Wake-up radio and spectrally-efficient control planes for Wi-Fi
 - **Age of Information (AoI)** optimization in wireless networks
 - Power-saving mechanisms (DRX) and data freshness
