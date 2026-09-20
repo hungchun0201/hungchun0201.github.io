@@ -85,6 +85,8 @@ author:
   bio              : "Ph.D. student in ECE at Georgia Tech. Efficient LLM inference, KV caching, and wireless networks."
   location         : "Atlanta, GA"
   employer         : "Georgia Institute of Technology"
+  lab              : "GNAN Research Group"
+  lab_url          : "https://gnan.ece.gatech.edu/"
   googlescholar    : "https://scholar.google.com/citations?user=_Y-8ak0AAAAJ&hl=en"
   email            : "hlin464@gatech.edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"

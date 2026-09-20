@@ -28,6 +28,9 @@
       {% if author.employer %}
         <li><i class="fas fa-fw fa-university" aria-hidden="true"></i> {{ author.employer }}</li>
       {% endif %}
+      {% if author.lab and author.lab_url %}
+        <li><a href="{{ author.lab_url | escape }}"><i class="fas fa-fw fa-flask" aria-hidden="true"></i> {{ author.lab | escape }}</a></li>
+      {% endif %}
       {% if author.uri %}
         <li><a href="{{ author.uri }}"><i class="fas fa-fw fa-link" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].website_label | default: "Website" }}</a></li>
       {% endif %}
