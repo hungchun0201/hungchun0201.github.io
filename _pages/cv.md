@@ -3,8 +3,8 @@ layout: archive
 title: "CV"
 permalink: /cv/
 author_profile: true
-# Update this date when replacing files/CV.pdf.
-cv_last_updated: 2026-03-27
+# Use the revision date printed in files/CV.pdf, not its upload date.
+cv_last_updated: 2023-12-07
 redirect_from:
   - /resume
 ---
