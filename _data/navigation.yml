@@ -9,5 +9,8 @@ main:
   - title: "Agentic AI Survey"
     url: /agentic-ai-survey/
 
+  - title: "AI Training Networks"
+    url: /ai-training-network-primer/
+
   - title: "CV"
     url: /cv/

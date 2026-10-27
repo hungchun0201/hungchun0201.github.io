@@ -20,3 +20,7 @@ My research interests lie in **efficient LLM inference**, **KV Cache**, and **wi
 - Multicast-broadcast services with rateless coding
 
 Beyond research, I am passionate about **astrophotography** — my works have been selected four times for inclusion in Taiwan's Central Weather Administration astronomical calendars.
+
+## Learning Resources
+
+[AI Training Network Primer](/ai-training-network-primer/) is an interactive guide in English and Chinese. It explains GPU communication, data center networks, and network design for AI training.
