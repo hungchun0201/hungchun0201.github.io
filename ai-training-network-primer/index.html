@@ -205,7 +205,7 @@ section.blk h2{margin-bottom:.5em}
 .foot p{flex-basis:100%;margin:6px 0 0;color:var(--ink-3);font-size:.84rem}
 @media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)} .hero{padding-block:28px 24px} .top-in{flex-wrap:wrap} .top-in nav.tabs{order:3;flex-basis:100%}}
 </style>
-<script>try{var l=localStorage.getItem("aitn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){document.documentElement.setAttribute("data-lang","en");}</script>
+<script>document.documentElement.setAttribute("data-lang","en");</script>
 <header class="top"><div class="top-in">
   <div class="brand"><span class="dot"></span><span><span class="en">AI Training Network Primer</span><span class="zh">AI 訓練網路入門</span></span><span class="v">v2</span></div>
   <nav class="tabs" aria-label="Sections"><a href="index.html#chapters"><span class="en">Chapters</span><span class="zh">主線各章</span></a><a href="research.html"><span class="en">Research digests</span><span class="zh">研究導讀</span></a><a href="index.html#papers"><span class="en">Guided readings</span><span class="zh">論文導讀</span></a><a href="glossary.html"><span class="en">Glossary</span><span class="zh">名詞表</span></a><a href="about.html"><span class="en">How to use</span><span class="zh">使用說明</span></a></nav>
@@ -252,11 +252,11 @@ section.blk h2{margin-bottom:.5em}
 </main>
 <script>
 (function(){var root=document.documentElement;
-function setLang(l){root.setAttribute("data-lang",l);try{localStorage.setItem("aitn-lang",l);}catch(e){}
+function setLang(l){root.setAttribute("data-lang",l);
  var a=document.getElementById("lang-en"),b=document.getElementById("lang-zh");if(a&&b){a.setAttribute("aria-pressed",l==="en");b.setAttribute("aria-pressed",l==="zh");}
  root.setAttribute("lang",l==="zh"?"zh-Hant":"en");}
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".lang button");if(b)setLang(b.getAttribute("data-lang"));});
-try{var l=localStorage.getItem("aitn-lang");setLang(l==="zh"?"zh":"en");}catch(e){setLang("en");}
+setLang("en");
 })();
 </script>
 
