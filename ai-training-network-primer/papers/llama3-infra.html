@@ -432,8 +432,9 @@ const root=document.documentElement;
 const $=(s,c)=>(c||document).querySelector(s), $$=(s,c)=>Array.from((c||document).querySelectorAll(s));
 const L=()=>root.getAttribute("data-lang")||"en", t=(en,zh)=>L()==="zh"?zh:en;
 const langHooks=[];
-root.setAttribute("data-lang","en");
-function setLang(l){root.setAttribute("data-lang",l);$$(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===l)));if(quizRender)quizRender(true);langHooks.forEach(f=>{try{f();}catch(e){console.error(e);}});}
+let saved=null; try{saved=localStorage.getItem("aitn-lang");}catch(e){}
+root.setAttribute("data-lang",saved==="zh"?"zh":"en");
+function setLang(l){root.setAttribute("data-lang",l);$$(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===l)));try{localStorage.setItem("aitn-lang",l);}catch(e){}if(quizRender)quizRender(true);langHooks.forEach(f=>{try{f();}catch(e){console.error(e);}});}
 $$(".lang button").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.lang===L()));b.addEventListener("click",()=>setLang(b.dataset.lang));});
 const prog=$("#progress");function onScroll(){const h=root;const max=h.scrollHeight-h.clientHeight;if(prog)prog.style.width=(max>0?Math.min(100,100*h.scrollTop/max):0)+"%";}
 window.addEventListener("scroll",onScroll,{passive:true});onScroll();
