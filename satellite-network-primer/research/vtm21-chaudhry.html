@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Laser ISLs in a Starlink constellation · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/katex/katex.min.css" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+</head>
+<body data-slug="r-vtm21-chaudhry">
+<div class="topbar">
+<div class="topbar-in">
+<a class="backlink" href="../research.html"><span>←</span><span class="en">All paper digests</span><span class="zh">論文導讀總表</span></a>
+<div class="brand"><span class="dot"></span><span class="en">Paper digest</span><span class="zh">論文導讀</span></div>
+<a class="cite-nav" href="../references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group">
+<button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button>
+<button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</div>
+<div class="frame single">
+<main>
+<header class="paper-hero reading rhero">
+<div class="eyebrow en">Digest · Link physics · read after Chapter 2</div><div class="eyebrow zh">導讀 · 鏈路物理 · 第 2 章後閱讀</div>
+<h1><span class="en">Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis</span><span class="zh">Starlink 星座中的雷射星間鏈路：分類與分析</span></h1>
+<div class="byline"><span class="venue">IEEE VTM 2021</span>Chaudhry &amp; Yanikomeroglu (Carleton University) · <a href="https://doi.org/10.1109/MVT.2021.3063706"><span class="en">paper</span><span class="zh">論文</span></a> <span class="src-tag pr">peer-reviewed</span></div>
+<p class="lede"><span class="en">This digest connects laser range, encounter duration and terminal setup time. You can explain why brief encounters require much faster link acquisition.</span><span class="zh">本導讀說明雷射距離、相遇時間與終端建立延遲的關係。讀完後，你能解釋為何短暫相遇需要大幅加快鏈路擷取。</span></p>
+<div class="metarow"><span class="en">≈ 8 min · 5-question quiz</span><span class="zh">≈ 8 分鐘 · 5 題測驗</span><a class="en" href="../chapters/c02-isl.html">Chapter 2 ↗</a><a class="zh" href="../chapters/c02-isl.html">第 2 章 ↗</a><a class="en" href="#quiz">Jump to the quiz ↓</a><a class="zh" href="#quiz">跳到測驗 ↓</a></div>
+</header>
+<section class="reading">
+<div class="key"><div class="eyebrow en">Main result and scope</div><div class="eyebrow zh">只讀這一段也可以</div>
+<p class="en">Laser range determines the possible neighbor set, while terminal count and acquisition time limit usable connections. The study measures geometric connectivity for its dated constellation.</p><p class="zh">雷射距離決定可能的鄰居集合，終端數與擷取時間則限制可用連線。研究量化了指定歷史星座的幾何連通性。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Orbital configuration</th><td>2018 · 1,584 · 550 km · 24 · 66</td><td>Chaudhry and Yanikomeroglu simulate the November 2018 Starlink Phase I filing for 24 hours in STK. Its 1,584 satellites occupy 24 planes of 66 at 550 km. They ask which satellites enter a reference satellite’s laser range and how long each encounter lasts.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>Permanent neighbors include the two intra-plane neighbors and same-direction satellites in adjacent planes. Temporary neighbors cross other planes or enter range near the poles.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>659 km · 2 · 62 · 1,700 km · 10 · 144 · 283 s</td><td>At 659 km range, a satellite has two permanent and 62 temporary neighbors over one day. At 1,700 km, these counts rise to ten and 144 <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV" data-original="Table 1 and Sec. IV of Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV]</a></sup>. A typical crossing-plane encounter lasts about 283 s.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Each of four laser terminals serves one partner at a time. Setup takes seconds to tens of seconds. Temporary links therefore need substantially faster acquisition to use their short contact windows effectively. Later papers by these authors quantify this requirement.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2021 · 2026</td><td>The constellation, the terminal count and the scope limited to connectivity are all 2021 assumptions that a 2026 reader must adjust.</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>2018 · 11 · 550 km · 24 · 66 · 1,584</td><td>Chaudhry 與 Yanikomeroglu 採用 2018 年 11 月申報版本的 Starlink 第一期軌道殼，即 550 km 高度、24 個軌道面各 66 顆、共 1,584 顆衛星，在 STK 裡飛 24 小時，然後問一個先前拓樸論文跳過的純幾何問題：一顆衛星在雷射距離內到底能看到哪些衛星、看多久。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>答案乾淨地分成兩類：對同軌道面前後兩顆鄰居與相鄰軌道面同向衛星的永久鏈路，以及對交叉軌道面衛星、或只在極區附近才漂進距離內的鄰近軌道面衛星的暫時性鏈路。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>659 km · 2 · 62 · 1,700 km · 10 · 144 · 283</td><td>在 659 km 距離下，一顆衛星一天內有 2 個永久鄰居與 62 個暫時鄰居，而在 1,700 km 下則是 10 個永久與 144 個暫時鄰居<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV" data-original="Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Table 1 與 Sec. IV" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV]</a></sup>，一次典型的交叉軌道面相遇約持續 283 秒。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>由於每顆衛星只有四個雷射終端、每個終端一次只能服務一個對象，而建立一條雷射鏈路要花數秒到數十秒，這些暫時鄰居在建立時間下降好幾個數量級之前的可用性都受限制，這正是作者後續論文追索的議題。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2021 · 2026</td><td>星座版本、終端數量，以及以連通性為範圍、速率與延遲待另行建模，都是 2021 年的假設，2026 年的讀者必須自行調整。</td></tr></tbody></table></div>
+</div>
+<h2><span class="en">1. Where this paper sits</span><span class="zh">1. 這篇論文的位置</span></h2>
+<p class="en">This classification connects topology studies with terminal pointing constraints. Its constellation filing, terminal count and qualitative setup assumptions must accompany each quoted result.</p><p class="zh">這套分類將拓樸研究與終端指向限制連結起來，引用結果時需附上星座申報版本、終端數與定性建立時間假設。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Orbital configuration</th><td>2018 · 2019 · 5,014 km</td><td>The 2018–2019 topology studies generally activate laser links when satellites enter range. Handley routes across five links per satellite. Bhattacherjee and Singla explore motif topologies with ranges up to 5,014 km. Terminal acquisition remains outside those models.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>This magazine article is the first widely cited paper to look at the same constellation from the terminal's point of view. This means asking what a single laser head with a finite range and a finite field of regard can actually hold a beam on.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>The paper connects topology design with optical-terminal constraints. Its link classification supports the authors’ <a href="ojcoms22-temporary-isl.html">temporary-LISL paper</a> and the <a href="arxiv23-setup-delay.html">setup-delay paper</a>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>It is important to read it with its snapshot in mind.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>24 · 66 · 2018 · 2016</td><td>The model uses the November 2018 Phase I shell, with 24 planes and 66 satellites per plane. Its four terminals follow the 2018 filing, which revised the 2016 count of five <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Sec. II of Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup>. The study calculates connectivity. Node delay and latency require a separate model.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>Setup delay is discussed in words as "a few seconds to tens of seconds" <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup> as a qualitative assumption.</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>2018 · 2019 · 5,014 km</td><td>開創這個領域的 2018 與 2019 年拓樸論文把星間雷射鏈路當成一條只要兩顆衛星在某個距離內就存在的線，所以 Handley 可以在每顆衛星五條鏈路上做路由，Bhattacherjee 與 Singla 可以在最遠 5,014 km 的距離下搜尋 motif 拓樸，，終端尋找對象的過程則列於模型之外。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這篇雜誌文章是第一篇被廣泛引用、改從終端的角度看同一個星座的論文，也就是問一個距離有限、視野範圍有限的雷射頭實際上能把光束穩定對準誰。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>因此這篇論文是拓樸文獻與光學文獻之間的橋，它提供的分類成為作者後續<a href="ojcoms22-temporary-isl.html">暫時性 LISL 論文</a>與<a href="arxiv23-setup-delay.html">建立延遲論文</a>的基礎。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2018 · 11 · 24 · 66 · 2016</td><td>閱讀時務必記住它凍結的版本：星座是 2018 年 11 月 FCC 修正案中的 24 個軌道面、每面 66 顆的第一期軌道殼，終端數量是四個，作者取自 2018 年申報文件（它把 2016 年的五個下修為四個）<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Sec. II" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup>，而且論文只計算連通性，節點延遲與路徑延遲則待另行建模。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>建立延遲只以文字描述為「數秒到數十秒」<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup>，僅作為定性假設。</td></tr></tbody></table></div>
+<h2><span class="en">2. The problem, measured</span><span class="zh">2. 問題，用量測說話</span></h2>
+<p class="en">Longer range adds temporary neighbors faster than permanent ones. Plane convergence at high latitudes explains why some same-direction partners appear only during part of an orbit.</p><p class="zh">距離增加時，暫時鄰居的成長速度高於永久鄰居。高緯度的軌道面收斂，解釋了部分同向對象為何只在一段軌道內出現。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The paper's measurement is a simulation of orbital geometry.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>1,584 · 550 km · 53° · 15° · 5.45° · 5,735.62 s</td><td>The 1,584 satellites orbit at 550 km and 53° inclination. Planes are 15° apart in right ascension, and satellites are 5.45° apart within each plane. Orbital period is 5,735.62 s <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV, Fig. 3, Eq. 2" data-original="Sec. IV, Fig. 3 and Eq. 2 of Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV, Fig. 3, Eq. 2]</a></sup>. The simulation records every satellite that enters one reference satellite’s selected laser range during a day.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The range itself is the independent variable.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>1 · 659 · 1,319 · 1,500 · 1,700 · 5,016 km</td><td>Table 1 tests ranges of 659, 1,319, 1,500, 1,700, and 5,016 km. The first two reach first and second intra-plane neighbors. The middle two identify the onset of adjacent-plane contacts.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>6,378 km · 550 km · 80 km</td><td>The final range is the geometric line-of-sight limit. It uses Earth radius 6,378 km, altitude 550 km, and an 80 km atmospheric clearance layer <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1, §IV.A" data-original="Eq. 1 and Sec. IV.A" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1, §IV.A]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>Across the day-long simulation, increasing range adds temporary neighbors much faster than permanent neighbors.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>659 km · 62 · 1,700 km · 10 · 144</td><td>At 659 km, two intra-plane neighbors remain reachable throughout the orbit, and 62 others enter range briefly. At 1,700 km, the counts become ten permanent and 144 temporary neighbors <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1 and Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The temporary encounters are also short.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>30 · 283 s · 1,978 s</td><td>The paper's example crossing-plane pair meets 30 times in the day for about 283 s each time. In comparison, a temporary adjacent-plane pair, which drifts into range only at high latitude, meets 30 times for about 1,978 s each <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.B, Tab. 2, Figs. 6–8" data-original="Sec. IV.B, Table 2 and Figs. 6–8" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.B, Tab. 2, Figs. 6–8]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>Satellites in neighboring planes are farthest apart near the equator and closest near the poles. High-latitude portions of each orbit therefore add temporary neighbors.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這篇論文的「量測」是軌道幾何模擬。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>1,584 · 550 km · 53° · 15° · 5.45° · 5,735.62</td><td>作者把 1,584 顆衛星放在 550 km 高度、53° 傾角，軌道面在升交點赤經上相隔 15°，同一軌道面內衛星相隔 5.45°，由此得到 5,735.62 秒的軌道週期<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV, Fig. 3, Eq. 2" data-original="Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Sec. IV, Fig. 3 與 Eq. 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV, Fig. 3, Eq. 2]</a></sup>，然後針對一顆參考衛星記錄一天之內所有曾進入所選雷射距離的衛星。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>距離本身是自變數。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>1 · 659 · 1,319 · 1,500 · 1,700 · 5,016 km · 6,378 km · 550 km · 80 km</td><td>論文的 Table 1 測試 659、1,319、1,500、1,700 與 5,016 km，前兩個是到同軌道面第一與第二個鄰居的距離，中間兩個是相鄰軌道面衛星開始出現的距離，最後一個則是幾何視線極限，由 6,378 km 的地球半徑、550 km 的高度，以及光束必須避開的 80 km 大氣層算得<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1, §IV.A" data-original="Eq. 1 與 Sec. IV.A" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1, §IV.A]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>一整天的模擬顯示，一個終端「曾經能連到」的衛星數量隨距離成長的速度，遠快於它「能永久保持」的數量。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>659 km · 62</td><td>在 659 km 下參考衛星只永久看到同軌道面的兩個鄰居，另有 62 顆衛星短暫出現。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>1,700 km · 10 · 144</td><td>在 1,700 km 下永久集合增為 10 顆，暫時集合卻增為 144 顆<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1 與 Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>暫時相遇也很短暫。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>30 · 283 · 1,978</td><td>論文舉例的交叉軌道面對一天相遇 30 次、每次約 283 秒，而只在高緯度才漂進距離內的暫時相鄰軌道面對同樣相遇 30 次，每次約 1,978 秒<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.B, Tab. 2, Figs. 6–8" data-original="Sec. IV.B、Table 2 與 Figs. 6–8" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.B, Tab. 2, Figs. 6–8]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>緯度相依性的原因作者以文字說明得很簡單：相鄰軌道面的衛星在赤道相距最遠、在極區附近最近，所以每圈軌道的高緯度部分就是額外鄰居出現的地方。</td></tr></tbody></table></div>
+<div class="tbl calc"><table>
+<thead><tr><th><span class="en">Question</span><span class="zh">問題</span></th><th><span class="en">Formula</span><span class="zh">公式</span></th><th><span class="en">Result</span><span class="zh">結果</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Line-of-sight limit between two satellites at 550 km clearing an 80 km atmosphere</span><span class="zh">兩顆 550 km 衛星避開 80 km 大氣層的視線極限</span></td><td>\( d_{\max}=2\sqrt{(R_E+h)^2-(R_E+h_a)^2} \)</td><td>5,016 km<span class="cn en">computed. R_E = 6,378 km, h = 550 km, h_a = 80 km as in Eq. 1 of the paper</span><span class="cn zh">計算值。R_E = 6,378 km、h = 550 km、h_a = 80 km，取自論文 Eq. 1</span></td></tr>
+<tr><td><span class="en">Distance to the first and second intra-plane neighbor, 66 per plane</span><span class="zh">到同軌道面第一與第二個鄰居的距離，每面 66 顆</span></td><td>\( 2R\sin(k\pi/66) \)</td><td>659 km, 1,317 km<span class="cn en">computed with R = 6,921 km (mean radius plus 550 km). The paper's 659.5 and 1,319 km use the equatorial radius</span><span class="cn zh">以 R = 6,921 km（平均半徑加 550 km）計算。論文的 659.5 與 1,319 km 用赤道半徑</span></td></tr>
+<tr><td><span class="en">Same-index neighbor in the adjacent plane, 15° apart, at the equator and at 53° latitude</span><span class="zh">相鄰軌道面（相隔 15°）同序號鄰居在赤道與 53° 緯度的距離</span></td><td>\( 2R\sin(\Delta\Omega/2),\;\times\cos i \)</td><td>1,807 km → 1,087 km<span class="cn en">computed. The cos 53° ≈ 0.60 shrink is why temporary nearby-plane links appear at high latitude</span><span class="cn zh">計算值。cos 53° ≈ 0.60 的收縮就是暫時鄰近軌道面鏈路出現在高緯度的原因</span></td></tr>
+<tr><td><span class="en">One-way propagation over the shortest and the longest tested range</span><span class="zh">最短與最長測試距離的單向傳播時間</span></td><td>\( t=d/c \)</td><td>2.20 ms, 16.7 ms<span class="cn en">computed. C = 299,792,458 m/s. 659 km and 5,016 km</span><span class="cn zh">計算值。c = 299,792,458 m/s。659 km 與 5,016 km</span></td></tr>
+<tr><td><span class="en">Fraction of an orbit during which the example temporary links exist</span><span class="zh">範例暫時鏈路存在的時間佔軌道週期的比例</span></td><td>\( T_{\text{link}}/T_{\text{orbit}} \)</td><td>4.9 %, 34.5 %<span class="cn en">computed. 283 s and 1,978 s per encounter <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup> over 5,735.62 s</span><span class="cn zh">計算值。每次相遇 283 秒與 1,978 秒<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup>，週期 5,735.62 秒</span></td></tr>
+<tr><td><span class="en">Share of a 283 s crossing encounter lost to setup at 30 s and at 2 s</span><span class="zh">283 秒交叉相遇中花在建立鏈路上的比例，建立時間 30 秒與 2 秒</span></td><td>\( t_{\text{setup}}/T_{\text{link}} \)</td><td>10.6 %, 0.7 %<span class="cn en">computed. 30 s and 2 s are the CONDOR first-link and re-acquisition figures relayed by <sup class="cite"><a aria-label="Bhattacharjee, Chaudhry, Yanikomeroglu, Hu &amp; Lamontagne · Laser Inter-Satellite Link Setup Delay: Quantification, Impact, and Tolerable Value · WCNC · arXiv 2301.05285" class="cite-ref" data-cite="32" data-locator="" data-original="Bhattacharjee et al. 2023" data-ref="arxiv23-setup-delay" href="../references.html#ref-32">[32]</a></sup></span><span class="cn zh">計算值。30 秒與 2 秒是 <sup class="cite"><a aria-label="Bhattacharjee, Chaudhry, Yanikomeroglu, Hu &amp; Lamontagne · Laser Inter-Satellite Link Setup Delay: Quantification, Impact, and Tolerable Value · WCNC · arXiv 2301.05285" class="cite-ref" data-cite="32" data-locator="" data-original="Bhattacharjee 等人 2023" data-ref="arxiv23-setup-delay" href="../references.html#ref-32">[32]</a></sup> 轉述的 CONDOR 首次建鏈與再擷取數字</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">3. The design</span><span class="zh">3. 設計</span></h2>
+<p class="en">Permanent links keep their partners throughout an orbit, while temporary links require partner changes. Independent terminal pointing and faster acquisition make those temporary opportunities usable.</p><p class="zh">永久鏈路在整圈軌道維持同一對象，暫時鏈路則需要更換對象。獨立終端指向與更快擷取，有助於使用這些短暫機會。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The paper's contribution is a classification of geometric link availability. The classification matters because it tells a topology designer which links support static connections and which require changing partners.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>A permanent laser ISL joins satellites that remain within range throughout an orbit. In a Walker Delta shell, this includes intra-plane neighbors and same-direction adjacent-plane neighbors.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>A temporary link joins two satellites that come within range for a short period during their orbits</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>and the authors split that class again into crossing-plane links, where the two satellites move in different directions and meet for minutes</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>Temporary adjacent- or nearby-plane links connect same-direction satellites in separate planes. These satellites enter range during high-latitude portions of their orbits <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§I, §IV.B" data-original="Sec. I and Sec. IV.B of Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §I, §IV.B]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Terminal hardware constraint</th><td>Qualitative scope</td><td>The analysis then layers the hardware constraint on top of the geometry.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Four terminals support four simultaneous links. Each terminal must point independently. The authors therefore require a coarse pointing assembly for each terminal to direct four beams beyond the spacecraft’s shared orientation <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Crossing-plane acquisition combines narrow beams with high relative velocity. The authors identify this pointing problem as especially difficult. They argue that setup must fall substantially below seconds to tens of seconds for effective temporary-link use.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>2.5 · 5,000 km · 19</td><td>The paper compares RF and optical links at 2.5 Gbps over 5,000 km. RF requires at least 19× the antenna diameter. It also requires over twice the onboard power and mass of the optical link <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Sec. II" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup>.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這篇論文的貢獻是一套幾何鏈路可用性的分類，而這套分類重要之處在於它告訴拓樸設計者哪些鏈路適合靜態連線、哪些需要更換對象。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>永久雷射星間鏈路連接兩顆整圈軌道都在距離內的衛星，在 Walker Delta 軌道殼裡就是同軌道面前後的衛星，以及相鄰軌道面裡同向運行的衛星。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>暫時鏈路連接兩顆在軌道運行中只短暫進入距離內的衛星，作者再把這一類拆成交叉軌道面鏈路（兩顆衛星往相異方向運動、相遇幾分鐘）與暫時相鄰或鄰近軌道面鏈路（相隔一個或多個軌道面的同向衛星只在軌道的高緯度段漂進距離內）<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§I, §IV.B" data-original="Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Sec. I 與 Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §I, §IV.B]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>分析接著把硬體限制疊在幾何之上。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>每顆衛星帶四個雷射終端，所以能同時維持四條鏈路，而每個終端必須能同時指向相異方向，作者主張這需要每個終端各有一個粗指向機構，因為轉動整個衛星本體只能以同一個機體姿態指向，四個對象則需要獨立指向<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>對準交叉衛星被特定點名為「高度困難」，因為光束很窄而相對速度很高，論文的結論論證則是：目前終端需要的數秒到數十秒建立時間，必須大幅縮短，任何暫時鏈路才有可能派上用場。</td></tr>
+<tr class="zh"><th scope="row">容量與速率</th><td>5,000 km · 2.5 · 19</td><td>以雷射取代射頻的理由只用一句話說完，而整本教材都倚賴這句話：要在 5,000 km 上傳送 2.5 Gbps，RF 鏈路需要至少 19 倍的天線直徑，以及兩倍以上的機上功率與質量<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Sec. II" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup>。</td></tr></tbody></table></div>
+<figure class="plate"><div class="img" style="background:var(--paper)">
+<svg aria-label="Left: three orbital planes show permanent and temporary laser links from one satellite. Right: permanent and temporary neighbor counts at 659 km and 1,700 km." role="img" viewbox="0 0 760 300">
+<rect fill="var(--paper)" height="300" width="760"></rect>
+<!-- left panel: geometry -->
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="22">Which links a terminal can hold (24 × 66 shell)</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="22">終端能維持哪些鏈路（24 × 66 軌道殼）</text>
+<!-- same-direction planes -->
+<line stroke="var(--rule)" stroke-width="1.5" x1="80" x2="140" y1="260" y2="50"></line>
+<line stroke="var(--rule)" stroke-width="1.5" x1="170" x2="230" y1="260" y2="50"></line>
+<line stroke="var(--rule)" stroke-width="1.5" x1="260" x2="320" y1="260" y2="50"></line>
+<!-- crossing plane -->
+<line stroke="var(--rule)" stroke-dasharray="4 4" stroke-width="1.5" x1="330" x2="90" y1="250" y2="70"></line>
+<!-- satellites on planes -->
+<circle cx="97" cy="200" fill="var(--ink-3)" r="4"></circle><circle cx="114" cy="140" fill="var(--ink-3)" r="4"></circle><circle cx="131" cy="80" fill="var(--ink-3)" r="4"></circle>
+<circle cx="187" cy="200" fill="var(--ink-3)" r="4"></circle><circle cx="204" cy="140" fill="var(--sat)" r="6"></circle><circle cx="221" cy="80" fill="var(--ink-3)" r="4"></circle>
+<circle cx="277" cy="200" fill="var(--ink-3)" r="4"></circle><circle cx="294" cy="140" fill="var(--ink-3)" r="4"></circle><circle cx="311" cy="80" fill="var(--ink-3)" r="4"></circle>
+<circle cx="250" cy="190" fill="var(--warn)" r="4"></circle>
+<!-- permanent intra-plane links -->
+<line stroke="var(--sat)" stroke-width="2.5" x1="204" x2="187" y1="140" y2="200"></line>
+<line stroke="var(--sat)" stroke-width="2.5" x1="204" x2="221" y1="140" y2="80"></line>
+<!-- permanent adjacent-plane links -->
+<line stroke="var(--cool)" stroke-width="2.5" x1="204" x2="114" y1="140" y2="140"></line>
+<line stroke="var(--cool)" stroke-width="2.5" x1="204" x2="294" y1="140" y2="140"></line>
+<!-- temporary crossing link -->
+<line stroke="var(--warn)" stroke-dasharray="5 4" stroke-width="2" x1="204" x2="250" y1="140" y2="190"></line>
+<!-- temporary nearby-plane link (two planes away) -->
+<line stroke="var(--warn)" stroke-dasharray="2 4" stroke-width="1.5" x1="204" x2="311" y1="140" y2="80"></line>
+<text class="en" fill="var(--sat)" font-size="10.5" x="20" y="282">■ permanent intra-plane (659 km)</text>
+<text class="zh" fill="var(--sat)" font-size="10.5" x="20" y="282">■ 永久同軌道面（659 km）</text>
+<text class="en" fill="var(--cool)" font-size="10.5" x="208" y="282">■ permanent adjacent-plane (≥1,500 km)</text>
+<text class="zh" fill="var(--cool)" font-size="10.5" x="208" y="282">■ 永久相鄰軌道面（≥1,500 km）</text>
+<text class="en" fill="var(--warn)" font-size="10.5" x="20" y="296">- - temporary: crossing plane ≈283 s, nearby plane ≈1,978 s per encounter</text>
+<text class="zh" fill="var(--warn)" font-size="10.5" x="20" y="296">- - 暫時：交叉軌道面每次 ≈283 秒，鄰近軌道面每次 ≈1,978 秒</text>
+<text class="en" fill="var(--ink-3)" font-size="10" x="40" y="62">crossing plane</text>
+<text class="zh" fill="var(--ink-3)" font-size="10" x="40" y="62">交叉軌道面</text>
+<!-- right panel: bar chart -->
+<line stroke="var(--rule)" stroke-width="0" x1="420" x2="760" y1="40" y2="40"></line>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="420" y="22">Neighbours seen in 24 h, one satellite</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="420" y="22">一顆衛星 24 小時內看到的鄰居數</text>
+<line stroke="var(--ink-3)" stroke-width="1" x1="440" x2="740" y1="240" y2="240"></line>
+<line stroke="var(--ink-3)" stroke-width="1" x1="440" x2="440" y1="240" y2="50"></line>
+<!-- gridlines for 50, 100, 150 : scale 180px for 144 -> 1.25 px per link -->
+<line stroke="var(--rule)" stroke-dasharray="2 3" x1="440" x2="740" y1="177.5" y2="177.5"></line><text class="mono" fill="var(--ink-3)" font-size="10" x="412" y="181">50</text>
+<line stroke="var(--rule)" stroke-dasharray="2 3" x1="440" x2="740" y1="115" y2="115"></line><text class="mono" fill="var(--ink-3)" font-size="10" x="406" y="118">100</text>
+<line stroke="var(--rule)" stroke-dasharray="2 3" x1="440" x2="740" y1="52.5" y2="52.5"></line><text class="mono" fill="var(--ink-3)" font-size="10" x="406" y="56">150</text>
+<!-- 659 km group -->
+<rect fill="var(--cool)" height="2.5" width="40" x="470" y="237.5"></rect><text class="mono" fill="var(--ink-2)" font-size="10.5" text-anchor="middle" x="490" y="230">2</text>
+<rect fill="var(--warn)" height="77.5" width="40" x="520" y="162.5"></rect><text class="mono" fill="var(--ink-2)" font-size="10.5" text-anchor="middle" x="540" y="156">62</text>
+<text class="en" fill="var(--ink-2)" font-size="11" text-anchor="middle" x="515" y="258">range 659 km</text>
+<text class="zh" fill="var(--ink-2)" font-size="11" text-anchor="middle" x="515" y="258">距離 659 km</text>
+<!-- 1700 km group -->
+<rect fill="var(--cool)" height="12.5" width="40" x="620" y="227.5"></rect><text class="mono" fill="var(--ink-2)" font-size="10.5" text-anchor="middle" x="640" y="221">10</text>
+<rect fill="var(--warn)" height="180" width="40" x="670" y="60"></rect><text class="mono" fill="var(--ink-2)" font-size="10.5" text-anchor="middle" x="690" y="54">144</text>
+<text class="en" fill="var(--ink-2)" font-size="11" text-anchor="middle" x="665" y="258">range 1,700 km</text>
+<text class="zh" fill="var(--ink-2)" font-size="11" text-anchor="middle" x="665" y="258">距離 1,700 km</text>
+<text class="en" fill="var(--cool)" font-size="10.5" x="440" y="282">■ permanent</text>
+<text class="zh" fill="var(--cool)" font-size="10.5" x="440" y="282">■ 永久</text>
+<text class="en" fill="var(--warn)" font-size="10.5" x="530" y="282">■ temporary (only 4 terminals to serve them)</text>
+<text class="zh" fill="var(--warn)" font-size="10.5" x="530" y="282">■ 暫時（只有 4 個終端可服務）</text>
+</svg></div>
+<figcaption><span class="en"><b class="fignum">Figure A. </b>Left: link classes from one satellite in the 24 × 66 shell. Two intra-plane and two same-direction adjacent-plane links persist throughout the orbit. Crossing-plane and nearby-plane links last minutes per encounter. Right: distinct reachable neighbors over 24 h at two ranges. Temporary neighbors increase faster than permanent neighbors, while four terminals support four simultaneous partners.</span><span class="zh"><b class="fignum">圖 A。</b>左：24 × 66 軌道殼中從一顆衛星看到的鏈路類型，兩條同軌道面與兩條同向相鄰軌道面鏈路整圈軌道都存在，交叉軌道面與鄰近軌道面鏈路每次相遇只存在幾分鐘。右：一顆衛星在兩種雷射距離下 24 小時內能接觸到的相異鄰居數量。暫時集合成長遠快於永久集合，但四個終端一次只能維持四個對象。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, Tab. 2, §IV.B" data-original="Drawn for this primer from Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Table 1, Table 2 and Sec. IV.B." data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, Tab. 2, §IV.B]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Table 1, Table 2 and Sec. IV.B.</details></span></figcaption></figure>
+<h2><span class="en">4. Evaluation setup</span><span class="zh">4. 實驗設定</span></h2>
+<p class="en">The STK evaluation counts neighbors for a reference satellite in a regular Walker shell. Range thresholds are geometric inputs, and latency requires a separate model.</p><p class="zh">STK 評估計算規則 Walker 軌道殼中一顆參考衛星的鄰居數，距離門檻是幾何輸入，延遲則需獨立模型。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Orbital configuration</th><td>24 · 66 · 550 km · 53°</td><td>The results come from a 24-hour Systems Tool Kit simulation. It uses the 24 × 66 Phase I shell at 550 km and 53° <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV" data-original="Sec. IV of Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2018 · 2019 · 72 · 22</td><td>The November 2018 geometry also appears in Bhattacherjee and Singla’s work and Handley’s 2019 relay paper. Hypatia and later tools use the August 2019 arrangement of 72 × 22.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The number of terminals assumed is four, one partner per terminal.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The study computes geometric connectivity.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>Traffic, link rate, routing, latency and node processing require separate models.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>Setup delay appears qualitatively as seconds to tens of seconds.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>Qualitative scope</td><td>The reported neighbor counts are for a single reference satellite, which is representative in a symmetric Walker shell but still a single sample.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>10</td><td>The range values are inputs chosen to sit at geometric thresholds and serve as geometric inputs. The paper's own expectation for commercial terminals at the time was "up to 10 Gbps".</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>100</td><td>SpaceX later claimed the 100 Gbps class.</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>550 km · 53° · 24 · 66</td><td>論文中的一切都來自在 550 km、53° 的 24 × 66 第一期軌道殼上用 Systems Tool Kit（STK）跑 24 小時的結果<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV" data-original="Chaudhry &amp; Yanikomeroglu, IEEE VTM 2021, Sec. IV" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2018 · 11 · 2019 · 8 · 72 · 22</td><td>星座版本是 2018 年 11 月的 FCC 修正案，與 Bhattacherjee 與 Singla 以及 Handley 2019 年地面中繼論文所用的幾何相同，，Hypatia 與後續工具則採用 2019 年 8 月修正案的 72 × 22 排列。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>假設的終端數量是四個，每個終端一個對象。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這項研究計算幾何連通性，流量、鏈路速率、路由、延遲與節點處理則需要獨立模型。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>建立延遲只在討論中以「數秒到數十秒」作定性描述。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>報告的鄰居數量來自單一參考衛星，在對稱的 Walker 軌道殼中具代表性，但仍是單一樣本。</td></tr>
+<tr class="zh"><th scope="row">容量與速率</th><td>10 · 100</td><td>距離值是刻意選在幾何門檻上的輸入，，其定位是幾何輸入，而論文當時對商用終端的預期是「最高 10 Gbps」，SpaceX 後來則宣稱 100 Gbps 等級。</td></tr></tbody></table></div>
+<h2><span class="en">5. What was measured</span><span class="zh">5. 量到了什麼</span></h2>
+<div class="tbl"><table>
+<thead><tr><th><span class="en">Claim</span><span class="zh">宣稱</span></th><th><span class="en">Setup and caveat</span><span class="zh">設定與附註</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Maximum laser range between two satellites in the shell is 5,016 km.</span><span class="zh">軌道殼內兩顆衛星間的最大雷射距離為 5,016 km。</span></td><td><span class="en">Geometric line of sight with a 6,378 km Earth radius and an 80 km atmosphere <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1" data-original="Eq. 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1]</a></sup>. Bhattacherjee and Singla get 5,014 km with slightly different constants. SpaceX later claimed links closed beyond 5,400 km, which would need a thinner exclusion layer or a higher shell.</span><span class="zh">以 6,378 km 地球半徑與 80 km 大氣層算得的幾何視線<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1" data-original="Eq. 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1]</a></sup>。Bhattacherjee 與 Singla 用略相異的常數得到 5,014 km。SpaceX 後來宣稱鏈路在 5,400 km 以上仍可建立，那需要更薄的排除層或更高的軌道殼。</span></td></tr>
+<tr><td><span class="en">At 659 km range a satellite has 2 permanent and 62 temporary neighbors over 24 h. At 1,700 km, 10 and 144.</span><span class="zh">在 659 km 距離下一顆衛星 24 小時內有 2 個永久與 62 個暫時鄰居。在 1,700 km 下為 10 與 144。</span></td><td><span class="en">One reference satellite, STK, 24 × 66 shell <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1, Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup>. Counts cover all distinct satellites encountered during the day. Simultaneous connections have a separate terminal limit. Only four can be held at once.</span><span class="zh">單一參考衛星、STK、24 × 66 軌道殼<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1、Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup>。數字計算整天曾進入距離內的相異衛星，同時鏈路數則另受終端數限制。一次只能維持四條。</span></td></tr>
+<tr><td><span class="en">Adjacent-plane neighbors appear at 1,500 km (two) and 1,700 km (six).</span><span class="zh">相鄰軌道面鄰居在 1,500 km 出現兩個、在 1,700 km 出現六個。</span></td><td><span class="en">Follows from the 15° plane spacing of the 24-plane shell. In the 72-plane shell the same neighbors sit at roughly 604 km and the thresholds move.</span><span class="zh">源於 24 面軌道殼 15° 的軌道面間距。在 72 面軌道殼中同樣的鄰居只相距約 604 km，門檻隨之移動。</span></td></tr>
+<tr><td><span class="en">A crossing-plane encounter lasts about 283 s and recurs 30 times a day. A temporary nearby-plane encounter lasts about 1,978 s.</span><span class="zh">一次交叉軌道面相遇約 283 秒、一天重複 30 次。一次暫時鄰近軌道面相遇約 1,978 秒。</span></td><td><span class="en">Specific pairs x10101–x11232 and x10101–x10263 at 1,700 km <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2, Figs. 6–8" data-original="Table 2, Figs. 6–8" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2, Figs. 6–8]</a></sup>. Durations depend on range and on the pair.</span><span class="zh">特定衛星對 x10101–x11232 與 x10101–x10263，距離 1,700 km<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2, Figs. 6–8" data-original="Table 2、Figs. 6–8" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2, Figs. 6–8]</a></sup>。持續時間取決於距離與衛星對。</span></td></tr>
+<tr><td><span class="en">RF would need ≥19× the antenna diameter and &gt;2× the power and mass to carry 2.5 Gbps over 5,000 km.</span><span class="zh">要在 5,000 km 上傳送 2.5 Gbps，RF 需要 ≥19 倍天線直徑與 &gt;2 倍功率與質量。</span></td><td><span class="en">Section II attributes this comparison to the authors’ cited reference. Chapter 2 separately calculates about 36 dB gain for a 0.3 m Ka dish. Its 10 cm optical-aperture calculation gives about 106 dB.</span><span class="zh">引自作者在 Sec. II 的參考文獻，計算應歸於該參考文獻。本教材第 2 章自行比較的增益是 0.3 m Ka 碟形天線約 36 dB，對比 10 cm 光學孔徑約 106 dB。</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">6. Limits and open questions</span><span class="zh">6. 範圍與待解問題</span></h2>
+<ul>
+<li><span class="en"><strong>The constellation is a superseded filing.</strong> The 24 × 66 layout was replaced by 72 × 22 in August 2019, before the paper appeared. The change inverts the geometry: the intra-plane spacing becomes 1,969 km instead of 659 km. In comparison, the adjacent-plane spacing falls to about 604 km at the equator <sup class="cite"><a aria-label="Muaz Ali &amp; Beichuan Zhang · LEO Topology Design Under Real-World Deployment Constraints · arXiv 2602.07756" class="cite-ref" data-cite="34" data-locator="§3" data-original="Ali &amp; Zhang, arXiv 2026, Sec. 3 preprint" data-ref="arxiv26-ali-zhang" href="../references.html#ref-34">[34, §3]</a></sup>. The 659 and 1,319 km range classes therefore require reinterpretation for the revised neighbor geometry. The thresholds at which adjacent-plane links appear must be recomputed.</span><span class="zh"><strong>星座是已被取代的申報版本。</strong>24 × 66 的排列在論文發表前的 2019 年 8 月就被 72 × 22 取代，而這個改變把幾何倒過來：同軌道面間距從 659 km 增為 1,969 km，相鄰軌道面間距在赤道則降到約 604 km<sup class="cite"><a aria-label="Muaz Ali &amp; Beichuan Zhang · LEO Topology Design Under Real-World Deployment Constraints · arXiv 2602.07756" class="cite-ref" data-cite="34" data-locator="§3" data-original="Ali &amp; Zhang, arXiv 2026, Sec. 3 preprint" data-ref="arxiv26-ali-zhang" href="../references.html#ref-34">[34, §3]</a></sup>。因此 659 與 1,319 km 的距離類型需要依修訂後的鄰居幾何重新解讀，相鄰軌道面鏈路出現的門檻也必須重算。</span></li>
+<li><span class="en"><strong>Four terminals reflects the 2018 filing.</strong> Starlink’s technology page specifies three optical links per satellite. Ali and Zhang and TinyLEO use that count (factbase Part C, item 13 <span class="src-tag co">company</span>). The paper’s four-link statements and implied +Grid therefore describe the earlier design. Ali and Zhang find disconnected 3-ISL grids under real ephemerides.</span><span class="zh"><strong>四個終端是 2018 年的數字。</strong>目前的 Starlink 技術頁面寫每顆衛星三條光學鏈路，Ali 與 Zhang 以及 TinyLEO 都採用此值（事實庫 Part C 第 13 項 <span class="src-tag co">company</span>），所以論文中每一句「四條同時 LISL」以及它隱含的 +Grid 都已過時。在三個終端下，Ali 與 Zhang 發現連 3-ISL 網格在真實星曆上仍會分裂成多個連通部分。</span></li>
+<li><span class="en"><strong>Geometric connectivity defines the scope.</strong> Capacity and latency need separate inputs. The paper expects up to 10 Gbps per terminal. SpaceX claims 100 Gbps sustained and 200 Gbps peak through journalist reports (Part C, item 14 <span class="src-tag co">company</span>). Mynaric’s CONDOR Mk3 page lists 0.313–2.5 Gbps, with 10 Gbps planned. A 100 Gbps CONDOR claim therefore needs product-page evidence (Part D, item 4). Chapter 2 supplies the independent link-budget model needed to convert neighbor counts into throughput.</span><span class="zh"><strong>研究範圍是幾何連通性。</strong>模型計算鏈路數量，容量與延遲權重則需要另外輸入。論文對每個終端「最高 10 Gbps」的預期比 SpaceX 透過記者宣稱的 100 Gbps 持續、200 Gbps 峰值低一個數量級（Part C 第 14 項 <span class="src-tag co">company</span>），而 Mynaric CONDOR Mk3 的產品頁列的是 0.313–2.5 Gbps、10 Gbps「即將推出」，所以演講中流傳的「100 Gbps CONDOR」數字仍需產品頁證據（Part D 第 4 項）。將鄰居數換算成吞吐量需要獨立的速率模型，第 2 章透過鏈路預算建立這個模型。</span></li>
+<li><span class="en"><strong>Setup delay receives qualitative treatment.</strong> The paper describes acquisition as seconds to tens of seconds. The <a href="ojcoms22-temporary-isl.html">OJCOMS 2022 paper</a> calculates temporary-link latency gains under millisecond setup. The <a href="arxiv23-setup-delay.html">2023 preprint</a> shows a 1 s setup raising average path delay from 25.9 to 123.9 ms. The calculation table illustrates how 30 s acquisition consumes about a tenth of a 283 s encounter.</span><span class="zh"><strong>建立延遲僅有定性描述。</strong>「數秒到數十秒」就是全部的處理。作者的兩篇後續論文量化了代價：<a href="ojcoms22-temporary-isl.html">OJCOMS 2022 論文</a>計算若建立時間為毫秒級，暫時鏈路能帶來多少延遲增益。<a href="arxiv23-setup-delay.html">2023 年預印本</a>則顯示 1 秒的建立時間把 25.9 ms 的路徑變成 123.9 ms 的平均值。上方計算表以縮影呈現同一件事：30 秒的擷取吃掉 283 秒交叉相遇的十分之一。</span></li>
+<li><span class="en"><strong>Range limits depend on their assumptions.</strong> The 5,016 km limit uses an 80 km atmospheric exclusion layer. Bhattacherjee and Singla obtain 5,014 km from different constants. SpaceX claims links beyond 5,400 km (Part C, item 15 <span class="src-tag co">company</span>). A longer range cited in the Suncatcher preprint exceeds line of sight at 550 km and needs primary-source support. This primer distinguishes the model’s 5,016 km bound from the 5,400 km company claim.</span><span class="zh"><strong>距離極限在邊緣有爭議。</strong>5,016 km 取決於 80 km 的排除層，Bhattacherjee 與 Singla 的 5,014 km 用其他常數，SpaceX 則宣稱鏈路可超過 5,400 km（Part C 第 15 項 <span class="src-tag co">company</span>）。Suncatcher 預印本中流傳的一個更長距離超出 550 km 軌道殼的視線範圍、其一手來源仍待補充，所以本教材以 5,016 km 為物理上限、5,400 km 為宣稱值。</span></li>
+<li><span class="en"><strong>Results cover one satellite, day, and shell.</strong> Counts describe satellite x10101 in a regular shell. Actual Shell 1 has 18 satellites per plane, below the filed 22 <sup class="cite"><a aria-label="Muaz Ali, Utkarsh Upadhyay, Sean McCormick, Joseph Hill, Beichuan Zhang · Starlink Constellation: Deployment, Configuration, and Dynamics · arXiv 2603.25835" class="cite-ref" data-cite="16" data-locator="Tab. 2" data-original="Ali et al., arXiv 2026, Table 2 preprint" data-ref="ali2026" href="../references.html#ref-16">[16, Tab. 2]</a></sup>. Its permanent-neighbor distances therefore differ from those in the filings.</span><span class="zh"><strong>一顆衛星、一天、一個軌道殼。</strong>數字來自完全規則軌道殼中的衛星 x10101。真實的 Shell 1 每面實際飛行 18 顆，申報數量則為 22 顆，且持續低於申報密度<sup class="cite"><a aria-label="Muaz Ali, Utkarsh Upadhyay, Sean McCormick, Joseph Hill, Beichuan Zhang · Starlink Constellation: Deployment, Configuration, and Dynamics · arXiv 2603.25835" class="cite-ref" data-cite="16" data-locator="Tab. 2" data-original="Ali 等人, arXiv 2026, Table 2 preprint" data-ref="ali2026" href="../references.html#ref-16">[16, Tab. 2]</a></sup>，所以真實星座上的永久鏈路距離與兩個申報版本都相異。</span></li>
+</ul>
+<h2><span class="en">7. How it connects</span><span class="zh">7. 與其他內容的關聯</span></h2>
+<ul>
+<li><span class="en"><a href="../chapters/c02-isl.html#s2-1">Section 2.1</a>: the hop lengths 659 km versus 1,969 km and the 5,016 km line-of-sight limit come from this paper's geometry. The chapter recomputes them for both filings.</span><span class="zh"><a href="../chapters/c02-isl.html#s2-1">第 2.1 節</a>：659 km 對 1,969 km 的跳距與 5,016 km 的視線極限來自本文的幾何。該章針對兩個申報版本重新計算。</span></li>
+<li><span class="en"><a href="../chapters/c02-isl.html#s2-2">Section 2.2</a> derives received power’s 1/d² dependence. Longer-range link classes consequently need larger apertures or greater transmitted power.</span><span class="zh"><a href="../chapters/c02-isl.html#s2-2">第 2.2 節</a>：鏈路預算解釋為什麼距離以 1/d² 吃掉接收功率，這是本文較長距離類型需要更大孔徑或更多瓦數的物理原因。</span></li>
+<li><span class="en"><a href="../chapters/c02-isl.html#s2-4">Section 2.4</a>: pointing, acquisition and the terminal count, including the five-to-four-to-three history that this paper sits in the middle of.</span><span class="zh"><a href="../chapters/c02-isl.html#s2-4">第 2.4 節</a>：指向、擷取與終端數量，包括本文正處於其中的五到四到三的歷史。</span></li>
+<li><span class="en"><a href="../chapters/c02-isl.html#s2-5">Section 2.5</a>: permanent links are what +Grid wires. Temporary links are what motifs and later stable-link designs deliberately avoid.</span><span class="zh"><a href="../chapters/c02-isl.html#s2-5">第 2.5 節</a>：永久鏈路是 +Grid 接線的對象。暫時鏈路則是 motif 與後來的穩定鏈路設計刻意避開的。</span></li>
+<li><span class="en"><a href="../chapters/c05-topology-routing.html#s5-2">Section 5.2</a> and the digests <a href="conext19-motifs.html">conext19-motifs</a> and <a href="arxiv26-ali-zhang.html">arxiv26-ali-zhang</a>: topology designs built on the same 24 × 66 shell and on real ephemerides respectively.</span><span class="zh"><a href="../chapters/c05-topology-routing.html#s5-2">第 5.2 節</a>與導讀 <a href="conext19-motifs.html">conext19-motifs</a>、<a href="arxiv26-ali-zhang.html">arxiv26-ali-zhang</a>：各自建立在同一個 24 × 66 軌道殼與真實星曆上的拓樸設計。</span></li>
+<li><span class="en">Related digests extend the classification: <a href="ojcoms22-temporary-isl.html">ojcoms22-temporary-isl</a> quantifies temporary-link latency gains, and <a href="arxiv23-setup-delay.html">arxiv23-setup-delay</a> quantifies setup cost. <a href="hotnets18-handley.html">hotnets18-handley</a> supplies the earlier five-terminal design.</span><span class="zh">同組導讀：<a href="ojcoms22-temporary-isl.html">ojcoms22-temporary-isl</a> 量化暫時鏈路類型的延遲價值，<a href="arxiv23-setup-delay.html">arxiv23-setup-delay</a> 量化其代價，<a href="hotnets18-handley.html">hotnets18-handley</a> 則是本文修正的五終端起點。</span></li>
+</ul>
+<h2><span class="en">Key numbers</span><span class="zh">關鍵數字</span></h2>
+<div class="tbl"><table><thead><tr><th class="en">Number</th><th class="zh">數字</th><th class="en">Meaning (setup)</th><th class="zh">意義（設定）</th></tr></thead><tbody>
+<tr><td class="num">1,584 = 24 × 66</td><td class="en">Starlink Phase I as filed in November 2018, 550 km, 53°, planes 15° apart, 5.45° in-plane spacing, period 5,735.62 s <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV" data-original="Sec. IV" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV]</a></sup></td><td class="zh">2018 年 11 月申報的 Starlink 第一期，550 km、53°，軌道面相隔 15°、面內間距 5.45°，週期 5,735.62 秒<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV" data-original="Sec. IV" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV]</a></sup></td></tr>
+<tr><td class="num">5,016 km</td><td class="en">Line-of-sight limit with an 80 km atmospheric layer <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1" data-original="Eq. 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1]</a></sup></td><td class="zh">含 80 km 大氣層的視線極限<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Eq. 1" data-original="Eq. 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Eq. 1]</a></sup></td></tr>
+<tr><td class="num">659 / 1,319 km</td><td class="en">First and second intra-plane neighbor distances in the 24 × 66 shell <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1" data-original="Table 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1]</a></sup></td><td class="zh">24 × 66 軌道殼中同軌道面第一與第二個鄰居的距離<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1" data-original="Table 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1]</a></sup></td></tr>
+<tr><td class="num">1,500 / 1,700 km</td><td class="en">Ranges at which two and then six adjacent-plane neighbors come within reach <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1" data-original="Table 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1]</a></sup></td><td class="zh">兩個、然後六個相鄰軌道面鄰居進入距離內的距離<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1" data-original="Table 1" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1]</a></sup></td></tr>
+<tr><td class="num">2 / 62 and 10 / 144</td><td class="en">Permanent / temporary neighbors of one satellite in 24 h at 659 km and 1,700 km <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1, Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup></td><td class="zh">一顆衛星 24 小時內在 659 km 與 1,700 km 下的永久／暫時鄰居<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 1, §IV.B" data-original="Table 1、Sec. IV.B" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 1, §IV.B]</a></sup></td></tr>
+<tr><td class="num">283 s × 30</td><td class="en">Duration and daily count of one crossing-plane encounter at 1,700 km <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup></td><td class="zh">1,700 km 下一次交叉軌道面相遇的持續時間與每日次數<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup></td></tr>
+<tr><td class="num">1,978 s × 30</td><td class="en">Duration and daily count of one temporary nearby-plane encounter at 1,700 km <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup></td><td class="zh">1,700 km 下一次暫時鄰近軌道面相遇的持續時間與每日次數<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="Tab. 2" data-original="Table 2" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, Tab. 2]</a></sup></td></tr>
+<tr><td class="num">4</td><td class="en">Laser terminals per satellite assumed, from the 2018 filing. Now three on the Starlink page</td><td class="zh">假設的每顆衛星雷射終端數，取自 2018 年申報。Starlink 頁面現為三個</td></tr>
+<tr><td class="num">≥19×, &gt;2×</td><td class="en">Antenna diameter and power/mass penalty of RF against optical for 2.5 Gbps over 5,000 km <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Sec. II" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup></td><td class="zh">RF 相對光學在 5,000 km 傳送 2.5 Gbps 的天線直徑與功率／質量代價<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§II" data-original="Sec. II" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §II]</a></sup></td></tr>
+<tr><td class="num">s to tens of s</td><td class="en">Laser link setup time the paper assumes for current terminals, qualitative discussion only <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup></td><td class="zh">論文假設目前終端的雷射鏈路建立時間，僅有定性討論<sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Laser Intersatellite Links in a Starlink Constellation: A Classification and Analysis · IEEE VTM 2021 · 2021" class="cite-ref" data-cite="17" data-locator="§IV.C" data-original="Sec. IV.C" data-ref="vtm21-chaudhry" href="../references.html#ref-17">[17, §IV.C]</a></sup></td></tr>
+</tbody></table></div>
+</section>
+<section class="quiz reading" id="quiz"><h2><span class="en">Check your understanding</span><span class="zh">檢驗你的理解</span></h2><div id="quiz-root"></div></section>
+<script id="quiz-data" type="application/json">[
+  {
+    "q": {
+      "en": "Why does the number of temporary neighbors grow so much faster with laser range than the number of permanent ones?",
+      "zh": "為什麼暫時鄰居的數量隨雷射距離成長得比永久鄰居快那麼多？"
+    },
+    "o": [
+      {
+        "en": "Permanent neighbors are fixed by the plane geometry (two in-plane, a few same-direction in adjacent planes). In comparison, a larger range sweeps in satellites on crossing planes and distant planes that pass through briefly.",
+        "zh": "永久鄰居由軌道面幾何固定（面內兩個、相鄰面少數同向者），而更大的距離會掃進交叉軌道面與較遠軌道面上短暫經過的衛星。"
+      },
+      {
+        "en": "Temporary links use a different wavelength that travels further.",
+        "zh": "暫時鏈路使用傳得更遠的另一種波長。"
+      },
+      {
+        "en": "The four-terminal limit applies exclusively to permanent links.",
+        "zh": "四個終端的限制只適用於永久鏈路。"
+      },
+      {
+        "en": "The STK run was longer for the temporary case.",
+        "zh": "暫時情況的 STK 模擬時間比較長。"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "Section 2: permanent partners are the handful of satellites that stay in range all orbit. Everything else that a wider range reaches moves relative to the reference satellite and so is only temporarily in range.",
+      "zh": "第 2 節：永久對象是整圈軌道都在距離內的少數衛星。更大距離所觸及的其他衛星都相對參考衛星運動，因此只是暫時在距離內。"
+    }
+  },
+  {
+    "q": {
+      "en": "A satellite in the 24 × 66 shell can see 144 temporary neighbors in a day at 1,700 km. What stops it from using them?",
+      "zh": "24 × 66 軌道殼中的一顆衛星在 1,700 km 下一天能看到 144 個暫時鄰居。哪些限制影響它使用這些鄰居？"
+    },
+    "o": [
+      {
+        "en": "The received optical power is too low at 1,700 km.",
+        "zh": "1,700 km 下接收光功率太低。"
+      },
+      {
+        "en": "Crossing-plane satellites belong to a different operator.",
+        "zh": "交叉軌道面的衛星屬於相異業者。"
+      },
+      {
+        "en": "Each of four terminals serves one partner at a time. Acquisition takes seconds to tens of seconds, while an encounter lasts minutes.",
+        "zh": "四個終端各自一次只服務一個對象，擷取新對象要數秒到數十秒，而一次相遇只持續幾分鐘。"
+      },
+      {
+        "en": "Temporary links exceed the 5,016 km limit.",
+        "zh": "暫時鏈路超過 5,016 km 極限。"
+      }
+    ],
+    "a": 2,
+    "why": {
+      "en": "Section 3: terminal count and setup time bind the design under the assumed link budget. The paper's conclusion is that setup must fall by orders of magnitude.",
+      "zh": "第 3 節：在所設鏈路預算下，終端數量與建立時間構成主要限制。論文的結論是建立時間必須下降好幾個數量級。"
+    }
+  },
+  {
+    "q": {
+      "en": "Why do temporary adjacent-plane links appear only on the high-latitude part of the orbit?",
+      "zh": "為什麼暫時相鄰軌道面鏈路只在軌道的高緯度部分出現？"
+    },
+    "o": [
+      {
+        "en": "The atmosphere is thinner over the poles.",
+        "zh": "極區上空的大氣較薄。"
+      },
+      {
+        "en": "Satellites slow down near the poles.",
+        "zh": "衛星在極區附近減速。"
+      },
+      {
+        "en": "The 15° plane spacing becomes 30° at high latitude.",
+        "zh": "15° 的軌道面間距在高緯度變成 30°。"
+      },
+      {
+        "en": "Planes with fixed right-ascension separation converge toward the poles. Same-direction satellites in nearby planes therefore approach each other and enter range there.",
+        "zh": "在升交點赤經上相隔固定角度的軌道面向極區收斂，所以鄰近軌道面的同向衛星在那裡最近，因而漂進距離內。"
+      }
+    ],
+    "a": 3,
+    "why": {
+      "en": "Section 2 and the calculation table: same-index separation shrinks by about cos i ≈ 0.60 between the equator and 53° latitude. Nearby-plane links therefore enter range near the orbit’s highest latitude.",
+      "zh": "第 2 節與計算表：同序號間距從赤道到 53° 緯度約縮小 cos i ≈ 0.60，所以在赤道超出距離的鏈路在軌道頂端附近進入距離。"
+    }
+  },
+  {
+    "q": {
+      "en": "If you apply this paper's range classes to the 72 × 22 shell that Starlink actually filed in 2019, what changes?",
+      "zh": "如果把本文的距離類型套用到 Starlink 2019 年實際申報的 72 × 22 軌道殼，會有什麼改變？"
+    },
+    "o": [
+      {
+        "en": "The geometry stays identical because the satellite count is the same.",
+        "zh": "幾何保持相同，因為衛星總數相同。"
+      },
+      {
+        "en": "The intra-plane neighbor moves out to about 1,969 km while the adjacent-plane neighbor moves in to about 604 km. Thus, the 659 km class is empty and the long link is now the in-plane one.",
+        "zh": "同軌道面鄰居移到約 1,969 km，相鄰軌道面鄰居則移近到約 604 km，所以 659 km 類型變空，長鏈路變成面內那一條。"
+      },
+      {
+        "en": "The line-of-sight limit doubles.",
+        "zh": "視線極限變成兩倍。"
+      },
+      {
+        "en": "Temporary links disappear entirely.",
+        "zh": "暫時鏈路完全消失。"
+      }
+    ],
+    "a": 1,
+    "why": {
+      "en": "Section 6: with 22 per plane and 5° between planes the geometry inverts. This is fact base Part C item 12 and the reason every digest states which filing a paper froze.",
+      "zh": "第 6 節：每面 22 顆、面間 5° 使幾何倒轉。這是事實庫 Part C 第 12 項，也是每篇導讀都要說明論文凍結哪個申報版本的原因。"
+    }
+  },
+  {
+    "q": {
+      "en": "The paper quotes that RF would need at least 19× the antenna diameter to carry 2.5 Gbps over 5,000 km. Which physical quantity drives that factor?",
+      "zh": "論文引述 RF 要在 5,000 km 傳送 2.5 Gbps 需要至少 19 倍的天線直徑。哪個物理量決定這個倍數？"
+    },
+    "o": [
+      {
+        "en": "RF photons carry less energy per bit.",
+        "zh": "RF 光子每位元攜帶的能量較少。"
+      },
+      {
+        "en": "RF propagation requires a material medium.",
+        "zh": "RF 傳播需要物質介質。"
+      },
+      {
+        "en": "Antenna gain scales as (πD/λ)², so the millimeter RF wavelength needs a far larger aperture than 1,550 nm light to reach the same gain.",
+        "zh": "天線增益以 (πD/λ)² 增長，所以毫米級的 RF 波長需要比 1,550 nm 光大得多的孔徑才能達到相同增益。"
+      },
+      {
+        "en": "Error-correcting codes apply exclusively to optical links.",
+        "zh": "錯誤更正碼只適用於光學鏈路。"
+      }
+    ],
+    "a": 2,
+    "why": {
+      "en": "Section 3 and Chapter 2.2: the gain ratio is θ²_RF/θ²_opt. A 0.3 m dish at 23 GHz has ~36 dB where a 10 cm optical aperture has ~106 dB.",
+      "zh": "第 3 節與第 2.2 節：增益比為 θ²_RF/θ²_opt。23 GHz 的 0.3 m 碟形天線約 36 dB，而 10 cm 光學孔徑約 106 dB。"
+    }
+  }
+]</script>
+<nav class="pager">
+<a href="../research.html"><span class="eyebrow">↩</span><span class="en">All digests</span><span class="zh">全部導讀</span></a>
+<a href="ojcoms22-temporary-isl.html"><span class="eyebrow">→</span><span class="en">Next: Temporary laser ISLs</span><span class="zh">下一篇：暫時性雷射 ISL</span></a>
+<a href="../chapters/c02-isl.html" style="margin-left:auto;text-align:right"><span class="eyebrow">↩</span><span class="en">Back to Chapter 2</span><span class="zh">回到第 2 章</span></a>
+</nav>
+</main>
+</div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/contrib/auto-render.min.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/citations-data.js"></script><script src="../assets/citations.js"></script></body>
+</html>

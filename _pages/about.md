@@ -24,3 +24,5 @@ Beyond research, I am passionate about **astrophotography** — my works have be
 ## Learning Resources
 
 [AI Training Network Primer](/ai-training-network-primer/) is an interactive guide in English and Chinese. It explains GPU communication, data center networks, and network design for AI training.
+
+[Satellite Network Primer](/satellite-network-primer/) is an interactive guide in English and Chinese. It explains satellite links, routing, transport, and AI computing in orbit.

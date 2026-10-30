@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>How to use · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+<style>
+table.qs{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+table.qs td{padding:10px 14px;border-top:1px solid var(--rule-2);vertical-align:top}
+table.qs tr:first-child td{border-top:0}
+table.qs td.where{white-space:nowrap;font-family:var(--mono);font-size:.86rem;text-align:right}
+table.qs td.where a{text-decoration:none}
+@media (max-width:760px){table.qs td{display:block} table.qs td.where{white-space:normal;text-align:left;border-top:0;padding-top:0}}
+.tagrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;align-items:baseline;margin:.6em 0 1.2em}
+</style>
+</head>
+<body data-slug="about">
+<div class="topbar"><div class="topbar-in">
+<a class="backlink" href="index.html"><span>←</span><span class="en">Contents</span><span class="zh">目錄</span></a>
+<div class="brand"><span class="dot"></span><span class="en">How to use</span><span class="zh">使用說明</span></div>
+<a class="cite-nav" href="references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group"><button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button><button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button></div>
+</div><div class="progress" id="progress"></div></div>
+<div class="frame single"><main>
+<header class="paper-hero reading">
+<div class="eyebrow en">About this primer</div><div class="eyebrow zh">關於這份教材</div>
+<h1><span class="en">How to use this primer</span><span class="zh">如何使用這份教材</span></h1>
+<p class="lede"><span class="en">Find the intended reader, the sources behind the numbers, chapter prerequisites and starting points for specific questions.</span><span class="zh">這裡說明適合的讀者、數字來源、章節關係，以及各類問題對應的閱讀起點。</span></p>
+</header>
+<section class="reading">
+<h2 id="who"><span class="en">Who this is for</span><span class="zh">寫給誰</span></h2>
+<p class="en">This primer assumes basic knowledge of packets and GPUs and introduces orbital mechanics and link budgets. It helps readers assess satellite network research and AI systems that span satellites. Its companion, the <a href="/ai-training-network-primer/" rel="noopener" target="_blank">AI Training Network Primer</a>, explains networks inside terrestrial training clusters. Part III uses that material and identifies the relevant sections.</p>
+<p class="zh">本教材假設讀者了解封包與 GPU，並從基礎介紹軌道與鏈路預算，協助讀者評估衛星網路及跨衛星 AI 研究。姊妹篇<a href="/ai-training-network-primer/" rel="noopener" target="_blank">AI 訓練網路入門</a>介紹地面訓練叢集內部的網路，第三部會標明引用其中哪些內容。</p>
+<p class="en">The primer uses one reference numbering system. A superscript such as <sup class="cite">[1, §4, Tabs. 1–2]</sup> identifies a work and its exact source location. Hover over a marker, focus it with the keyboard, or tap it to see the full citation. Select its reference entry to open the <a href="references.html">global bibliography</a>. Entries include publication links and local digests where available. Source claims and calculated values carry separate labels.</p>
+<p class="zh">全書採用統一的文獻編號。上標引文，例如 <sup class="cite">[1, §4, Tabs. 1–2]</sup>，標明文獻編號及原文位置。滑鼠移入、鍵盤聚焦或觸控點選標記，即可查看完整書目。點選文獻項目可前往<a href="references.html">全書參考文獻</a>，其中列出可取得的論文連結與導讀。公司宣稱、監管申報與自行計算的數值各有來源標記。</p>
+<h2 id="sources"><span class="en">Where the numbers come from</span><span class="zh">數字從哪裡來</span></h2>
+<p class="en">Each number in Parts I and II cites its source paper, standard or filing in the sentence that uses it. Section, table or figure references let readers locate the original value. Peer-reviewed papers use the default format. Other sources carry the tags below. These tags distinguish company claims, measured results and preprints awaiting peer review. Part III examines proposed systems using Part I's physics and Part II's measurements, with its arithmetic labeled as calculated values.</p>
+<p class="zh">第一、二部的每個數字都隨句標明來源論文、標準或申報文件，並列出節次、表格或圖號，方便查證。經同儕審查的論文採預設格式，其餘來源使用下列標記。這些標記區分公司宣稱、實測結果及等待同儕審查的預印本。資料僅來自公司聲明時，內文會明確歸因。第三部以第一部的物理原理與第二部的量測資料討論擬議系統，自行推導的數值標為「計算值」。</p>
+<div class="tagrow">
+<span class="src-tag pr">peer-reviewed</span><span><span class="en">Appeared in a refereed venue (SIGCOMM, NSDI, IMC, MobiCom, CoNEXT, HotNets, INFOCOM, IEEE journals, Acta Astronautica…).</span><span class="zh">發表於有審查的場館（SIGCOMM、NSDI、IMC、MobiCom、CoNEXT、HotNets、INFOCOM、IEEE 期刊、Acta Astronautica 等）。</span></span>
+<span class="src-tag rg">FCC filing</span><span><span class="en">A regulatory filing or grant (FCC, ITU) states a plan that binds the operator. Its evidence concerns planned deployment.</span><span class="zh">監管申報或核准文件（FCC、ITU），內容是對營運商具有約束力的部署計畫。</span></span>
+<span class="src-tag co">company</span><span><span class="en">An operator's or vendor's own statement, blog post, datasheet or conference talk.</span><span class="zh">營運商或廠商自己的聲明、部落格、規格表或演講。</span></span>
+<span class="src-tag pp">preprint</span><span><span class="en">An arXiv or similar preprint awaiting peer review, including Google's Suncatcher paper.</span><span class="zh">等待同儕審查的 arXiv 等預印本，包括 Google 的 Suncatcher 論文。</span></span>
+<span class="src-tag tb">textbook</span><span><span class="en">A standard textbook or handbook (Vallado, Maral &amp; Bousquet, Gilmore).</span><span class="zh">標準教科書或手冊（Vallado、Maral &amp; Bousquet、Gilmore）。</span></span>
+</div>
+<h2 id="questions"><span class="en">Start with a question</span><span class="zh">從一個問題開始</span></h2>
+<div class="tbl"><table class="qs"><tbody>
+<tr><td><span class="en">Why does a LEO satellite cross the sky in minutes, and what does that do to a connection?</span><span class="zh">為什麼 LEO 衛星幾分鐘就劃過天空，這對連線有什麼影響？</span></td><td class="where"><a href="chapters/c01-orbits.html">Ch. 1</a> · <a href="chapters/c03-ground.html">Ch. 3</a></td></tr>
+<tr><td><span class="en">What decides the delay and the bit rate of a laser link between two satellites?</span><span class="zh">兩顆衛星之間雷射鏈路的延遲與位元率由什麼決定？</span></td><td class="where"><a href="chapters/c02-isl.html">Ch. 2</a></td></tr>
+<tr><td><span class="en">What numbers should a 2026 paper assume for a Starlink-class network, and which of them are measured?</span><span class="zh">2026 年的論文該為 Starlink 級網路假設哪些數字，其中哪些是量測值？</span></td><td class="where"><a href="chapters/c04-parameters.html">Ch. 4</a></td></tr>
+<tr><td><span class="en">Can a constellation beat fiber on latency, and when?</span><span class="zh">星座在延遲上能贏過光纖嗎？什麼時候？</span></td><td class="where"><a href="chapters/c05-topology-routing.html">Ch. 5</a></td></tr>
+<tr><td><span class="en">Why do TCP and QUIC misbehave over Starlink every fifteen seconds?</span><span class="zh">為什麼 TCP 與 QUIC 在 Starlink 上每十五秒就出狀況？</span></td><td class="where"><a href="chapters/c06-transport.html">Ch. 6</a></td></tr>
+<tr><td><span class="en">How do researchers test a design using simulation or emulation?</span><span class="zh">研究者如何透過模擬或模擬平台測試設計？</span></td><td class="where"><a href="chapters/c07-tools.html">Ch. 7</a></td></tr>
+<tr><td><span class="en">How much computing can a satellite do, and what limits it: power, heat or radiation?</span><span class="zh">一顆衛星能做多少運算？限制來自電力、散熱還是輻射？</span></td><td class="where"><a href="chapters/c08-space-computing.html">Ch. 8</a></td></tr>
+<tr><td><span class="en">Does a training cluster's network translate to a laser-linked formation?</span><span class="zh">訓練叢集的網路能搬到雷射互聯的編隊上嗎？</span></td><td class="where"><a href="chapters/c10-training-needs.html">Ch. 10</a> · <a href="chapters/c11-suncatcher.html">Ch. 11</a></td></tr>
+<tr><td><span class="en">Which parts of the published "LLM on satellites" papers survive a change of link-rate assumption?</span><span class="zh">已發表的「衛星上的 LLM」論文，哪些部分在鏈路速率假設改變後還站得住？</span></td><td class="where"><a href="chapters/c12-inference.html">Ch. 12</a></td></tr>
+<tr><td><span class="en">What should a research group work on next for orbital data centers?</span><span class="zh">研究團隊接下來該為軌道資料中心做什麼？</span></td><td class="where"><a href="chapters/c13-research-plan.html">Ch. 13</a></td></tr>
+</tbody></table></div>
+<h2 id="map"><span class="en">How the chapters connect</span><span class="zh">各章的關係</span></h2>
+<p class="en">Read Part I in order. Chapter 1 explains geometry, Chapter 2 calculates inter-satellite delay and link budgets, and Chapter 3 adds ground links and network measurements. Chapter 4 collects these results in a parameter sheet for later chapters. Part II allows any reading order after Chapter 4, though Chapter 7 explains the simulator capabilities needed to assess most results. Part III builds on Parts I and II and Chapters 3 to 8 of the AI Training Network Primer. Chapter 10 restates the required facts about parallelism, collectives, step budgets, topology, transport and routing.</p>
+<p class="zh">第一部適合依序閱讀。第 1 章介紹幾何，第 2 章計算星間延遲與鏈路預算，第 3 章加入地面段及真實網路量測，第 4 章整理成供後續章節引用的參數表。讀完第 4 章後，第二部可依興趣選讀。細讀論文導讀前，建議先讀第 7 章，了解各模擬器的能力及適用範圍，因為本領域多數結果來自模擬。第三部以第一、二部及姊妹篇第 3 至 8 章為基礎，第 10 章會重述所需的平行化、集體通訊、步驟時間預算、拓樸、傳輸層與路由概念。</p>
+<h2 id="companion"><span class="en">Companion primer and conventions</span><span class="zh">姊妹篇與慣例</span></h2>
+<p class="en">Distances use km, link rates use Gb/s (bits), storage uses GB (bytes), and latency uses ms. The text distinguishes one-way propagation delay from round-trip time. Starlink shell names follow FCC filings. Each digest identifies the constellation model behind its numbers and explains differences from deployment. Language choices and quiz answers stay on this device.</p>
+<p class="zh">距離以 km、鏈路速率以 Gb/s（位元）、儲存量以 GB（位元組）、延遲以 ms 表示，全文區分單向傳播延遲與往返時間。Starlink 殼層名稱依 FCC 申報文件。導讀會指出數值所對應的星座模型，並說明它與實際部署的差異。語言選擇及測驗作答皆儲存在這台裝置上。</p>
+</section>
+</main></div>
+<script src="assets/site.js"></script>
+<script src="assets/citations-data.js"></script><script src="assets/citations.js"></script></body></html>

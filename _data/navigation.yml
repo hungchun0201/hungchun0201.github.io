@@ -12,5 +12,8 @@ main:
   - title: "AI Training Networks"
     url: /ai-training-network-primer/
 
+  - title: "Satellite Networks"
+    url: /satellite-network-primer/
+
   - title: "CV"
     url: /cv/

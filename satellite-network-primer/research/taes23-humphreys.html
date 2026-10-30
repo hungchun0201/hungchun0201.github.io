@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Starlink Ku Downlink Signal · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/katex/katex.min.css" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+</head>
+<body data-slug="taes23-humphreys">
+<div class="topbar">
+<div class="topbar-in">
+<a class="backlink" href="../research.html"><span>←</span><span class="en">All paper digests</span><span class="zh">論文導讀總表</span></a>
+<div class="brand"><span class="dot"></span><span class="en">Paper digest</span><span class="zh">論文導讀</span></div>
+<a class="cite-nav" href="../references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group">
+<button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button>
+<button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</div>
+<div class="frame single">
+<main>
+<header class="paper-hero reading rhero">
+<div class="eyebrow en">Digest · Link physics · read after Chapter 3</div><div class="eyebrow zh">導讀 · 鏈路物理 · 第 3 章後閱讀</div>
+<h1><span class="en">Signal Structure of the Starlink Ku-Band Downlink</span><span class="zh">Starlink Ku 頻段下行鏈路的訊號結構</span></h1>
+<div class="byline"><span class="venue">IEEE TAES 2023</span>Humphreys, Iannucci, Komodromos, Graff (University of Texas at Austin) · <a href="https://doi.org/10.1109/TAES.2023.3268610"><span class="en">paper</span><span class="zh">論文</span></a> <span class="src-tag pr">peer-reviewed</span></div>
+<p class="lede"><span class="en">This digest connects Starlink’s band plan, frames and OFDM symbols. You can derive their timing and distinguish the primer’s computed rate ceiling from measured throughput.</span><span class="zh">本導讀從頻段規劃逐步說明 Starlink 的下行幀與 OFDM 符號。讀完後，你能推導表中的符號及幀時序，並區分教材計算的速率上限與實測吞吐量。</span></p>
+<div class="metarow"><span class="en">≈ 9 min · 5-question quiz</span><span class="zh">≈ 9 分鐘 · 5 題測驗</span><a class="en" href="../chapters/c03-ground.html">Chapter 3 ↗</a><a class="zh" href="../chapters/c03-ground.html">第 3 章 ↗</a><a class="en" href="#quiz">Jump to the quiz ↓</a><a class="zh" href="#quiz">跳到測驗 ↓</a></div>
+</header>
+<section class="reading">
+<div class="key"><div class="eyebrow en">Main result and scope</div><div class="eyebrow zh">只讀這一段也可以</div>
+<p class="en">The authors independently recovered Starlink’s downlink waveform from Ku-band recordings. The evidence table separates measured signal structure from the primer’s computed raw-rate ceiling.</p><p class="zh">作者從 Ku 頻段錄音獨立還原 Starlink 下行波形，證據表區分了實測訊號結構與教材計算的原始速率上限。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Waveform observation</th><td>90 cm</td><td>Humphreys, Iannucci, Komodromos and Graff pointed a 90 cm offset parabolic dish at passing Starlink satellites, recorded the raw Ku-band signal</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>10.7–12.7 · 240 · 250 · 1,024 · 234.375 · 32 · 4.267 µs · 4.4 µs</td><td>The recordings reveal eight 240 MHz channels in the 10.7–12.7 GHz band, on a 250 MHz grid. Each channel uses OFDM with 1,024 subcarriers spaced 234.375 kHz apart. A 32-sample cyclic prefix extends each 4.267 µs useful symbol to 4.4 µs.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>302 · 1.333 ms · 750</td><td>and 302 non-zero symbols plus a short guard form a 1.333 ms frame repeated 750 times a second</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>4 · 16 · 6 · 12</td><td>with four synchronization symbols per frame, 4QAM on most data symbols and 16QAM on roughly symbols 6 to 12 <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§V–VII, Tab. II" data-original="Humphreys et al., IEEE TAES 2023, Secs. V–VII, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §V–VII, Tab. II]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>456</td><td>The paper's purpose is opportunistic positioning, so it reports structure while throughput remains outside the report. The figure of 456 Mbps per channel before forward error correction that the primer uses is computed from Table II. This explains why it must carry the "computed" label.</td></tr>
+<tr class="en"><th scope="row">Power and thermal conditions</th><td>2022</td><td>The study covers the downlink only, from one research-grade dish in captures first posted in 2022. Thus, the uplink, the user terminal's transmit power and the per-satellite capacity remain outside what it can tell us.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>90 cm · 10.7–12.7 · 240 · 250 · 1,024 · 234.375 · 32 · 4.267 µs · 4.4 µs · 302 · 1.333 ms · 750 · 4 · 6 · 12 · 16</td><td>Humphreys、Iannucci、Komodromos 與 Graff 把一支 90 cm 偏饋拋物面天線對準經過的 Starlink 衛星，錄下原始的 Ku 頻段訊號，獨立從錄音還原了下行波形：10.7–12.7 GHz 頻段被切成八個 240 MHz 的頻道，排在 250 MHz 的格點上，每個頻道承載具有 1,024 個子載波、間距 234.375 kHz 的 OFDM，32 個取樣的循環字首把每個 4.267 µs 的有效符號延長到 4.4 µs，而 302 個振幅大於零的符號加上一段短保護區間組成 1.333 ms 的幀，每秒重複 750 次，每幀有四個同步符號，多數資料符號用 4QAM，大約第 6 到第 12 個符號用 16QAM<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§V–VII, Tab. II" data-original="Humphreys et al., IEEE TAES 2023, Secs. V–VII, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §V–VII, Tab. II]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>456</td><td>論文的目的是機會式定位，所以它報告的是結構，吞吐量則待量測，本教材使用的「每頻道前向錯誤更正前 456 Mbps」是從 Table II 計算出來的，因此必須帶著「計算值」的標記。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2022</td><td>這項研究只涵蓋下行，來自 2022 年首次公開、以一支研究級天線擷取的錄音，所以上行、使用者終端的發射功率與每顆衛星的容量都需要另外的資料來源。</td></tr></tbody></table></div>
+</div>
+<h2><span class="en">1. Where this paper sits</span><span class="zh">1. 這篇論文的位置</span></h2>
+<p class="en">Chapter 3 uses this paper for Starlink user-link waveform parameters. The primer’s source search identified it as the sole peer-reviewed waveform description. SpaceX retains its proprietary air-interface specification. The paper belongs beside the laser ISL and TBIRD optical-downlink studies. Together, these studies define physical links before protocols and scheduling enter the model.</p>
+<p class="en">The authors study navigation and use Starlink’s dense synchronization sequences as signals of opportunity for positioning. They carefully measure timing, frequency and modulation for navigation receivers. User sharing, frame payload occupancy and error-correcting codes remain outside that scope. Those questions are picked up later by networking papers that time Starlink bursts from the user side. The primer reads the two kinds of evidence together.</p>
+<p class="zh">第 3 章所有關於 Starlink 使用者鏈路能有多快的數字，最後都建立在這篇論文上，因為本教材的搜尋以此篇作為唯一找到的同儕審查波形描述。SpaceX 的空中介面規格仍屬專有資料。它屬於鏈路物理這組導讀，與雷射星間鏈路論文及 TBIRD 光學下行並列，因為它對衛星與使用者之間的射頻段，回答了那些論文對光學段所回答的同一類問題：在任何協定或排程器放上去之前，實體層究竟是什麼。作者研究導航，希望將 Starlink 密集的同步序列當作機會訊號來定位。因此論文依導航接收機的需求，仔細量測時序、頻率與調變。</p>
+<p class="zh">使用者共享數量、幀內資料比例與錯誤更正碼則屬於其他研究範圍。這些問題後來由從使用者端量測 Starlink 突發時序的網路論文接手，而本教材把這兩類證據放在一起讀。</p>
+<h2><span class="en">2. The problem, measured</span><span class="zh">2. 問題，用量測說話</span></h2>
+<p class="en">A research dish captures the wideband signal, while Doppler changes both frequency and signal timing. Recovered periodicities provide an internal consistency check.</p><p class="zh">研究級天線擷取寬頻訊號，都卜勒則同時改變頻率與訊號時序。還原的週期性提供了內部一致性檢查。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The problem is to recover a wideband signal with a proprietary specification from recordings alone. The paper's difficulty is set by the receiver it had.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>90 cm · 3° · 40 · 12.5 · 0.8</td><td>The receiver uses a 90 cm offset parabolic dish with about 3° beamwidth. Nominal gain is 40 dBi at 12.5 GHz. Its low-noise block has a 0.8 dB noise figure.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>which is a research-grade setup with characteristics distinct from a Starlink user terminal</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>4 · 15 · −6</td><td>and with it they saw clean 4QAM constellation clusters at about 15 dB signal-to-noise ratio while their synchronization observables still worked below −6 dB <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II, Fig. 4, §VII.C" data-original="Humphreys et al., TAES 2023, Sec. II, Fig. 4, Sec. VII.C" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II, Fig. 4, §VII.C]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Model and compute</th><td>240 · 2.5 · 10</td><td>A satellite at a few hundred kilometers moves fast enough that, across a 240 MHz channel, Doppler requires a model beyond a single frequency offset. Thus, the authors model it both as a frequency shift and as a compression or dilation of time. They bound the carrier frequency offset at a fractional value below 2.5 × 10⁻⁵ <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§III.B" data-original="Sec. III.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §III.B]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The authors infer symbol length from cyclic-prefix periodicity, then derive subcarrier spacing from symbol length. Repeated synchronization symbols reveal frame length. They check that these parameters agree, as the calculation table below reproduces.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>問題是僅憑錄音還原一個規格屬於專有資料的寬頻訊號，而論文的難度取決於它手上的接收機。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>3° · 12.5 · 40 · 90 cm · 0.8 · 15 · 4 · −6</td><td>作者使用一支波束寬約 3°、在 12.5 GHz 標稱增益 40 dBi 的 90 cm 偏饋拋物面天線，接上雜訊指數 0.8 dB 的低雜訊降頻器，這是研究級設備，與 Starlink 使用者終端的特性相異，他們用它在約 15 dB 訊雜比下看到乾淨的 4QAM 星座群，而其同步觀測量在低於 −6 dB 時仍然可用<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II, Fig. 4, §VII.C" data-original="Humphreys et al., TAES 2023, Sec. II, Fig. 4, Sec. VII.C" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II, Fig. 4, §VII.C]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>240 · 2.5 · 10</td><td>位於數百公里高度的衛星移動得夠快，使得在 240 MHz 的頻道上，都卜勒需要超越單一頻率偏移的模型，所以作者把它同時建模為頻率偏移與時間的壓縮或伸張，並把載波頻率偏移的比例上限定在 2.5 × 10⁻⁵ 以下<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§III.B" data-original="Sec. III.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §III.B]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>盲目解析意味著要從循環字首的週期性推出符號長度、從符號長度推出子載波間距、從同步符號的重複推出幀長，再檢查這些參數的精確一致性，下方的計算表就是重現這項檢查。</td></tr></tbody></table></div>
+<h2><span class="en">3. The design</span><span class="zh">3. 設計</span></h2>
+<p class="en">The waveform has nested frequency and time structures: channels contain subcarriers, and frames contain synchronization, header and data symbols. The table records their parameters.</p><p class="zh">波形在頻率與時間上具有巢狀結構，頻道包含子載波，幀則包含同步、標頭與資料符號。參數集中列於表中。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The "design" here is the signal that the paper recovered, and it is best read from the outside in, as the figure does.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2 · 10.7 · 12.7 · 240 · 250 · 10 · 24/25 · 0.25</td><td>The 2 GHz Ku downlink band spans 10.7–12.7 GHz. It holds eight 240 MHz channels at 250 MHz spacing. Adjacent channels have 10 MHz guards, and occupied bandwidth is 24/25 of the band. Channel i centers at 10.7 GHz plus half a subcarrier plus 0.25(i − ½) GHz <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A, Tab. II" data-original="Humphreys et al., TAES 2023, Sec. VII.A, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A, Tab. II]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>1 · 2 · 10.6–10.7</td><td>Channels 1 and 2 were empty in every capture, which the authors attribute to protecting the 10.6–10.7 GHz radio-astronomy band just below.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Each channel uses orthogonal frequency-division multiplexing, or OFDM. It sends narrow subcarriers in parallel, and the receiver separates them with a Fourier transform.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>1,024 · 234.375 · 4.267 µs · 240 · 1,020</td><td>Starlink uses 1,024 subcarriers spaced 234.375 kHz apart, which fixes the useful symbol at the reciprocal of the spacing, 4.267 µs. The sample rate at exactly 240 MHz. It leaves the central four subcarriers empty as a "gutter", so at most 1,020 carry data <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.D" data-original="Sec. VII.D" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.D]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>32 · 4.4 µs</td><td>A 32-sample cyclic prefix copies each symbol’s tail to absorb multipath echoes. This prefix extends total symbol duration to 4.4 µs.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>1/750 s · 0 · 128 · 127 m · 1 · 2 · 5 · 6 · 12 · 16 · 4</td><td>Frames last 1/750 s. Symbol 0 contains eight repetitions of a 128-sample block derived from a length-127 m-sequence. Symbol 1 provides secondary synchronization, and symbols 2–5 form a header. Approximately symbols 6–12 use 16QAM. Most remaining symbols use 4QAM.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>300 · 301 · 4.533 µs</td><td>and symbols 300 and 301 are two further "coda" synchronization symbols, after which a guard interval of about 4.533 µs closes the frame <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§V.G, VI, VII.B–C" data-original="Secs. V.G, VI, VII.B–C" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §V.G, VI, VII.B–C]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>1.33 ms · 5 ms</td><td>Four synchronization symbols every 1.33 ms is, as the authors note, unusually dense compared with LTE's two every 5 ms. That density is what makes the signal attractive for positioning.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這裡的「設計」就是論文還原出的訊號，最好像下圖那樣由外而內地讀。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>10.7 · 12.7 · 2 · 240 · 250 · 10 · 24/25 · 0.25</td><td>在最寬的尺度上，10.7 到 12.7 GHz 之間 2 GHz 的 Ku 下行頻譜容納八個各 240 MHz 的頻道，每 250 MHz 放一個，使相鄰頻道之間有 10 MHz 的保護帶、頻段的 24/25 被佔用，而第 i 個頻道的中心位於 10.7 GHz 加半個子載波再加 0.25(i − ½) GHz<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A, Tab. II" data-original="Humphreys et al., TAES 2023, Sec. VII.A, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A, Tab. II]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1 · 2 · 10.6–10.7</td><td>第 1 與第 2 頻道在每次錄音中都是空的，作者將此歸因於保護緊鄰其下的 10.6–10.7 GHz 電波天文頻段。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>在一個頻道內，訊號是 OFDM，也就是正交分頻多工波形，許多窄的子載波平行送出，接收端以傅立葉轉換把它們分開。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1,024 · 234.375 · 4.267 µs · 240 · 1,020</td><td>Starlink 使用 1,024 個子載波，間距 234.375 kHz，這把有效符號固定為間距的倒數 4.267 µs、取樣率恰為 240 MHz，並把中央四個子載波留空作為「溝槽」，所以最多 1,020 個承載資料<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.D" data-original="Sec. VII.D" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.D]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>32 · 4.4 µs</td><td>每個符號前面有 32 個取樣的循環字首，也就是符號自身尾端的複本，用來吸收多路徑回波，使符號變成 4.4 µs。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1/750 s · 0 · 127 · 128 · 1 · 2 · 5 · 6 · 12 · 16 · 4 · 300 · 301 · 4.533 µs</td><td>在時間上，符號被組成 1/750 s 的幀：第 0 個符號是主同步序列，由一個從長度 127 的 m 序列導出的 128 取樣區塊重複八次組成，第 1 個符號是次同步序列，第 2 到第 5 個符號構成標頭，大約第 6 到第 12 個符號用 16QAM，其餘多數用 4QAM，第 300 與 301 個符號是另外兩個「尾段」同步符號，之後約 4.533 µs 的保護區間結束這一幀<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§V.G, VI, VII.B–C" data-original="Secs. V.G, VI, VII.B–C" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §V.G, VI, VII.B–C]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1.33 ms · 5 ms</td><td>正如作者所指出，每 1.33 ms 四個同步符號，相較於 LTE 每 5 ms 兩個，密度異常地高，而這種密度正是此訊號對定位有吸引力的原因。</td></tr></tbody></table></div>
+<figure class="plate"><div class="img" style="background:var(--paper)">
+<svg aria-label="Starlink Ku downlink from band plan to frame to symbol" role="img" viewbox="0 0 760 400"><rect fill="var(--paper)" height="400" width="760"></rect>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="24">A · Band plan, 10.7–12.7 GHz (Sec. VII.A)</text><text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="24">A · 頻段規劃，10.7–12.7 GHz（Sec. VII.A）</text>
+<line stroke="var(--ink-3)" x1="40" x2="720" y1="92" y2="92"></line>
+<g fill="var(--ink-3)" font-size="9" text-anchor="middle"><text x="40" y="106">10.7</text><text x="210" y="106">11.2</text><text x="380" y="106">11.7</text><text x="550" y="106">12.2</text><text x="720" y="106">12.7 GHz</text></g>
+<g stroke-width="1.2">
+<rect fill="var(--panel)" height="46" stroke="var(--rule)" stroke-dasharray="4 3" width="82" x="41.4" y="46"></rect>
+<rect fill="var(--panel)" height="46" stroke="var(--rule)" stroke-dasharray="4 3" width="82" x="126.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="211.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="296.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="381.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="466.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="551.4" y="46"></rect>
+<rect fill="var(--sat)" fill-opacity="0.25" height="46" stroke="var(--sat)" width="82" x="636.4" y="46"></rect>
+</g>
+<g fill="var(--ink)" font-size="10" text-anchor="middle"><text x="82" y="68">1</text><text x="167" y="68">2</text><text x="252" y="68">3</text><text x="337" y="68">4</text><text x="422" y="68">5</text><text x="507" y="68">6</text><text x="592" y="68">7</text><text x="677" y="68">8</text></g>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="124" y="40">vacant: protects 10.6–10.7 GHz radio astronomy</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="124" y="40">空置：保護 10.6–10.7 GHz 電波天文</text>
+<text class="en" fill="var(--ink-2)" font-size="9" text-anchor="middle" x="464" y="40">240 MHz channels on a 250 MHz grid (10 MHz guard)</text><text class="zh" fill="var(--ink-2)" font-size="9" text-anchor="middle" x="464" y="40">240 MHz 頻道排在 250 MHz 格點上（10 MHz 保護帶）</text>
+<line stroke="var(--rule)" x1="20" x2="740" y1="122" y2="122"></line>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="144">B · One frame in one channel: 1/750 s = 1.333 ms (Secs. VI–VII.B)</text><text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="144">B · 一個頻道中的一幀：1/750 s = 1.333 ms（Secs. VI–VII.B）</text>
+<rect fill="var(--accent)" height="56" width="10" x="40" y="160"></rect>
+<rect fill="var(--accent)" fill-opacity="0.6" height="56" width="10" x="50" y="160"></rect>
+<rect fill="var(--cool)" fill-opacity="0.5" height="56" stroke="var(--cool)" width="36" x="60" y="160"></rect>
+<rect fill="var(--warn)" fill-opacity="0.45" height="56" stroke="var(--warn)" width="62" x="96" y="160"></rect>
+<rect fill="var(--sat)" fill-opacity="0.22" height="56" stroke="var(--sat)" width="520" x="158" y="160"></rect>
+<rect fill="var(--accent)" fill-opacity="0.6" height="56" width="20" x="678" y="160"></rect>
+<rect fill="var(--panel)" height="56" stroke="var(--rule)" width="10" x="698" y="160"></rect>
+<g fill="var(--ink)" font-size="9" text-anchor="middle">
+<text x="45" y="232">0</text><text x="55" y="244">1</text><text x="78" y="232">2–5</text><text x="127" y="232">≈6–12</text><text x="418" y="232">…</text><text x="688" y="232">300–301</text>
+</g>
+<text class="en" fill="var(--ink)" font-size="9" text-anchor="middle" x="78" y="192">header</text><text class="zh" fill="var(--ink)" font-size="9" text-anchor="middle" x="78" y="192">標頭</text>
+<text fill="var(--ink)" font-size="9" text-anchor="middle" x="127" y="192">16QAM</text>
+<text class="en" fill="var(--ink)" font-size="10" text-anchor="middle" x="418" y="186">4QAM data symbols (most of the frame)</text><text class="zh" fill="var(--ink)" font-size="10" text-anchor="middle" x="418" y="186">4QAM 資料符號（幀的大部分）</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="418" y="202">298 of the 302 non-zero symbols carry data</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="418" y="202">302 個振幅大於零的符號中有 298 個承載資料</text>
+<text class="en" fill="var(--accent)" font-size="9" x="40" y="262">PSS · SSS · two coda symbols = 4 sync symbols per frame (LTE: 2 per 5 ms)</text><text class="zh" fill="var(--accent)" font-size="9" x="40" y="262">PSS · SSS · 兩個尾段符號 = 每幀 4 個同步符號（LTE：每 5 ms 2 個）</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="end" x="703" y="262">guard ≈ 4.533 µs</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="end" x="703" y="262">保護區間 ≈ 4.533 µs</text>
+<line stroke="var(--rule)" x1="20" x2="740" y1="278" y2="278"></line>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="298">C · One OFDM symbol: 1,056 samples at 240 MHz = 4.4 µs (Table II)</text><text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="298">C · 一個 OFDM 符號：240 MHz 下 1,056 個取樣 = 4.4 µs（Table II）</text>
+<rect fill="var(--warn)" fill-opacity="0.45" height="36" stroke="var(--warn)" width="22" x="40" y="322"></rect>
+<rect fill="var(--panel)" height="36" stroke="var(--ink-3)" width="660" x="62" y="322"></rect>
+<rect fill="var(--warn)" fill-opacity="0.2" height="36" stroke="var(--warn)" stroke-dasharray="3 2" width="22" x="700" y="322"></rect>
+<path d="M711 322 C 640 308, 120 308, 51 322" fill="none" stroke="var(--warn)" stroke-width="1.2"></path>
+<text class="en" fill="var(--ink-2)" font-size="9" text-anchor="middle" x="51" y="374">CP 32</text><text class="zh" fill="var(--ink-2)" font-size="9" text-anchor="middle" x="51" y="374">CP 32</text>
+<text class="en" fill="var(--ink)" font-size="10" text-anchor="middle" x="380" y="344">useful part: 1,024 samples = 1/234.375 kHz = 4.267 µs</text><text class="zh" fill="var(--ink)" font-size="10" text-anchor="middle" x="380" y="344">有效部分：1,024 個取樣 = 1/234.375 kHz = 4.267 µs</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="380" y="374">cyclic prefix = copy of the tail. 1,024 subcarriers, central 4 empty, ≤ 1,020 carry data</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="380" y="374">循環字首 = 尾端的複本。1,024 個子載波，中央 4 個留空，最多 1,020 個承載資料</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="380" y="393">302 × 4.4 µs + 4.533 µs guard = 1,333.3 µs = one frame</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="380" y="393">302 × 4.4 µs + 4.533 µs 保護區間 = 1,333.3 µs = 一幀</text>
+</svg></div>
+<figcaption><span class="en">Figure A. The Starlink Ku downlink at three scales. Panel A places eight 240 MHz channels on a 250 MHz grid, with channels 1 and 2 empty. Panel B lays out one 1.333 ms frame with its four synchronization symbols, header, short 16QAM run and long 4QAM body. Panel C shows one 4.4 µs symbol as a 4.267 µs useful part preceded by a 32-sample cyclic prefix. Widths in Panel B are schematic, while every duration in the labels comes from Table II.</span><span class="zh">圖 A。三個尺度下的 Starlink Ku 下行。A 欄把八個 240 MHz 頻道放在 250 MHz 格點上，第 1 與第 2 頻道空置。B 欄展開一個 1.333 ms 的幀，含四個同步符號、標頭、一小段 16QAM 與長長的 4QAM 主體。C 欄顯示一個 4.4 µs 的符號，由 32 取樣的循環字首加上 4.267 µs 的有效部分組成。B 欄寬度為示意，標籤中的每個時長都來自 Table II。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§V–VII, Tab. II" data-original="Drawn for this primer from Humphreys et al., IEEE TAES 2023, Secs. V–VII, Table II; the frame-sum check is computed." data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §V–VII, Tab. II]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Humphreys et al., IEEE TAES 2023, Secs. V–VII, Table II. The frame-sum check is computed.</details></span></figcaption></figure>
+<h2><span class="en">4. Evaluation setup</span><span class="zh">4. 實驗設定</span></h2>
+<p class="en">The study validates signal structure through recordings and parameter consistency. The primer computes a rate ceiling and compares it with later burst-timing measurements.</p><p class="zh">研究透過錄音與參數一致性驗證訊號結構。教材再計算速率上限，並與後續突發時序量測比較。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Measurement method</th><td>90 cm</td><td>The evidence comes from raw recordings of passing satellites, captured with the 90 cm dish and processed offline <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II" data-original="Humphreys et al., TAES 2023, Sec. II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Model and compute</th><td>15 · 3</td><td>Inter-satellite links, gateways, routing and the 15-second reconfiguration that Chapter 3 describes are all outside its scope, the reported model therefore describes the user downlink.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>240 · 4.4 µs · 302 · 750</td><td>The calculation table checks parameter consistency. Subcarrier count times spacing gives the 240 MHz sample rate. The useful symbol and prefix total 4.4 µs. The 302 symbols and frame guard total 1/750 s.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>1.333 ms · 373.3 · 430.5</td><td>The last rows calculate a raw bit rate from Table II. Garcia, Sundberg, and Brunstrom independently measure the same 1.333 ms sub-burst spacing. Their measured physical-layer rates are 373.3 and 430.5 Mbps <sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="§III–IV, Tab. I" data-original="Garcia et al., IFIP WONS 2024, Secs. III–IV, Table I" data-ref="garciawons2024" href="../references.html#ref-43">[43, §III–IV, Tab. I]</a></sup>.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>90 cm</td><td>這篇論文直接量測訊號，其證據來自實際錄音：證據是一組經過衛星的原始錄音，以 90 cm 天線擷取並離線處理<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II" data-original="Humphreys et al., TAES 2023, Sec. II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>3 · 15</td><td>星間鏈路、閘道、路由以及第 3 章描述的 15 秒重新配置都屬於其他研究範圍，本文模型描述的是使用者下行。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>240 · 4.4 µs · 302</td><td>論文真正驗證的是內部一致性，而如計算表所示，這些參數彼此恰好吻合：子載波數乘以間距得到 240 MHz 的取樣率，有效符號加上字首得到 4.4 µs，而 302 個符號加上保護區間得到七百五十分之一秒。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1.333 ms · 373.3 · 430.5</td><td>最後幾列的原始位元率是本教材根據 Table II 計算的結果，並與 Garcia、Sundberg 與 Brunstrom 的突發時序量測交叉核對，後者找到子突發之間同樣的 1.333 ms 間隔，以及 373.3 與 430.5 Mbps 的實體層速率<sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="§III–IV, Tab. I" data-original="Garcia et al., IFIP WONS 2024, Secs. III–IV, Table I" data-ref="garciawons2024" href="../references.html#ref-43">[43, §III–IV, Tab. I]</a></sup>。</td></tr></tbody></table></div>
+<div class="tbl calc"><table>
+<thead><tr><th><span class="en">Question</span><span class="zh">問題</span></th><th><span class="en">Calculation</span><span class="zh">算式</span></th><th><span class="en">Result</span><span class="zh">結果</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Sample rate implied by the subcarrier grid</span><span class="zh">子載波格點隱含的取樣率</span></td><td>\(1{,}024 \times 234.375\ \text{kHz}\)</td><td>240 MHz<span class="cn en">computed. N and spacing from Humphreys et al., Table II</span><span class="cn zh">計算值。N 與間距來自 Humphreys et al., Table II</span></td></tr>
+<tr><td><span class="en">Symbol length with cyclic prefix</span><span class="zh">含循環字首的符號長度</span></td><td>\((1{,}024 + 32) / 240\ \text{MHz}\)</td><td>4.4 µs<span class="cn en">computed. Matches the 4.4 µs in Table II</span><span class="cn zh">計算值。與 Table II 的 4.4 µs 相符</span></td></tr>
+<tr><td><span class="en">Frame length from its parts</span><span class="zh">由各部分加總的幀長</span></td><td>\(302 \times 4.4\ \mu\text{s} + 4.533\ \mu\text{s}\)</td><td>1,333.3 µs<span class="cn en">computed. Equals 1/750 s, Sec. VI and Table II</span><span class="cn zh">計算值。等於 1/750 s，Sec. VI 與 Table II</span></td></tr>
+<tr><td><span class="en">Raw rate per 240 MHz channel, all data symbols 4QAM</span><span class="zh">每個 240 MHz 頻道的原始速率，資料符號全為 4QAM</span></td><td>\(1{,}020 \times 298 \times 2 \times 750\ \text{s}^{-1}\)</td><td>456 Mbps<span class="cn en">computed. Before FEC and before any sharing among users</span><span class="cn zh">計算值。FEC 與使用者共享前</span></td></tr>
+<tr><td><span class="en">Measured PHY rates as a share of that ceiling</span><span class="zh">實測 PHY 速率佔該上限的比例</span></td><td>\(373.3/456,\ 430.5/456\)</td><td>82%, 94%<span class="cn en">computed. Rates from <sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="Tab. I" data-original="Garcia et al., WONS 2024, Table I" data-ref="garciawons2024" href="../references.html#ref-43">[43, Tab. I]</a></sup></span><span class="cn zh">計算值。速率來自 <sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="Tab. I" data-original="Garcia et al., WONS 2024, Table I" data-ref="garciawons2024" href="../references.html#ref-43">[43, Tab. I]</a></sup></span></td></tr>
+<tr><td><span class="en">Raw spectral efficiency against Shannon at 15 dB</span><span class="zh">原始頻譜效率對照 15 dB 下的 Shannon 界限</span></td><td>\(456/240\ \text{vs}\ \log_2(1+31.6)\)</td><td>1.9 vs 5.0 bit/s/Hz<span class="cn en">computed. 15 dB is the SNR of the paper's clean captures</span><span class="cn zh">計算值。15 dB 是論文乾淨錄音的訊雜比</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">5. What was measured</span><span class="zh">5. 量到了什麼</span></h2>
+<div class="tbl"><table>
+<thead><tr><th><span class="en">Claim</span><span class="zh">宣稱</span></th><th><span class="en">Setup and caveat</span><span class="zh">設定與附註</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Eight 240 MHz channels at 250 MHz spacing across 10.7–12.7 GHz. Channels 1 and 2 vacant <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A, Tab. II" data-original="Sec. VII.A, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A, Tab. II]</a></sup></span><span class="zh">10.7–12.7 GHz 中八個 240 MHz 頻道，間距 250 MHz。第 1、2 頻道空置<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A, Tab. II" data-original="Sec. VII.A, Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A, Tab. II]</a></sup></span></td><td><span class="en">Observed in captures first posted in October 2022 (arXiv 2210.11578). The authors explain the vacancy through radio-astronomy protection. Operator confirmation remains pending.</span><span class="zh">於 2022 年 10 月首次公開（arXiv 2210.11578）的錄音中觀測到。空置原因是作者以電波天文所做的解釋，營運商的確認則待補充。</span></td></tr>
+<tr><td><span class="en">OFDM, 1,024 subcarriers at 234.375 kHz, 32-sample cyclic prefix, 4.4 µs symbol <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II, §VII.D" data-original="Table II, Sec. VII.D" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II, §VII.D]</a></sup></span><span class="zh">OFDM，1,024 個子載波，間距 234.375 kHz，32 取樣循環字首，4.4 µs 符號<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II, §VII.D" data-original="Table II, Sec. VII.D" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II, §VII.D]</a></sup></span></td><td><span class="en">Recovered blind and internally consistent. The central four subcarriers are empty, leaving at most 1,020 for data.</span><span class="zh">盲目還原且內部一致。中央四個子載波空置，最多留下 1,020 個給資料。</span></td></tr>
+<tr><td><span class="en">1.333 ms frame (750 per second), 302 non-zero symbols, 298 carrying data, 4 sync symbols <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI–VII" data-original="Secs. VI–VII" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI–VII]</a></sup></span><span class="zh">1.333 ms 幀（每秒 750 個），302 個振幅大於零的符號，298 個承載資料，4 個同步符號<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI–VII" data-original="Secs. VI–VII" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI–VII]</a></sup></span></td><td><span class="en">Independently corroborated by burst spacing in <sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="" data-original="Garcia et al., WONS 2024" data-ref="garciawons2024" href="../references.html#ref-43">[43]</a></sup>.</span><span class="zh">由 <sup class="cite"><a aria-label="Johan Garcia, Simon Sundberg, Anna Brunstrom · Fine-Grained Starlink Throughput Variation Examined With State-Transition Modeling · IFIP WONS 2024 · 2024" class="cite-ref" data-cite="43" data-locator="" data-original="Garcia et al., WONS 2024" data-ref="garciawons2024" href="../references.html#ref-43">[43]</a></sup> 的突發間隔獨立佐證。</span></td></tr>
+<tr><td><span class="en">4QAM on most symbols, 16QAM on roughly symbols 6–12 <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.B" data-original="Sec. VII.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.B]</a></sup></span><span class="zh">多數符號為 4QAM，大約第 6–12 個符號為 16QAM<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.B" data-original="Sec. VII.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.B]</a></sup></span></td><td><span class="en">A snapshot of the modulation in the captures, which can change with load, link quality and later firmware.</span><span class="zh">錄音當下調變的快照，可能隨負載、鏈路品質與之後的韌體而改變。</span></td></tr>
+<tr><td><span class="en">Doppler must be modeled as frequency shift plus time compression. CFO below 2.5 × 10⁻⁵ <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§III.B" data-original="Sec. III.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §III.B]</a></sup></span><span class="zh">都卜勒必須建模為頻率偏移加時間壓縮。CFO 低於 2.5 × 10⁻⁵<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§III.B" data-original="Sec. III.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §III.B]</a></sup></span></td><td><span class="en">A receiver-design result, important to anyone building an emulator of the user link.</span><span class="zh">屬接收機設計的結果，對任何要建構使用者鏈路模擬平台的人都很重要。</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">6. Limits and open questions</span><span class="zh">6. 範圍與待解問題</span></h2>
+<ul>
+<li><span class="en"><strong>The primer calculates a rate ceiling.</strong> The 456 Mbps ceiling assumes 4QAM user bits on all 1,020 subcarriers across 298 data symbols in Table II. Throughput, coding rate, and frame-control overhead need separate evidence. Measured physical rates of 373.3 and 430.5 Mbps reach 82–94% of this ceiling. Coding overhead could explain the difference, with direct coding measurements needed to establish its contribution.</span><span class="zh"><strong>速率上限來自教材計算。</strong>每頻道 456 Mbps 是從 Table II 計算出的上限，前提是全部 298 個資料符號上的 1,020 個子載波都以 4QAM 承載使用者位元，而吞吐量、碼率及幀內控制開銷比例需要另外的證據。實測的 373.3 與 430.5 Mbps 實體層速率位於上限的 82–94%，與編碼開銷相符，但直接的編碼量測仍待補充。</span></li>
+<li><span class="en"><strong>Downlink only.</strong> The uplink waveform, the user terminal's transmit power, its gain over temperature and its element count remain outside the sources found for this primer. The fact base marks these quantities as requiring evidence before quotation. Any model of the return link therefore rests on assumptions that should be declared as such.</span><span class="zh"><strong>只有下行。</strong>上行波形、使用者終端的發射功率、增益溫度比與陣元數都在本教材找到的證據範圍之外，事實庫將這些量列為引用前須補充證據的項目。因此任何回程鏈路的模型都建立在應明白宣告的假設上。</span></li>
+<li><span class="en"><strong>Per-channel and per-satellite capacity have separate scopes.</strong> Scaling the 456 Mbps ceiling requires channels per beam, beams per satellite and user scheduling within a frame. These inputs need separate evidence. That number remains contested in Chapter 3, between a 6.5 Gbps physics model and company-derived figures an order of magnitude higher.</span><span class="zh"><strong>頻道容量與衛星容量各有範圍。</strong>將 456 Mbps 上限換算成衛星容量，需要每波束頻道數、每衛星波束數及幀內使用者排程，這些輸入仍需另外取得證據。該數字在第 3 章中仍有爭議，介於 6.5 Gbps 的物理模型與高出一個數量級的公司衍生數字之間。</span></li>
+<li><span class="en"><strong>Receiving hardware determines the SNR context.</strong> The clean 15 dB constellations come from a 40 dBi parabolic dish. Ordinary phased-array terminals can experience lower SNR. Lower SNR and a deliberate robustness trade-off could explain the 4QAM-heavy mix relative to the 15 dB Shannon bound.</span><span class="zh"><strong>接收硬體決定了訊雜比的解讀條件。</strong>乾淨的 15 dB 星座來自一支 40 dBi 拋物面天線，一般相位陣列終端看到的訊雜比可能較低，這是觀測到以 4QAM 為主的組合讓鏈路遠低於 15 dB 所允許之 Shannon 界限的一種解釋，另一種是刻意以容量換取強健性。</span></li>
+<li><span class="en"><strong>Frame time versus schedule time.</strong> The 1.333 ms frame is the physical layer's clock, and Starlink’s global scheduler has a separate 15-second reconfiguration interval, established through other measurements. Garcia et al.'s later simulator reproduced observed loss placement with one frame of access in every four, which links the two scales in a separate study.</span><span class="zh"><strong>幀時間與排程時間。</strong>1.333 ms 的幀是實體層的時鐘，Starlink 全域排程器則有獨立的 15 秒重新配置間隔，證據來自其他量測。Garcia et al. 之後的模擬器以每四幀中一幀可存取的模式重現了觀測到的遺失位置，把兩個尺度連結起來，這項結果來自另一篇研究。</span></li>
+</ul>
+<h2><span class="en">7. How it connects</span><span class="zh">7. 與其他內容的關聯</span></h2>
+<ul>
+<li><span class="en"><a href="../chapters/c03-ground.html#s3-1">Section 3.1</a>: the band plan, frame and symbol in Figure A are the chapter's frame-structure figure. The calc table above is a shortened copy of the chapter's user-link arithmetic.</span><span class="zh"><a href="../chapters/c03-ground.html#s3-1">第 3.1 節</a>：圖 A 中的頻段規劃、幀與符號就是該章的幀結構圖，上方的計算表是該章使用者鏈路算式的縮簡版。</span></li>
+<li><span class="en"><a href="../chapters/c03-ground.html#s3-2">Section 3.2</a>: the additional inputs needed to derive satellite capacity from a channel ceiling, and the contested range that replaces it.</span><span class="zh"><a href="../chapters/c03-ground.html#s3-2">第 3.2 節</a>：從頻道上限推算衛星容量所需的額外輸入，以及取而代之的爭議範圍。</span></li>
+<li><span class="en"><a href="../chapters/c03-ground.html#s3-4">Section 3.4</a> reports roughly 80–250 Mbps user downlink rates across studies. Coding, sharing, and scheduling explain why user throughput sits below the 456 Mbps channel ceiling.</span><span class="zh"><a href="../chapters/c03-ground.html#s3-4">第 3.4 節</a>：實測使用者下行在各研究中約 80–250 Mbps，在計入編碼、分享與排程後遠低於 456 Mbps 的頻道上限。</span></li>
+<li><span class="en">Related digests connect the waveform to access: <a href="pimrc23-pan.html">pimrc23-pan</a> supplies the four-users-per-channel rule, and <a href="imc26-garcia-queue.html">imc26-garcia-queue</a> reconstructs queue and frame access. <a href="icsos23-tbird.html">icsos23-tbird</a> provides the optical counterpart.</span><span class="zh">相關導讀：<a href="pimrc23-pan.html">pimrc23-pan</a> 提供「四個使用者共享一個頻道」的存取規則，<a href="imc26-garcia-queue.html">imc26-garcia-queue</a> 重建了位於此波形之上的佇列與幀存取模式，而 <a href="icsos23-tbird.html">icsos23-tbird</a> 是同一鏈路物理組中的光學對應。</span></li>
+</ul>
+<h2><span class="en">Key numbers</span><span class="zh">關鍵數字</span></h2>
+<div class="tbl"><table><thead><tr><th class="en">Number</th><th class="zh">數字</th><th class="en">Meaning (setup)</th><th class="zh">意義（設定）</th></tr></thead><tbody>
+<tr><td class="num">8 × 240 MHz</td><td class="en">Channels on a 250 MHz grid in 10.7–12.7 GHz. Channels 1–2 vacant <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A" data-original="Sec. VII.A" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A]</a></sup></td><td class="zh">10.7–12.7 GHz 中排在 250 MHz 格點上的頻道。第 1–2 頻道空置<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.A" data-original="Sec. VII.A" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.A]</a></sup></td></tr>
+<tr><td class="num">1,024 · 234.375 kHz</td><td class="en">Subcarriers per channel · subcarrier spacing. Central 4 empty <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II" data-original="Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II]</a></sup></td><td class="zh">每頻道子載波數 · 子載波間距。中央 4 個空置<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II" data-original="Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II]</a></sup></td></tr>
+<tr><td class="num">4.267 · 4.4 µs</td><td class="en">Useful symbol · symbol with 32-sample cyclic prefix <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II" data-original="Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II]</a></sup></td><td class="zh">有效符號 · 含 32 取樣循環字首的符號<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="Tab. II" data-original="Table II" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, Tab. II]</a></sup></td></tr>
+<tr><td class="num">1.333 ms · 750/s</td><td class="en">Frame length · frame rate <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI" data-original="Sec. VI" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI]</a></sup></td><td class="zh">幀長 · 幀率<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI" data-original="Sec. VI" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI]</a></sup></td></tr>
+<tr><td class="num">302 · 298 · 4</td><td class="en">Non-zero symbols · data symbols · sync symbols per frame <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI–VII" data-original="Secs. VI–VII" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI–VII]</a></sup></td><td class="zh">每幀振幅大於零的符號 · 資料符號 · 同步符號<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VI–VII" data-original="Secs. VI–VII" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VI–VII]</a></sup></td></tr>
+<tr><td class="num">4QAM / 16QAM</td><td class="en">Most symbols / roughly symbols 6–12 <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.B" data-original="Sec. VII.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.B]</a></sup></td><td class="zh">多數符號 / 大約第 6–12 個符號<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§VII.B" data-original="Sec. VII.B" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §VII.B]</a></sup></td></tr>
+<tr><td class="num">456 Mbps</td><td class="en">Raw rate per channel at 4QAM before FEC, computed from Table II</td><td class="zh">4QAM 下每頻道 FEC 前的原始速率，由 Table II 計算</td></tr>
+<tr><td class="num">90 cm · 40 dBi · 15 dB</td><td class="en">Receiving dish · nominal gain at 12.5 GHz · SNR of clean captures <sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II, Fig. 4" data-original="Sec. II, Fig. 4" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II, Fig. 4]</a></sup></td><td class="zh">接收天線 · 12.5 GHz 標稱增益 · 乾淨錄音的訊雜比<sup class="cite"><a aria-label="Humphreys, Iannucci, Komodromos, Graff · Signal Structure of the Starlink Ku-Band Downlink · IEEE TAES 2023 · 2023" class="cite-ref" data-cite="42" data-locator="§II, Fig. 4" data-original="Sec. II, Fig. 4" data-ref="taes23-humphreys" href="../references.html#ref-42">[42, §II, Fig. 4]</a></sup></td></tr>
+</tbody></table></div>
+</section>
+<section class="quiz reading" id="quiz"><h2><span class="en">Check your understanding</span><span class="zh">檢驗你的理解</span></h2><div id="quiz-root"></div></section>
+<script id="quiz-data" type="application/json">[
+  {
+    "q": {
+      "en": "Why is the useful OFDM symbol exactly 4.267 µs long?",
+      "zh": "為什麼 OFDM 的有效符號恰好是 4.267 µs？"
+    },
+    "o": [
+      {
+        "en": "Because SpaceX chose it to match LTE",
+        "zh": "因為 SpaceX 選它以配合 LTE"
+      },
+      {
+        "en": "Because it equals the cyclic prefix",
+        "zh": "因為它等於循環字首"
+      },
+      {
+        "en": "Because the useful symbol length is the reciprocal of the 234.375 kHz subcarrier spacing, which keeps the subcarriers orthogonal",
+        "zh": "因為有效符號長度是 234.375 kHz 子載波間距的倒數，這讓子載波保持正交"
+      },
+      {
+        "en": "Because it is 1/750 of a second divided by 8 channels",
+        "zh": "因為它是 1/750 秒除以 8 個頻道"
+      }
+    ],
+    "a": 2,
+    "why": {
+      "en": "Section 3: orthogonality requires the symbol to last one period of the spacing, 1/234.375 kHz. The 32-sample prefix then extends it to 4.4 µs.",
+      "zh": "第 3 節：正交性要求符號持續間距的一個週期 1/234.375 kHz。32 取樣的字首再把它延長到 4.4 µs。"
+    }
+  },
+  {
+    "q": {
+      "en": "What does the cyclic prefix buy the receiver, and what does it cost?",
+      "zh": "循環字首為接收端帶來什麼，又付出什麼代價？"
+    },
+    "o": [
+      {
+        "en": "It absorbs multipath echoes so subcarriers stay separable, at the cost of 32 of every 1,056 samples repeating existing data",
+        "zh": "它吸收多路徑回波使子載波保持可分離，代價是每 1,056 個取樣中有 32 個重複既有資料"
+      },
+      {
+        "en": "It encrypts the symbol at the cost of latency",
+        "zh": "它加密符號，代價是延遲"
+      },
+      {
+        "en": "It carries the header",
+        "zh": "它承載標頭"
+      },
+      {
+        "en": "It doubles the data rate",
+        "zh": "它使資料率加倍"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "Section 3 and Figure A, Panel C: the prefix copies the symbol’s tail. Echoes shorter than the prefix remain within its guard duration.",
+      "zh": "第 3 節與圖 A 的 C 欄：字首是符號尾端的複本，所以比字首短的回波會留在其保護區間內。"
+    }
+  },
+  {
+    "q": {
+      "en": "Why must the primer label 456 Mbps per channel as 'computed'?",
+      "zh": "為何本教材必須把每頻道 456 Mbps 標為「計算值」？"
+    },
+    "o": [
+      {
+        "en": "Because it was measured with a different dish",
+        "zh": "因為它是用相異的天線量到的"
+      },
+      {
+        "en": "Because the paper reports waveform structure, with throughput outside its scope. The figure assumes every subcarrier on every data symbol carries user bits at 4QAM before FEC",
+        "zh": "因為論文報告的是結構，吞吐量則待量測，而這個數字假設每個資料符號上的每個子載波都以 4QAM 在 FEC 前承載使用者位元"
+      },
+      {
+        "en": "Because it comes from an FCC filing",
+        "zh": "因為它來自 FCC 文件"
+      },
+      {
+        "en": "Because SpaceX disputes it",
+        "zh": "因為 SpaceX 有異議"
+      }
+    ],
+    "a": 1,
+    "why": {
+      "en": "Sections 4 and 6: the number is the primer's arithmetic on Table II, cross-checked against Garcia et al.'s 373.3 and 430.5 Mbps.",
+      "zh": "第 4 與 6 節：此數字是本教材對 Table II 的計算，並與 Garcia et al. 的 373.3 與 430.5 Mbps 交叉核對。"
+    }
+  },
+  {
+    "q": {
+      "en": "Which inputs are required to scale the per-channel ceiling to satellite capacity?",
+      "zh": "從每頻道上限推算衛星容量，需要哪些額外輸入？"
+    },
+    "o": [
+      {
+        "en": "Because satellites have only one channel",
+        "zh": "因為衛星只有一個頻道"
+      },
+      {
+        "en": "Because the uplink is faster",
+        "zh": "因為上行較快"
+      },
+      {
+        "en": "Because ISLs carry the rest",
+        "zh": "因為其餘由 ISL 承載"
+      },
+      {
+        "en": "Because beam count, channels per beam and user scheduling remain unspecified in the paper",
+        "zh": "因為波束數、每波束頻道數與幀內使用者排程仍待指定"
+      }
+    ],
+    "a": 3,
+    "why": {
+      "en": "Section 6: per-satellite capacity remains contested in Chapter 3 precisely because the beam and reuse structure remains proprietary.",
+      "zh": "第 6 節：每顆衛星的容量在第 3 章仍有爭議，正是因為波束與重用結構屬於專有資料。"
+    }
+  },
+  {
+    "q": {
+      "en": "How does the 1.333 ms frame relate to Starlink's 15-second reconfiguration?",
+      "zh": "1.333 ms 的幀與 Starlink 的 15 秒重新配置有什麼關係？"
+    },
+    "o": [
+      {
+        "en": "The frame is the physical-layer clock on which users are given access. In comparison, the 15-second interval is when the global scheduler reassigns satellites, established through a separate measurement study",
+        "zh": "幀是使用者被授予存取的實體層時鐘，而 15 秒間隔是全域排程器重新指派衛星的時刻，證據來自另一項量測"
+      },
+      {
+        "en": "They are the same mechanism measured two ways",
+        "zh": "它們是用兩種方式量到的同一機制"
+      },
+      {
+        "en": "The 15-second interval is 11,250 frames of handover",
+        "zh": "15 秒間隔是 11,250 幀的換手"
+      },
+      {
+        "en": "The frame length changes every 15 seconds",
+        "zh": "幀長每 15 秒改變一次"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "Section 6, last item: the two time scales are distinct. Garcia et al.'s one-in-four frame access links per-user sharing to the frame.",
+      "zh": "第 6 節最後一項：兩個時間尺度各有範圍。Garcia et al. 的四幀一存取模式把每位使用者的分享與幀連結起來。"
+    }
+  }
+]</script>
+<nav class="pager"><a href="icsos23-tbird.html"><span class="eyebrow">←</span><span class="en">Previous: Schieler et al., TBIRD, ICSOS 2023</span><span class="zh">上一篇：Schieler et al., TBIRD, ICSOS 2023</span></a><a href="imc22-michel.html" style="margin-left:auto;text-align:right"><span class="eyebrow">→</span><span class="en">Next: Michel et al., IMC 2022</span><span class="zh">下一篇：Michel et al., IMC 2022</span></a></nav>
+</main>
+</div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/contrib/auto-render.min.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/citations-data.js"></script><script src="../assets/citations.js"></script></body>
+</html>

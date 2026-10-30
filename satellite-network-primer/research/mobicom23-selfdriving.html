@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Self-driving constellation · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/katex/katex.min.css" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+</head>
+<body data-slug="mobicom23-selfdriving">
+<div class="topbar">
+<div class="topbar-in">
+<a class="backlink" href="../research.html"><span>←</span><span class="en">All paper digests</span><span class="zh">論文導讀總表</span></a>
+<div class="brand"><span class="dot"></span><span class="en">Paper digest</span><span class="zh">論文導讀</span></div>
+<a class="cite-nav" href="../references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group">
+<button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button>
+<button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</div>
+<div class="frame single">
+<main>
+<header class="paper-hero reading rhero">
+<div class="eyebrow en">Digest · Topology and routing · read after Chapter 5</div><div class="eyebrow zh">導讀 · 拓樸與路由 · 第 5 章後閱讀</div>
+<h1><span class="en">A Networking Perspective on Starlink's Self-Driving LEO Mega-Constellation</span><span class="zh">從網路觀點看 Starlink 的自駕式 LEO 巨型星座</span></h1>
+<div class="byline"><span class="venue">ACM MobiCom 2023</span>Yuanjie Li, Hewu Li, Wei Liu, Lixin Liu, Wei Zhao, Yimei Chen, Jianping Wu, Qian Wu, Jun Liu, Zeqi Lai, Han Qiu (Tsinghua University) · <a href="https://doi.org/10.1145/3570361.3592519"><span class="en">paper</span><span class="zh">論文</span></a> <span class="src-tag pr">peer-reviewed</span></div>
+<p class="lede"><span class="en">This digest explains how collision-avoidance maneuvers change inter-satellite links and trigger further maneuvers among neighbors. It identifies the operational changes that static-topology models leave outside their scope.</span><span class="zh">讀完後，你能說明為什麼一個自己閃避碰撞的星座是一個網路問題，一次閃避機動如何擴散成數十次鄰居機動與斷裂的星間鏈路，以及為什麼每一篇把 ISL 當成靜態的拓樸論文，都在默默假設一支軌道固定的星隊。</span></p>
+<div class="metarow"><span class="en">≈ 8 min · 5-question quiz</span><span class="zh">≈ 8 分鐘 · 5 題測驗</span><a class="en" href="../chapters/c05-topology-routing.html">Chapter 5 ↗</a><a class="zh" href="../chapters/c05-topology-routing.html">第 5 章 ↗</a><a class="en" href="#quiz">Jump to the quiz ↓</a><a class="zh" href="#quiz">跳到測驗 ↓</a></div>
+</header>
+<section class="reading">
+<div class="key"><div class="eyebrow en">Main result</div><div class="eyebrow zh">主要結果</div>
+<p class="en">Autonomous avoidance and slot keeping alter the links that satellites carry. Public traces connect those maneuvers to neighbor updates, while follow-up work examines cascades.</p><p class="zh">自主閃避與席位保持會改變衛星承載的鏈路，公開軌跡將這些機動與鄰居更新連結起來，後續研究則分析連鎖效應。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>Starlink satellites fly autonomously: they hold their orbital slots against drag and they manoeuvre out of predicted close approaches autonomously. This explains why the authors call the fleet "self-driving".</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2023</td><td>This MobiCom 2023 paper is the first to ask what that autonomy does to the network layered on top.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>2022 · 52% · 23% · 18% · 98%</td><td>Public ephemerides and conjunction data cover April–August 2022. Starlink pairs account for 52% of conjunctions, debris 23%, and other operators 18%. In 98% of cooperative Starlink-pair cases, the satellite with sparser surroundings maneuvers.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>60</td><td>and that the resulting slot changes perturb inter-satellite distances and force neighbor updates at a rate approaching 60 per day for a four-ISL topology</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>5 · 9 ms</td><td>with average ISL delay plotted at 5 to 9 ms under maintained and maintenance-free orbits.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>41 · 97% · 350</td><td>Chen et al. find one external avoidance maneuver can trigger up to 41 internal maneuvers. About 97% of cascades occur near plane intersections. Each satellite has a budget of about 350 maneuvers.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Our reading relies on the authors' MobiCom slide deck, so figure-level values beyond those quoted here are left for consultation in the source. The cascade statistics are from a preprint.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>Starlink 的衛星是自主飛行的：它們對抗大氣阻力保持軌道席位，也在自主控制下避開預測的近距離接近，這就是作者把這支星隊稱為「自駕」的原因。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2023</td><td>這篇 MobiCom 2023 論文是第一篇追問這種自主性對疊在其上的網路做了什麼的研究。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2022 · 4 · 8 · 52% · 23% · 18% · 98% · 60 · 5 · 9 ms</td><td>作者利用 2022 年 4 月到 8 月的公開星曆與接近事件資料，發現 52% 的 Starlink 接近事件發生在兩顆 Starlink 衛星之間、23% 與碎片、18% 與其他營運者的衛星，在 98% 的 Starlink 對 Starlink 合作情境中，是周圍較稀疏的那顆衛星移動，而由此產生的席位變化會擾動星間距離，並迫使四條 ISL 的拓樸每天進行接近 60 次的鄰居更新，平均 ISL 延遲在軌道維護與自由漂移兩種情況下畫出的曲線都落在 5 到 9 ms。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>41 · 97% · 350</td><td>Chen 等人的後續預印本顯示，單一次外部閃避機動可以觸發多達 41 次內部機動，97% 的連鎖機動發生在軌道面交會處附近，而每顆衛星的機動預算約為 350 次。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>我們的解讀依據作者的 MobiCom 投影片，因此圖中數值留在原圖供查閱，而連鎖統計來自預印本。</td></tr></tbody></table></div>
+</div>
+<h2><span class="en">1. Where this paper sits</span><span class="zh">1. 這篇論文的位置</span></h2>
+<p class="en">This work adds operational maneuvers to the geometric causes of topology change. SHORT and TinyLEO later use that observation to motivate geographic routing and topology control.</p><p class="zh">本研究在幾何因素之外，加入營運機動這個拓樸變動來源，SHORT 與 TinyLEO 後來據此提出地理路由及拓樸控制。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>5</td><td>Chapter 5 separates two reasons why ISL topologies change.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>The first is geometry, the predictable drift of inter-plane distances that the +Grid and motif papers already handle.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The second is operations, the unpredictable manoeuvres that modeling-era papers left outside their scope. This is the paper that introduced the second reason to the networking community.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2024 · 2025</td><td>It is the earliest of the Tsinghua group's three works in this digest group, preceding SHORT at MobiCom 2024 and TinyLEO at SIGCOMM 2025</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>This study supplies empirical motivation for SHORT. Random maneuvers and failures mean orbital predictions require additional routing control.</td></tr>
+<tr class="en"><th scope="row">Model and compute</th><td>Qualitative scope</td><td>and TinyLEO's model-predictive controller recompiles topology precisely because the fleet keeps moving.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>2023</td><td>A note on names is needed because Part C of the fact base records a frequent confusion: the MobiCom 2023 LEO paper is this one. In comparison, Pan, Zhao and Cai's measurement study "Measuring a Low-Earth-Orbit Satellite Network" that is often cited as MobiCom 2023 appeared at IEEE PIMRC 2023.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>59 · 29 · 2026</td><td>Crossref counted 59 citing works on 29 October 2026, which the fact base treats as a lower bound.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>5</td><td>第 5 章區分 ISL 拓樸變化的兩種原因。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>第一種是幾何，即 +Grid 與 motif 論文早已處理的、可預測的軌道面間距漂移。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>第二種是營運，即建模時代論文範圍之外的、隨機的軌道機動，而這篇論文就是把第二種原因引入網路學界的那一篇。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2024 · 2025</td><td>它是清華團隊在本導讀群組三篇作品中最早的一篇，先於 MobiCom 2024 的 SHORT 與 SIGCOMM 2025 的 TinyLEO，並為兩者提供實證動機：SHORT 主張光靠軌道預測還需額外控制才能穩定路由，因為機動與故障是隨機的，其引用的就是這裡量到的機動次數。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>TinyLEO 的模型預測控制器會重新編譯拓樸，正是因為星隊持續移動。</td></tr>
+<tr class="zh"><th scope="row">文獻歸屬</th><td>2023</td><td>這裡需要說明名稱，因為事實庫 Part C 記錄了一個常見的混淆：MobiCom 2023 的 LEO 論文是這一篇，而常被引為 MobiCom 2023 的 Pan、Zhao 與 Cai 量測研究「Measuring a Low-Earth-Orbit Satellite Network」實際上發表於 IEEE PIMRC 2023。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2026 · 10 · 29 · 59</td><td>Crossref 在 2026 年 10 月 29 日計得 59 篇引用，事實庫把它當作下限。</td></tr></tbody></table></div>
+<h2><span class="en">2. The problem, measured</span><span class="zh">2. 問題，用量測說話</span></h2>
+<p class="en">The conjunction record identifies who approaches whom and which satellite moves. The network analysis then relates slot changes to link lengths and neighbor-set churn.</p><p class="zh">接近事件紀錄辨識接近對象與移動衛星，網路分析再將席位變化連結到鏈路長度及鄰居集合變動。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The measurement is of the fleet's motion rather than of packets.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>2022</td><td>Public records from April–August 2022 identify conjunction partners and the satellite performing avoidance.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>52% · 23% · 18% · 7%</td><td>The split is 52% Starlink against Starlink, 23% Starlink against debris, 18% Starlink against another operator's satellite and 7% unknown. This means that more than half of all avoidance events are internal to the constellation and could in principle be coordinated. In comparison, the remaining share is imposed from outside and arrives on the debris field's schedule rather than the operator's.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>98%</td><td>In 98% of cooperative internal cases, the satellite with sparser surroundings maneuvers. This reduces collision risk while leaving its laser-link role outside the decision.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The consequence for the network is read from two slide figures.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>5 · 9 ms</td><td>Average ISL delay stays within 5–9 ms with maintenance enabled or disabled. Maintenance therefore changes link lengths within a bounded range.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>60 · 5</td><td>Four-ISL topologies reach about 60 neighbor updates daily. Operations alone can therefore rewrite preferred neighbors tens of times per day, before Chapter 5 geometric churn.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>5 · 9 ms · 1,500 · 2,700 km · 1,969 km · 72 · 22</td><td>Vacuum propagation over roughly 1,500–2,700 km gives 5–9 ms one-way delay. This brackets the 1,969 km intra-plane spacing of a 72 by 22 shell. The calculation table shows this conversion.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這裡量的是星隊的運動，封包傳輸則屬於其他模型。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2022 · 4 · 8</td><td>作者從 2022 年 4 月到 8 月的公開接近事件與星曆紀錄中，分類 Starlink 衛星即將與誰相撞以及誰移動了。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>52% · 23% · 18% · 7%</td><td>比例是 52% Starlink 對 Starlink、23% Starlink 對碎片、18% Starlink 對其他營運者的衛星、7% 待確認，這表示超過一半的閃避事件發生在星座內部、原則上可以協調，而其餘部分來自外部，依碎片場的時程發生，營運者只能回應。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>98%</td><td>在合作的內部情境中，決策規則在資料中清晰可見：98% 的案例由周圍較稀疏的衛星執行機動，這對碰撞風險而言是合理的政策，卻將其列於決策範圍之外，即移動的那顆衛星剛好載著哪些雷射鏈路。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>對網路的後果從兩張投影片圖讀出。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>5 · 9 ms</td><td>一張畫出軌道維護與自由漂移時的平均 ISL 延遲，兩條曲線都落在 5 到 9 ms 的帶狀範圍，所以維護使鏈路長度改變的幅度看得見但有界。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>60 · 5</td><td>另一張計算四條 ISL 拓樸每天的鄰居更新次數，達到約 60 次，意味著光是營運就讓一顆衛星的最佳鄰居集合每天被改寫數十次，此外還有第 5 章的幾何變動。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>5 · 9 ms · 1,500 · 2,700 km · 72 · 22 · 1,969 km</td><td>5 到 9 ms 的單向延遲在真空傳播下對應約 1,500 到 2,700 km 的鏈路長度，恰好包住 72 × 22 殼層 1,969 km 的軌道內間距，下方的計算表把這個換算寫明。</td></tr></tbody></table></div>
+<div class="tbl calc"><table>
+<thead><tr><th><span class="en">Question</span><span class="zh">問題</span></th><th><span class="en">Calculation</span><span class="zh">算式</span></th><th><span class="en">Result</span><span class="zh">結果</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Link length implied by the plotted 5–9 ms average ISL delay</span><span class="zh">圖中 5–9 ms 平均 ISL 延遲所隱含的鏈路長度</span></td><td>\(\dfrac{5\ \text{to}\ 9\ \text{ms}}{3.336\ \mu\text{s/km}}\)</td><td>1,500–2,700 km<span class="cn en">computed. Vacuum propagation from Chapter 2. Brackets the 1,969 km intra-plane hop of 72×22</span><span class="cn zh">計算值。真空傳播取自第 2 章。包住 72×22 的 1,969 km 軌道內跳段</span></td></tr>
+<tr><td><span class="en">Daily re-acquisition time if each of ~60 neighbor updates costs one laser setup</span><span class="zh">若約 60 次鄰居更新各需一次雷射建立，每天的重新擷取時間</span></td><td>\(60 \times (2\ \text{to}\ 30\ \text{s})\)</td><td>2–30 min per day<span class="cn en">computed. 60/day read from the slide figure, 2–30 s setup from <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Temporary Laser Inter-Satellite Links in Free-Space Optical Satellite Networks · IEEE OJCOMS 2022 · arXiv 2208.11225" class="cite-ref" data-cite="33" data-locator="Tab. 1" data-original="Chaudhry &amp; Yanikomeroglu OJCOMS 2022 Table 1" data-ref="ojcoms22-temporary-isl" href="../references.html#ref-33">[33, Tab. 1]</a></sup>. An upper bound, since some updates retain the same laser direction</span><span class="cn zh">計算值。每天 60 次讀自投影片圖，2–30 秒建立時間取自 <sup class="cite"><a aria-label="Chaudhry &amp; Yanikomeroglu · Temporary Laser Inter-Satellite Links in Free-Space Optical Satellite Networks · IEEE OJCOMS 2022 · arXiv 2208.11225" class="cite-ref" data-cite="33" data-locator="Tab. 1" data-original="Chaudhry 與 Yanikomeroglu OJCOMS 2022 Table 1" data-ref="ojcoms22-temporary-isl" href="../references.html#ref-33">[33, Tab. 1]</a></sup>。為上界，因為需要重新指向雷射的更新只佔其中一部分</span></td></tr>
+<tr><td><span class="en">Share of conjunctions that are internal and therefore coordinable</span><span class="zh">屬於內部、因而可協調的接近事件比例</span></td><td>\(52\% \text{ of } (52+23+18+7)\%\)</td><td>52%<span class="cn en">slide figure. The other 48% is imposed from outside</span><span class="cn zh">投影片數字。其餘 48% 來自外部</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">3. The design</span><span class="zh">3. 設計</span></h2>
+<p class="en">An avoidance maneuver changes neighboring distances as a satellite leaves and regains its slot. Neighboring controllers can respond in turn, creating cascades that consume maneuver budgets.</p><p class="zh">衛星離開再返回席位的閃避機動會改變鄰居距離，相鄰控制器接連反應，形成消耗機動預算的連鎖。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Model and compute</th><td>Qualitative scope</td><td>The paper is an analysis rather than a system. Thus, its design contribution is a model of how a manoeuvre becomes a network event, and the figure follows that chain.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>A conjunction warning names two objects and a time of closest approach.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>If the partner is debris or a foreign satellite the Starlink satellite must move.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>If it is another Starlink satellite the sparser one moves.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>A small along-track or radial burn moves a satellite from its nominal slot. Over hours, it returns. During this excursion, intra-plane and inter-plane distances change, perturbing delay. Larger excursions can break links and require reacquisition.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The neighbors are also slot-keeping</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>so a displaced satellite can push its own neighbors past their spacing tolerances and trigger their manoeuvres in turn</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>41 · 97% · 22</td><td>Chen et al. quantify cascades of up to 41 internal maneuvers from one external maneuver. About 97% involve separate orbits near plane intersections. One TROPICS-triggered cascade spans 22 hops.</td></tr>
+<tr class="en"><th scope="row">Cost assumptions</th><td>1408 · 27</td><td>and a single COSMOS-1408 debris avoidance that cost 27 extra manoeuvres.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>350 · 8</td><td>Each satellite has about 350 lifetime maneuvers, while the fleet performs tens of thousands each half year. The preprint proposes bilateral control that negotiates movement with network links in view. Trace-driven emulation claims an 8× extension of network lifetime.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>Qualitative scope</td><td>The MobiCom paper identifies separate orbit and network controllers. Network behavior bears the consequences of decisions made by the orbit controller alone.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這篇論文是軌跡分析，所以它的設計貢獻是一個「機動如何變成網路事件」的模型，圖中就沿著這條鏈描繪。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>一則接近事件警告指出兩個物體與最接近時刻。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>若對方是碎片或外國衛星，Starlink 衛星必須移動。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>若對方是另一顆 Starlink 衛星，則由較稀疏的那顆移動。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>移動指的是一次小幅的沿軌或徑向點火，使衛星偏離其標稱席位，再在數小時內回到原位，而在這段偏移期間，它與軌道內及軌道間鄰居的距離都會改變，這在投影片中表現為延遲擾動，若偏移足夠大，則表現為一條必須放棄、稍後再重新擷取的鏈路。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>41 · 97% · 22 · 1408 · 27</td><td>鄰居同樣在保持席位，所以一顆被移位的衛星可能把自己的鄰居推出間距容忍範圍、依序觸發它們的機動，這就是 Chen 等人的預印本所量化的連鎖：一次外部機動最多引發 41 次內部機動，其中 97% 發生在相異軌道的衛星之間、就在跨面間距最小的軌道面交會處附近，一次由 TROPICS 觸發的連鎖延續了 22 跳，一次閃避 COSMOS-1408 碎片則多付出 27 次機動。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>350 · 8</td><td>由於每顆衛星一生約有 350 次機動的預算，而整支星隊每半年執行數萬次，預印本提出雙邊機動控制，讓雙方在考慮網路鏈路的前提下協商由誰移動，並宣稱在軌跡驅動的模擬中把網路壽命延長 8 倍。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>MobiCom 論文自己的結論較窄但更經得起時間考驗：軌道控制器與網路控制器目前是各自獨立運作的兩個系統，而軌道控制器獨自做出的每個決定，代價都由網路承擔。</td></tr></tbody></table></div>
+<figure class="plate" id="fig-a"><div class="img" style="background:var(--paper)">
+<svg aria-label="Left: a conjunction warning forces A to maneuver and breaks its ISLs. B and C then maneuver and break further links. Right: April–August 2022 conjunctions comprise 52% Starlink–Starlink, 23% debris, 18% other satellites, and 7% unknown." role="img" viewbox="0 0 760 340">
+<rect fill="var(--paper)" height="340" width="760"></rect>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="22">How one avoidance manoeuvre becomes many broken ISLs</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="22">一次閃避機動如何變成多條斷裂的 ISL</text>
+<!-- three planes as slanted columns -->
+<g stroke="var(--rule)" stroke-width="1">
+<line x1="90" x2="68" y1="50" y2="236"></line><line x1="210" x2="188" y1="50" y2="236"></line><line x1="330" x2="308" y1="50" y2="236"></line>
+</g>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="68" y="250">plane k−1</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="68" y="250">第 k−1 面</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="188" y="250">plane k</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="188" y="250">第 k 面</text>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="308" y="250">plane k+1</text><text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="middle" x="308" y="250">第 k+1 面</text>
+<!-- satellites: plane k-1 at (84,100),(78,160),(72,220); plane k at (204,100),(198,160),(192,220); plane k+1 (324,100),(318,160),(312,220) -->
+<!-- intact links -->
+<g stroke="var(--cool)" stroke-width="1.6">
+<line x1="84" x2="78" y1="100" y2="160"></line><line x1="78" x2="72" y1="160" y2="220"></line>
+<line x1="324" x2="318" y1="100" y2="160"></line><line x1="318" x2="312" y1="160" y2="220"></line>
+<line x1="84" x2="204" y1="100" y2="100"></line><line x1="72" x2="192" y1="220" y2="220"></line>
+<line x1="204" x2="324" y1="100" y2="100"></line><line x1="192" x2="312" y1="220" y2="220"></line>
+</g>
+<!-- broken links around A (plane k, middle), drawn dashed in bad -->
+<g stroke="var(--bad)" stroke-dasharray="5 3" stroke-width="1.8">
+<line x1="204" x2="198" y1="100" y2="160"></line><line x1="198" x2="192" y1="160" y2="220"></line>
+<line x1="78" x2="198" y1="160" y2="160"></line><line x1="198" x2="318" y1="160" y2="160"></line>
+</g>
+<!-- A displaced: nominal slot (198,160) hollow, actual (222,150) -->
+<circle cx="198" cy="160" fill="none" r="5" stroke="var(--ink-3)" stroke-dasharray="2 2"></circle>
+<circle cx="222" cy="150" fill="var(--sat)" r="6"></circle>
+<path d="M203 158 L216 152" stroke="var(--sat)" stroke-width="1.4"></path><path d="M212 149 L217 152 L213 156" fill="none" stroke="var(--sat)" stroke-width="1.4"></path>
+<text class="en" fill="var(--sat)" font-size="10" font-weight="600" x="228" y="180">A manoeuvres</text>
+<text class="zh" fill="var(--sat)" font-size="10" font-weight="600" x="228" y="180">A 執行機動</text>
+<text class="en" fill="var(--ink-2)" font-size="9" x="228" y="193"><tspan x="228">4 ISLs drop,</tspan><tspan dy="11" x="228">re-acquire later</tspan></text>
+<text class="zh" fill="var(--ink-2)" font-size="9" x="228" y="193"><tspan x="228">4 條 ISL 中斷，</tspan><tspan dy="11" x="228">稍後重新擷取</tspan></text>
+<!-- debris -->
+<polygon fill="var(--bad)" points="208,116 214,108 220,116 214,124"></polygon>
+<text class="en" fill="var(--bad)" font-size="9" x="226" y="114"><tspan x="226">conjunction</tspan><tspan dy="11" x="226">(debris / other sat)</tspan></text>
+<text class="zh" fill="var(--bad)" font-size="9" x="226" y="114"><tspan x="226">接近事件</tspan><tspan dy="11" x="226">（碎片 / 其他衛星）</tspan></text>
+<path d="M216 125 L220 143" stroke="var(--bad)" stroke-dasharray="2 2" stroke-width="1"></path>
+<!-- other satellites -->
+<g fill="var(--ink)">
+<circle cx="84" cy="100" r="4"></circle><circle cx="72" cy="220" r="4"></circle><circle cx="324" cy="100" r="4"></circle><circle cx="312" cy="220" r="4"></circle>
+<circle cx="204" cy="100" r="4"></circle><circle cx="192" cy="220" r="4"></circle>
+</g>
+<!-- neighbours B, C that cascade -->
+<circle cx="78" cy="160" fill="var(--warn)" r="5"></circle><circle cx="318" cy="160" fill="var(--warn)" r="5"></circle>
+<text class="en" fill="var(--warn)" font-size="10" font-weight="600" x="30" y="150">B</text><text class="zh" fill="var(--warn)" font-size="10" font-weight="600" x="30" y="150">B</text>
+<text class="en" fill="var(--warn)" font-size="10" font-weight="600" x="330" y="176">C</text><text class="zh" fill="var(--warn)" font-size="10" font-weight="600" x="330" y="176">C</text>
+<text class="en" fill="var(--warn)" font-size="9" x="20" y="274">B, C must re-space → their own manoeuvres → more links drop</text>
+<text class="zh" fill="var(--warn)" font-size="9" x="20" y="274">B、C 必須重新調整間距 → 各自機動 → 更多鏈路中斷</text>
+<text class="en" fill="var(--ink-2)" font-size="9" x="20" y="290">cascade: up to 41 internal manoeuvres per external one. 97% near plane intersections</text>
+<text class="zh" fill="var(--ink-2)" font-size="9" x="20" y="290">連鎖：每次外部機動最多 41 次內部機動。97% 在軌道面交會處附近</text>
+<text class="en" fill="var(--ink-3)" font-size="9" x="20" y="306">(cascade figures: Chen et al., arXiv 2406.06068, preprint)</text>
+<text class="zh" fill="var(--ink-3)" font-size="9" x="20" y="306">（連鎖數字：Chen 等人，arXiv 2406.06068，預印本）</text>
+<!-- rule for 98% -->
+<text class="en" fill="var(--ink-2)" font-size="9" x="20" y="322">who moves: the sparser-surrounded satellite in 98% of cooperative cases</text>
+<text class="zh" fill="var(--ink-2)" font-size="9" x="20" y="322">誰移動：98% 的合作案例由周圍較稀疏的衛星移動</text>
+<!-- right: conjunction split stacked bar -->
+<line stroke="var(--rule)" stroke-width="1" x1="400" x2="400" y1="30" y2="326"></line>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="420" y="22">Starlink conjunctions, Apr–Aug 2022 (slides)</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="420" y="22">Starlink 接近事件，2022 年 4–8 月（投影片）</text>
+<!-- bar 300px wide at x=420 y=60 h=28 -->
+<rect fill="var(--accent)" height="28" width="156" x="420" y="60"></rect>
+<rect fill="var(--bad)" height="28" width="69" x="576" y="60"></rect>
+<rect fill="var(--sat)" height="28" width="54" x="645" y="60"></rect>
+<rect fill="var(--gnd)" height="28" width="21" x="699" y="60"></rect>
+<text fill="var(--paper)" font-size="11" text-anchor="middle" x="498" y="79">52%</text>
+<text fill="var(--paper)" font-size="11" text-anchor="middle" x="610" y="79">23%</text>
+<text fill="var(--paper)" font-size="11" text-anchor="middle" x="672" y="79">18%</text>
+<text fill="var(--paper)" font-size="9" text-anchor="middle" x="709" y="79">7%</text>
+<g font-size="10">
+<rect fill="var(--accent)" height="10" width="10" x="420" y="104"></rect><text class="en" fill="var(--ink-2)" x="436" y="113">Starlink–Starlink (internal, coordinable)</text><text class="zh" fill="var(--ink-2)" x="436" y="113">Starlink–Starlink（內部，可協調）</text>
+<rect fill="var(--bad)" height="10" width="10" x="420" y="124"></rect><text class="en" fill="var(--ink-2)" x="436" y="133">Starlink–debris (imposed from outside)</text><text class="zh" fill="var(--ink-2)" x="436" y="133">Starlink–碎片（外部強加）</text>
+<rect fill="var(--sat)" height="10" width="10" x="420" y="144"></rect><text class="en" fill="var(--ink-2)" x="436" y="153">Starlink–other operators' satellites</text><text class="zh" fill="var(--ink-2)" x="436" y="153">Starlink–其他營運者的衛星</text>
+<rect fill="var(--gnd)" height="10" width="10" x="420" y="164"></rect><text class="en" fill="var(--ink-2)" x="436" y="173">unknown</text><text class="zh" fill="var(--ink-2)" x="436" y="173">待確認</text>
+</g>
+<text class="en" fill="var(--ink)" font-size="11" font-weight="600" x="420" y="210">Network cost read from the slides</text>
+<text class="zh" fill="var(--ink)" font-size="11" font-weight="600" x="420" y="210">從投影片讀出的網路代價</text>
+<text class="en" fill="var(--ink-2)" font-size="10" x="420" y="230">neighbor updates: up to ~60 per day (4-ISL topology)</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" x="420" y="230">鄰居更新：每天最多約 60 次（4-ISL 拓樸）</text>
+<text class="en" fill="var(--ink-2)" font-size="10" x="420" y="248">average ISL delay: 5–9 ms under maintained and maintenance-free orbits</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" x="420" y="248">平均 ISL 延遲：維護啟用與停用皆在 5–9 ms</text>
+<text class="en" fill="var(--ink-2)" font-size="10" x="420" y="266">budget: ~350 manoeuvres per satellite lifetime (preprint)</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" x="420" y="266">預算：每顆衛星一生約 350 次機動（預印本）</text>
+<text class="en" fill="var(--ink-2)" font-size="10" x="420" y="284"><tspan x="420">fleet in 2026: ~264 manoeuvres/day,</tspan><tspan dy="16" x="420">74.6% avoidance (Ali et al., preprint)</tspan></text>
+<text class="zh" fill="var(--ink-2)" font-size="10" x="420" y="284">2026 年星隊：每天約 264 次機動，74.6% 為閃避（Ali 等人，預印本）</text>
+</svg></div>
+<figcaption><span class="en"><b class="fignum">Figure A. </b>Left, conjunction avoidance moves satellite A from its slot, breaking four ISLs that require reacquisition. Neighbor spacing propagates the disturbance along and across planes. The follow-up preprint measures cascades of up to 41 maneuvers, concentrated near plane intersections. Right, conjunction categories for April–August 2022 and network-side slide measurements.</span><span class="zh"><b class="fignum">圖 A。</b>左：機制，一次接近事件把衛星 A 推離席位，它的四條 ISL 中斷並須重新擷取，鄰居 B 與 C 的重新調距則把擾動沿軌道面與跨軌道面傳播，後續預印本量到最多 41 次機動、集中在軌道面交會處的連鎖。右：2022 年 4 到 8 月的接近事件比例，以及投影片報告的網路側數量。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Yuanjie Li, Hewu Li, Wei Liu, Lixin Liu, Wei Zhao, Yimei Chen, Jianping Wu, Qian Wu, Jun Liu, Zeqi Lai, Han Qiu · A Networking Perspective on Starlink&#x27;s Self-Driving LEO Mega-Constellation · ACM MobiCom 2023 · 2023" class="cite-ref" data-cite="71" data-locator="" data-original="Drawn for this primer from Li et al., MobiCom 2023 (slide deck); cascade figures from Chen et al., arXiv 2406.06068; 2026 fleet rate from Ali et al., arXiv 2603.25835." data-ref="mobicom23-selfdriving" href="../references.html#ref-71">[71]</a></sup> <sup class="cite"><a aria-label="Yimei Chen et al. · Instability of Self-Driving Satellite Mega-Constellation: From Theory to Practical Impacts on Network Lifetime and Capacity · arXiv 2406.06068" class="cite-ref" data-cite="72" data-locator="" data-original="Drawn for this primer from Li et al., MobiCom 2023 (slide deck); cascade figures from Chen et al., arXiv 2406.06068; 2026 fleet rate from Ali et al., arXiv 2603.25835." data-ref="chen2024" href="../references.html#ref-72">[72]</a></sup> <sup class="cite"><a aria-label="Muaz Ali, Utkarsh Upadhyay, Sean McCormick, Joseph Hill, Beichuan Zhang · Starlink Constellation: Deployment, Configuration, and Dynamics · arXiv 2603.25835" class="cite-ref" data-cite="16" data-locator="" data-original="Drawn for this primer from Li et al., MobiCom 2023 (slide deck); cascade figures from Chen et al., arXiv 2406.06068; 2026 fleet rate from Ali et al., arXiv 2603.25835." data-ref="ali2026" href="../references.html#ref-16">[16]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Li et al., MobiCom 2023 (slide deck). Cascade figures from Chen et al., arXiv 2406.06068. 2026 fleet rate from Ali et al., arXiv 2603.25835.</details></span></figcaption></figure>
+<h2><span class="en">4. Evaluation setup</span><span class="zh">4. 實驗設定</span></h2>
+<p class="en">The evidence concerns real orbital traces and modeled connectivity. Capacity, packet behavior and acquisition costs require separate models, while the quoted rates retain their observation dates.</p><p class="zh">證據涵蓋真實軌道軌跡與模型連通性，容量、封包行為及擷取成本需另外建模，引用速率也應保留觀測日期。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Dataset and workload</th><td>Qualitative scope</td><td>This is a trace analysis of real ephemerides and conjunction records, with scope limited to real trace analysis.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>2022 · 5 · 2025</td><td>The input period is April–August 2022, when laser-equipped v1.5 satellites were operating. The fleet was smaller than TinyLEO's five-shell 2025 fleet. Absolute rates apply to that earlier period.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>60</td><td>Neighbor updates of about 60 per day assume four ISLs per satellite in a +Grid. This is a modeling-era topology.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Three terminals, the number the Starlink website now gives, would change the count.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>5 · 9 ms</td><td>The only latency measure is average ISL propagation delay of 5–9 ms from the slides. Node delay, queueing and ground links lie outside its scope.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>Qualitative scope</td><td>ISL rate remains outside the model, since the paper's question is about connectivity and churn rather than throughput.</td></tr>
+<tr class="en"><th scope="row">Cost assumptions</th><td>2 · 30 s · 60</td><td>The link-change cost excludes laser acquisition. The calculation table therefore uses Chapter 2 setup times of 2–30 s to assess 60 daily updates.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>15</td><td>The 15-second user-link schedule is outside the paper's scope.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2023</td><td>All numbers in this digest are read from the authors' MobiCom 2023 slide deck. The cascade statistics come from the Chen et al. Preprint, which the fact base tags accordingly.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這是對真實星曆與接近事件紀錄的軌跡分析，範圍限定於真實軌跡資料。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2022 · 4 · 8 · 5 · 2025</td><td>輸入期間是 2022 年 4 月到 8 月，當時配備雷射的 Starlink v1.5 衛星已在服務，但星隊規模遠小於 TinyLEO 在 2025 年計算的五個殼層，所以絕對數值屬於那個日期。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>60</td><td>拓樸一側採用建模時代 +Grid 式的每顆衛星四條 ISL，每天約 60 次的鄰居更新數就是針對這個設定。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>若改用 Starlink 網站現在給的三個終端，數字會改變。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>5 · 9 ms</td><td>延遲是純傳播，投影片中 5 到 9 ms 的平均 ISL 延遲是唯一的延遲量，節點延遲、排隊與地面段列於範圍之外。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>ISL 速率列於模型範圍之外，因為論文問的是連通性與變動，吞吐量另屬其他模型。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2 · 30 · 60</td><td>機動打斷的鏈路將其列於範圍之外雷射擷取時間，這就是為什麼上面的計算表必須借用第 2 章的 2 到 30 秒建立時間，來估計每天 60 次更新可能的代價。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>15</td><td>15 秒的用戶鏈路排程在論文範圍之外。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2023</td><td>本導讀中所有數字都讀自作者的 MobiCom 2023 投影片，連鎖統計則來自 Chen 等人的預印本，事實庫也據此標記。</td></tr></tbody></table></div>
+<h2><span class="en">5. What was measured</span><span class="zh">5. 量到了什麼</span></h2>
+<div class="tbl"><table>
+<thead><tr><th><span class="en">Claim</span><span class="zh">宣稱</span></th><th><span class="en">Setup and caveat</span><span class="zh">設定與附註</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Conjunctions Apr–Aug 2022: 52% Starlink–Starlink, 23% Starlink–debris, 18% Starlink–other satellites, 7% unknown.</span><span class="zh">2022 年 4–8 月的接近事件：52% Starlink–Starlink、23% Starlink–碎片、18% Starlink–其他衛星、7% 待確認。</span></td><td><span class="en">Public conjunction data. Percentages read from the slides. The fleet was v1.5-era and smaller than today's.</span><span class="zh">公開接近事件資料。比例讀自投影片。星隊屬 v1.5 時代，比今日小。</span></td></tr>
+<tr><td><span class="en">In 98% of cooperative Starlink–Starlink cases the satellite with sparser surroundings manoeuvres.</span><span class="zh">在 98% 的 Starlink–Starlink 合作案例中，由周圍較稀疏的衛星執行機動。</span></td><td><span class="en">Inferred from which object's ephemeris changed. The rule ignores which ISLs the mover carries.</span><span class="zh">由哪一方的星曆改變推得。此規則只使用軌道狀態決定移動者。</span></td></tr>
+<tr><td><span class="en">Average ISL delay 5–9 ms with orbital maintenance enabled and disabled.</span><span class="zh">軌道維護啟用與停用時的平均 ISL 延遲均為 5–9 ms。</span></td><td><span class="en">Propagation only, read from a slide figure. Implies 1,500–2,700 km links [computed].</span><span class="zh">僅傳播延遲，讀自投影片圖。隱含 1,500–2,700 km 的鏈路 [計算值]。</span></td></tr>
+<tr><td><span class="en">Neighbour updates per day reach about 60 for four-ISL topologies.</span><span class="zh">四條 ISL 拓樸的每日鄰居更新達到約 60 次。</span></td><td><span class="en">Read from a slide figure. Depends on the 4-ISL +Grid assumption and the 2022 fleet.</span><span class="zh">讀自投影片圖。取決於 4-ISL +Grid 假設與 2022 年的星隊。</span></td></tr>
+<tr><td><span class="en">Follow-up results report up to 41 internal maneuvers per external maneuver. About 97% of cascaded maneuvers occur near plane intersections. One TROPICS case cascades across 22 hops. A COSMOS-1408 avoidance causes 27 extra maneuvers. The budget is approximately 350 maneuvers, and bilateral control gives an 8× lifetime.</span><span class="zh">後續研究：每次外部機動最多 41 次內部機動。97% 的連鎖機動在軌道面交會處附近。TROPICS 引發 22 跳連鎖。一次閃避 COSMOS-1408 多出 27 次機動。約 350 次機動預算。雙邊控制下壽命延長 8 倍。</span></td><td><span class="en">Chen et al., arXiv 2406.06068, preprint. The 8× is trace-driven emulation of a proposal, an emulated design result.</span><span class="zh">Chen 等人，arXiv 2406.06068，預印本。8 倍是對一項提案的軌跡驅動模擬，其定位是提案評估。</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">6. Limits and open questions</span><span class="zh">6. 範圍與待解問題</span></h2>
+<ul>
+<li><span class="en">The fact base and digest use the authors' MobiCom slide deck. Full-paper figure values, confidence intervals and exact maneuver counts require source consultation. Claims beyond the quoted percentages need the full paper.</span><span class="zh">證據停留在投影片層級。事實庫與本導讀依據作者的 MobiCom 投影片，所以完整論文中圖層級的數值、信賴區間與機動的精確計數留在原論文供查閱，引述的百分比以外的任何內容都應回到論文本身查證。</span></li>
+<li><span class="en">The 2022 fleet was smaller than TinyLEO's 6,793 satellites in January 2025. Ali et al. estimate about 264 daily maneuvers across five shells in 2026. Collision avoidance accounts for 74.6%. Cite the 60-update rate and conjunction categories with their dates.</span><span class="zh">數值有時效性。2022 年的星隊只是 TinyLEO 在 2025 年 1 月計得的 6,793 顆的一部分，而 Ali 等人 2026 年的獨立預印本估計整支星隊五個殼層每天約 264 次機動、其中 74.6% 為碰撞閃避，所以每天 60 次更新與接近事件比例引用時都應標明觀測日期。</span></li>
+<li><span class="en">Neighbor updates assume four-terminal +Grid wiring. Starlink specifies three terminals. Fewer terminals mean each maneuver breaks fewer links but leaves less routing redundancy. The net effect requires evaluation.</span><span class="zh">模型採用四條 ISL。鄰居更新數假設的是建模時代四個終端的 +Grid，而 Starlink 網站給的是三個，每顆衛星少一條鏈路意味著每次機動打斷的鏈路更少、但可繞行的冗餘也更少，所以修正的方向仍待評估。</span></li>
+<li><span class="en">Broken lasers require 2–30 s for reacquisition. The study counts link changes with acquisition outside its cost model. Part C records this omission across topology papers except the Chaudhry and Bhattacharjee studies.</span><span class="zh">建立延遲是缺失的成本。一條斷裂的雷射鏈路在今日終端上要 2 到 30 秒重新擷取，論文計算鏈路變更卻將其列於範圍之外這段時間，這正是事實庫 Part C 為除了 Chaudhry 與 Bhattacharjee 研究外的每篇拓樸論文所記錄的遺漏。</span></li>
+<li><span class="en">Scope: connectivity and topology changes. The study describes link breaks. Their per-flow costs require ISL capacity, queueing and the 15-second schedule in a separate model. The transport-layer consequences belong to Chapter 6.</span><span class="zh">研究範圍：連通性與拓樸變動。研究描述鏈路斷裂，其對流量的代價則需要加入 ISL 容量、排隊與 15 秒排程後另行評估。傳輸層的後果屬於第 6 章。</span></li>
+<li><span class="en">The cascade numbers are from a preprint and the proposed bilateral control is evaluated only in trace-driven emulation. Thus, the 8× lifetime claim is a design projection and the 350-manoeuvre budget is the preprint's estimate rather than an operator figure.</span><span class="zh">連鎖數字來自預印本，所提出的雙邊控制也只在軌跡驅動的模擬中評估，所以 8 倍壽命的宣稱是設計上的推估，350 次機動的預算也是預印本的估計，營運者的數字另需查證。</span></li>
+</ul>
+<h2><span class="en">7. How it connects</span><span class="zh">7. 與其他內容的關聯</span></h2>
+<ul>
+<li><span class="en"><a href="../chapters/c05-topology-routing.html#s5-6">Section 5.6</a> uses this study and its follow-up to show operations breaking links alongside geometric change. Ali et al. add the 264 daily maneuver estimate.</span><span class="zh"><a href="../chapters/c05-topology-routing.html#s5-6">第 5.6 節</a>：這篇論文及其後續研究是該節「幾何與營運都會打斷鏈路」的證據，與 Ali 等人每天 264 次機動並列。</span></li>
+<li><span class="en"><a href="../chapters/c05-topology-routing.html#s5-4">Section 5.4</a> explains why SHORT adds control beyond orbit prediction. Geographic destinations replace satellite identities to absorb random operational changes.</span><span class="zh"><a href="../chapters/c05-topology-routing.html#s5-4">第 5.4 節</a>：這裡量到的隨機機動，正是 SHORT 主張光靠軌道預測還需額外控制才能穩定路由、以及地理取代衛星身分成為命名空間的原因。</span></li>
+<li><span class="en"><a href="../chapters/c05-topology-routing.html#s5-7">Section 5.7</a> lists four ISLs and setup delay outside the model. Chapter 5 asks readers to account for both assumptions.</span><span class="zh"><a href="../chapters/c05-topology-routing.html#s5-7">第 5.7 節</a>：假設表把這篇論文列在四條 ISL、建立延遲列於模型之外之下，這是第 5 章要求讀者套用的兩項修正。</span></li>
+<li><span class="en"><a href="../chapters/c04-parameters.html#s4-2">Section 4.2</a>: the acquisition-delay and terminals-per-satellite rows of the parameter sheet are what turn this paper's link-change counts into a time cost.</span><span class="zh"><a href="../chapters/c04-parameters.html#s4-2">第 4.2 節</a>：參數表中的擷取延遲與每衛星終端數兩列，是把這篇論文的鏈路變更次數換算成時間成本的依據。</span></li>
+<li><span class="en"><a href="arxiv26-ali-zhang.html">Ali &amp; Zhang digest</a>: their 1.0 to 1.3% daily link breakage on real TLEs is the topology-side footprint of the manoeuvres described here. <a href="mobicom24-short.html">SHORT</a> and <a href="sigcomm25-tinyleo.html">TinyLEO</a> are the same group's two answers.</span><span class="zh"><a href="arxiv26-ali-zhang.html">Ali 與 Zhang 導讀</a>：他們在真實 TLE 上每日 1.0 到 1.3% 的鏈路斷裂，是這裡描述的機動在拓樸側留下的足跡。<a href="mobicom24-short.html">SHORT</a> 與 <a href="sigcomm25-tinyleo.html">TinyLEO</a> 則是同一團隊的兩個解答。</span></li>
+<li><span class="en"><a href="conext19-motifs.html">CoNEXT 2019 motifs</a> and <a href="hotnets18-handley.html">Handley 2018</a> use links fixed or changing only through geometry. This study adds operational changes observed in the deployed fleet.</span><span class="zh"><a href="conext19-motifs.html">CoNEXT 2019 motif</a> 與 <a href="hotnets18-handley.html">Handley 2018</a>：兩者都假設鏈路靜態或只因幾何而變，而這篇論文顯示真實飛行星隊還受到營運機動影響。</span></li>
+</ul>
+<h2><span class="en">Key numbers</span><span class="zh">關鍵數字</span></h2>
+<div class="tbl"><table><thead><tr><th class="en">Number</th><th class="zh">數字</th><th class="en">Meaning (setup)</th><th class="zh">意義（設定）</th></tr></thead><tbody>
+<tr><td class="num">Apr–Aug 2022</td><td class="en">Observation window of public ephemerides and conjunction data (slides)</td><td class="zh">公開星曆與接近事件資料的觀測期間（投影片）</td></tr>
+<tr><td class="num">52 / 23 / 18 / 7%</td><td class="en">Conjunctions Starlink–Starlink / debris / other satellites / unknown (slides)</td><td class="zh">接近事件 Starlink–Starlink / 碎片 / 其他衛星 / 待確認（投影片）</td></tr>
+<tr><td class="num">98%</td><td class="en">Cooperative cases in which the sparser-surrounded satellite manoeuvres (slides)</td><td class="zh">由周圍較稀疏的衛星執行機動的合作案例比例（投影片）</td></tr>
+<tr><td class="num">5–9 ms</td><td class="en">Average ISL delay under maintained and maintenance-free orbits, propagation only (slide figure)</td><td class="zh">維護啟用與停用時的平均 ISL 延遲，僅傳播（投影片圖）</td></tr>
+<tr><td class="num">1,500–2,700 km</td><td class="en">Link length implied by 5–9 ms at vacuum propagation [computed]</td><td class="zh">5–9 ms 在真空傳播下隱含的鏈路長度 [計算值]</td></tr>
+<tr><td class="num">~60 / day</td><td class="en">Neighbour updates for four-ISL topologies (slide figure)</td><td class="zh">四條 ISL 拓樸的每日鄰居更新次數（投影片圖）</td></tr>
+<tr><td class="num">2–30 min / day</td><td class="en">Upper-bound re-acquisition time if each update costs one 2–30 s setup [computed]</td><td class="zh">若每次更新需一次 2–30 秒建立，每天重新擷取時間的上界 [計算值]</td></tr>
+<tr><td class="num">41</td><td class="en">Maximum internal manoeuvres triggered by one external avoidance (Chen et al., preprint)</td><td class="zh">一次外部閃避引發的內部機動最大次數（Chen 等人，預印本）</td></tr>
+<tr><td class="num">97%</td><td class="en">Cascaded manoeuvres occurring near plane intersections (Chen et al., Fig. 8a, preprint)</td><td class="zh">發生在軌道面交會處附近的連鎖機動比例（Chen 等人，Fig. 8a，預印本）</td></tr>
+<tr><td class="num">~350</td><td class="en">Manoeuvre budget per satellite lifetime (Chen et al., preprint)</td><td class="zh">每顆衛星一生的機動預算（Chen 等人，預印本）</td></tr>
+<tr><td class="num">~264 / day</td><td class="en">Fleet-wide manoeuvres across five shells in 2026, 74.6% avoidance <sup class="cite"><a aria-label="Muaz Ali, Utkarsh Upadhyay, Sean McCormick, Joseph Hill, Beichuan Zhang · Starlink Constellation: Deployment, Configuration, and Dynamics · arXiv 2603.25835" class="cite-ref" data-cite="16" data-locator="" data-original="Ali et al., arXiv 2603.25835, preprint" data-ref="ali2026" href="../references.html#ref-16">[16]</a></sup></td><td class="zh">2026 年五個殼層全星隊每日機動數，74.6% 為閃避<sup class="cite"><a aria-label="Muaz Ali, Utkarsh Upadhyay, Sean McCormick, Joseph Hill, Beichuan Zhang · Starlink Constellation: Deployment, Configuration, and Dynamics · arXiv 2603.25835" class="cite-ref" data-cite="16" data-locator="" data-original="Ali 等人，arXiv 2603.25835，預印本" data-ref="ali2026" href="../references.html#ref-16">[16]</a></sup></td></tr>
+<tr><td class="num">59</td><td class="en">Crossref citing works on 29 Oct 2026, a lower bound</td><td class="zh">2026 年 10 月 29 日 Crossref 的引用數，為下限</td></tr>
+</tbody></table></div>
+</section>
+<section class="quiz reading" id="quiz"><h2><span class="en">Check your understanding</span><span class="zh">檢驗你的理解</span></h2><div id="quiz-root"></div></section>
+<script id="quiz-data" type="application/json">[{"q": {"en": "How does collision avoidance affect network behavior?", "zh": "為什麼論文把碰撞閃避描述成一個網路問題，同時涉及軌道力學？"}, "o": [{"en": "Because manoeuvres consume bandwidth on the ISLs", "zh": "因為機動會消耗 ISL 上的頻寬"}, {"en": "A maneuver changes satellite position, perturbing or breaking ISLs and rewriting neighbors. The orbit controller chooses movement with those links outside its decision model.", "zh": "因為機動把衛星推離席位，改變或打斷它載著的雷射鏈路並改寫其鄰居集合，而決定機動的軌道控制器僅以軌道資訊作決策"}, {"en": "Because satellites must download new routing tables before moving", "zh": "因為衛星移動前必須下載新的路由表"}, {"en": "Because debris emits radio interference", "zh": "因為碎片會發出射頻干擾"}], "a": 1, "why": {"en": "Maintenance and avoidance perturb ISL delay and cause about 60 daily neighbor updates. The sparseness-based mover rule excludes network links from its decision.", "zh": "投影片顯示維護與閃避造成的 ISL 延遲擾動與每天約 60 次鄰居更新，而移動者是由只使用軌道資訊的稀疏規則選出的。"}}, {"q": {"en": "What does the 52% Starlink–Starlink share of conjunctions imply for a network-aware manoeuvre policy?", "zh": "52% 的 Starlink–Starlink 接近事件比例對一個考慮網路的機動政策意味著什麼？"}, "o": [{"en": "Nothing, since all conjunctions are equally unavoidable", "zh": "意義為零，因為所有接近事件都只能被動接受"}, {"en": "Starlink satellites should be launched into fewer planes", "zh": "Starlink 衛星應該發射到較少的軌道面"}, {"en": "ISLs should be switched off during conjunctions", "zh": "接近事件期間應關閉 ISL"}, {"en": "Over half the conjunctions involve satellites under one operator. It can coordinate mover selection with network links. Debris and foreign satellites remain outside its control.", "zh": "超過一半的閃避事件涉及同一營運者的兩顆衛星，所以由誰移動、因而哪些 ISL 斷裂，可以與網路協調，碎片與外國衛星則屬於該營運者的控制範圍之外"}], "a": 3, "why": {"en": "The conjunction categories and 98% sparseness rule motivate bilateral maneuver control. That follow-up negotiates movement while accounting for links.", "zh": "投影片的比例與 98% 的稀疏規則共同促成後續研究的雙邊機動控制，在考慮鏈路的前提下協商由誰移動。"}}, {"q": {"en": "Why do 97% of cascaded manoeuvres occur near plane intersections, according to the follow-up preprint?", "zh": "根據後續預印本，為什麼 97% 的連鎖機動發生在軌道面交會處附近？"}, "o": [{"en": "Cross-plane spacing is smallest near intersections. A displaced satellite can therefore violate a neighboring-plane satellite's spacing tolerance and force another maneuver.", "zh": "因為那裡的跨面間距最小，被移位的衛星最容易侵犯相鄰面衛星的間距容忍而迫使它也移動"}, {"en": "Because ground stations are concentrated at high latitudes", "zh": "因為地面站集中在高緯度"}, {"en": "Because laser pointing is restricted to one plane", "zh": "因為雷射指向只限於同一軌道面"}, {"en": "Because the 15-second scheduler resets there", "zh": "因為 15 秒排程器在那裡重設"}], "a": 0, "why": {"en": "Chapter 2 shows inter-plane distance shrinking toward high latitudes. Figure 8a places cascades between separate orbits near their intersections.", "zh": "第 2 章顯示軌道面間距朝最高緯度縮小。預印本的 Fig. 8a 把連鎖定位在這些交會處附近相異軌道的衛星之間。"}}, {"q": {"en": "The slides plot average ISL delay at 5–9 ms. Which conclusions does that number support?", "zh": "投影片畫出平均 ISL 延遲為 5–9 ms。這個數字支持哪些結論？"}, "o": [{"en": "It is the end-to-end RTT a Starlink user sees", "zh": "它是 Starlink 用戶看到的端到端 RTT"}, {"en": "It proves ISLs run at 100 Gbps", "zh": "它證明 ISL 以 100 Gbps 運作"}, {"en": "It measures propagation over roughly 1,500–2,700 km, consistent with 72×22 spacing. Node delay, queueing and user-link performance lie outside that metric.", "zh": "它是約 1,500–2,700 km 鏈路上的傳播時間，與 72×22 的軌道內間距一致，節點延遲、排隊與用戶鏈路則需另外的證據"}, {"en": "It includes the 2–30 s laser acquisition time", "zh": "它包含 2–30 秒的雷射擷取時間"}], "a": 2, "why": {"en": "The calculation table converts 5–9 ms at 3.336 µs/km into distance. Rate, node delay and acquisition lie outside the model.", "zh": "計算表用 3.336 µs/km 把 5–9 ms 換算成鏈路長度。速率、節點延遲與擷取時間列於模型範圍之外。"}}, {"q": {"en": "Which date and model assumptions accompany the ‘about 60 neighbor updates per day’ figure?", "zh": "引用「每天約 60 次鄰居更新」時，應附上哪些日期與模型條件？"}, "o": [{"en": "Because Starlink has stopped all maneuvers", "zh": "因為 Starlink 已停止全部機動"}, {"en": "Because the number was computed for Iridium", "zh": "因為這個數字是為 Iridium 計算的"}, {"en": "Because neighbor updates only happen at the poles", "zh": "因為鄰居更新只發生在極區"}, {"en": "The measurement uses the smaller 2022 fleet and four-ISL +Grid. Current satellites carry three terminals, and the fleet is several times larger.", "zh": "因為它是在規模小得多的 2022 年星隊、四條 ISL 的 +Grid 假設下量到的，而今日的衛星只有三個終端、星隊也大了好幾倍"}], "a": 3, "why": {"en": "The measurement covers April–August 2022 with four ISLs. Ali et al.'s 2026 preprint provides a newer reference of about 264 fleet-wide maneuvers daily.", "zh": "「限制」一節把量測定在 2022 年 4–8 月與四條 ISL 的假設。Ali 等人 2026 年的預印本給出全星隊每天約 264 次機動作為較新的參考。"}}]</script>
+<nav class="pager"><a href="sigcomm25-tinyleo.html"><span class="eyebrow">←</span><span class="en">Previous: TinyLEO (SIGCOMM 2025)</span><span class="zh">上一篇：TinyLEO（SIGCOMM 2025）</span></a><a href="mobicom24-short.html" style="margin-left:auto;text-align:right"><span class="eyebrow">→</span><span class="en">Next: SHORT (MobiCom 2024)</span><span class="zh">下一篇：SHORT（MobiCom 2024）</span></a></nav>
+</main>
+</div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/contrib/auto-render.min.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/citations-data.js"></script><script src="../assets/citations.js"></script></body>
+</html>

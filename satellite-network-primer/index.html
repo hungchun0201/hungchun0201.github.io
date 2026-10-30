@@ -1,0 +1,92 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Satellite Network Primer</title>
+<meta content="cover" name="claude:viewport-fit-sides"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+<style>
+.hero-index{padding-block:44px 30px}
+.hero-index .eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.hero-index h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.06;margin:.25em 0 .35em}
+section.blk{padding-block:36px 8px}
+section.blk h2{margin:0 0 .5em}
+.foot{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.92rem;padding-top:16px;border-top:1px solid var(--rule);margin-top:44px}
+.foot a{color:var(--ink-2);text-decoration:none}.foot a:hover{color:var(--accent)}
+.foot p{flex-basis:100%;margin:6px 0 0;color:var(--ink-3);font-size:.84rem}
+.frame.single{grid-template-columns:minmax(0,1100px)}
+</style>
+</head>
+<body data-slug="index">
+<div class="topbar"><div class="topbar-in">
+<div class="brand"><span class="dot"></span><span class="en">Satellite Network Primer</span><span class="zh">衛星網路入門</span></div>
+<span class="meta">v1 · 2026-10</span>
+<span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group"><button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button><button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button></div>
+</div><div class="progress" id="progress"></div></div>
+<div class="frame single"><main>
+<section class="hero-index">
+<div class="eyebrow"><span class="en">First edition</span><span class="zh">第一版</span></div>
+<h1><span class="en">How satellite networks work, and whether AI can run on them</span><span class="zh">衛星網路的運作方式與在軌 AI 的可行性</span></h1>
+<p class="lede"><span class="en">This primer introduces orbital mechanics, optics and networking. Part I explains the physics using numbers from peer-reviewed papers and public filings. Part II covers the research by topic. Part III examines training and inference across satellites, using Google's Suncatcher formation as an example. It ends with a network research plan for orbital data centers.</span><span class="zh">這份教材從軌道力學、光學與網路的基礎講起。第一部介紹物理原理，數字取自經同儕審查的論文與公開申報文件。第二部依主題介紹研究文獻。第三部以 Google 的 Suncatcher 編隊為例，討論跨衛星訓練與推論的需求，最後提出軌道資料中心的網路研究計畫。</span></p>
+<div class="entry">
+<a class="main" href="chapters/c01-orbits.html"><span class="n"><span class="en">13 chapters · ≈6 h</span><span class="zh">13 章 · 約 6 小時</span></span><b><span class="en">Start with Chapter 1 →</span><span class="zh">從第 1 章開始 →</span></b><span><span class="en">Orbits, constellations and the satellites actually flying</span><span class="zh">軌道、星座與真正在飛的衛星</span></span></a>
+<a href="research.html"><span class="n"><span class="en">48 paper digests</span><span class="zh">48 篇論文導讀</span></span><b><span class="en">Paper digests →</span><span class="zh">論文導讀 →</span></b><span><span class="en">Papers grouped by topic, with a page explaining each paper's assumptions</span><span class="zh">每頁一篇，依主題分組，每篇都攤開它的假設</span></span></a>
+<a href="glossary.html"><span class="n"><span class="en">104 terms</span><span class="zh">104 個名詞</span></span><b><span class="en">Glossary →</span><span class="zh">名詞表 →</span></b><span><span class="en">Every term, linked to where it is defined</span><span class="zh">每個名詞都連到它的定義處</span></span></a>
+</div>
+</section>
+<section class="blk" id="chapters">
+<h2><span class="en">The thirteen chapters</span><span class="zh">十三章</span></h2>
+<div class="chlist">
+<div><div class="chgroup"><h3><span class="en">Part I · The physics</span><span class="zh">第一部 · 物理</span></h3><ol>
+<li><a href="chapters/c01-orbits.html"><span class="k">01</span><span class="t"><span class="en">Orbits and constellations: altitude, period, passes and the constellations actually flying</span><span class="zh">軌道與星座：高度、週期、過頂，以及真正在飛的星座</span></span><span class="m">25′</span></a></li>
+<li><a href="chapters/c02-isl.html"><span class="k">02</span><span class="t"><span class="en">Inter-satellite links: geometry, propagation delay, the laser link budget and the +Grid</span><span class="zh">星間鏈路：幾何、傳播延遲、雷射鏈路預算與 +Grid</span></span><span class="m">25′</span></a></li>
+<li><a href="chapters/c03-ground.html"><span class="k">03</span><span class="t"><span class="en">Ground links: terminals, gateways, beams, handovers and what Starlink measures like</span><span class="zh">地面鏈路：終端、閘道、波束、換手，以及實測的 Starlink</span></span><span class="m">39′</span></a></li>
+<li><a href="chapters/c04-parameters.html"><span class="k">04</span><span class="t"><span class="en">The parameter sheet: a defensible 2026 model of a LEO network</span><span class="zh">參數表：一份站得住腳的 2026 年 LEO 網路模型</span></span><span class="m">24′</span></a></li>
+</ol></div></div>
+<div><div class="chgroup"><h3><span class="en">Part II · The research</span><span class="zh">第二部 · 研究</span></h3><ol>
+<li><a href="chapters/c05-topology-routing.html"><span class="k">05</span><span class="t"><span class="en">Topology design and routing: +Grid, motifs, ground relays and the latency arguments</span><span class="zh">拓樸設計與路由：+Grid、motif、地面中繼與延遲論證</span></span><span class="m">24′</span></a></li>
+<li><a href="chapters/c06-transport.html"><span class="k">06</span><span class="t"><span class="en">Transport and congestion control over a moving network</span><span class="zh">移動網路上的傳輸層與壅塞控制</span></span><span class="m">32′</span></a></li>
+<li><a href="chapters/c07-tools.html"><span class="k">07</span><span class="t"><span class="en">Tools of the trade: measurement campaigns, simulators and emulators</span><span class="zh">研究工具：量測活動、模擬器與模擬平台</span></span><span class="m">29′</span></a></li>
+<li><a href="chapters/c08-space-computing.html"><span class="k">08</span><span class="t"><span class="en">Computing in orbit: power, heat, radiation and the downlink bottleneck</span><span class="zh">在軌運算：電力、散熱、輻射與下行瓶頸</span></span><span class="m">33′</span></a></li>
+<li><a href="chapters/c09-services.html"><span class="k">09</span><span class="t"><span class="en">Services in orbit: content delivery, storage, federated learning and on-board inference</span><span class="zh">在軌服務：內容遞送、儲存、聯邦學習與機上推論</span></span><span class="m">25′</span></a></li>
+</ol></div>
+<div class="chgroup"><h3><span class="en">Part III · AI in orbit</span><span class="zh">第三部 · 在軌 AI</span></h3><ol>
+<li><a href="chapters/c10-training-needs.html"><span class="k">10</span><span class="t"><span class="en">What AI training asks of a network, and what a constellation offers</span><span class="zh">AI 訓練對網路的要求，以及星座能給什麼</span></span><span class="m">27′</span></a></li>
+<li><a href="chapters/c11-suncatcher.html"><span class="k">11</span><span class="t"><span class="en">Google's Suncatcher formation: the links, the cluster network and what must be redesigned</span><span class="zh">Google 的 Suncatcher 編隊：鏈路、叢集網路與必須重新設計之處</span></span><span class="m">32′</span></a></li>
+<li><a href="chapters/c12-inference.html"><span class="k">12</span><span class="t"><span class="en">LLM inference on satellites: the published systems and the assumptions they rest on</span><span class="zh">衛星上的 LLM 推論：已發表的系統與它們所依賴的假設</span></span><span class="m">33′</span></a></li>
+<li><a href="chapters/c13-research-plan.html"><span class="k">13</span><span class="t"><span class="en">Orbital data centers: open problems and a research plan for the network</span><span class="zh">軌道資料中心：待研究問題與網路研究計畫</span></span><span class="m">38′</span></a></li>
+</ol></div></div>
+</div>
+</section>
+<section class="blk" id="papers">
+<h2><span class="en">Beyond the chapters</span><span class="zh">章節之外</span></h2>
+<div class="two">
+<div class="box"><h3><span class="en">Paper digests</span><span class="zh">論文導讀</span><span class="c">48</span></h3>
+<p class="d"><span class="en">Each paper has a page, and each topic lists its prerequisite chapter. The digests state constellation, link-rate and latency assumptions, measurement coverage and evidence limits.</span><span class="zh">每篇論文各有一頁導讀，並依主題列出先備章節。導讀說明星座、鏈路速率與延遲的假設，以及量測範圍和證據限制。</span></p>
+<ul id="digest-groups"><li><a href="research.html#g1"><span><span class="en">Link physics</span><span class="zh">鏈路物理</span></span><span class="x"><span class="en">5 · after Ch. 2</span><span class="zh">5 篇 · 第 2 章後</span></span></a></li><li><a href="research.html#g2"><span><span class="en">Measuring Starlink</span><span class="zh">量測 Starlink</span></span><span class="x"><span class="en">8 · after Ch. 3</span><span class="zh">8 篇 · 第 3 章後</span></span></a></li><li><a href="research.html#g3"><span><span class="en">Topology and routing</span><span class="zh">拓樸與路由</span></span><span class="x"><span class="en">10 · after Ch. 5</span><span class="zh">10 篇 · 第 5 章後</span></span></a></li><li><a href="research.html#g4"><span><span class="en">Transport and congestion control</span><span class="zh">傳輸層與壅塞控制</span></span><span class="x"><span class="en">6 · after Ch. 6</span><span class="zh">6 篇 · 第 6 章後</span></span></a></li><li><a href="research.html#g5"><span><span class="en">Simulation and emulation</span><span class="zh">模擬與模擬平台</span></span><span class="x"><span class="en">4 · after Ch. 7</span><span class="zh">4 篇 · 第 7 章後</span></span></a></li><li><a href="research.html#g6"><span><span class="en">Computing in orbit</span><span class="zh">在軌運算</span></span><span class="x"><span class="en">4 · after Ch. 8</span><span class="zh">4 篇 · 第 8 章後</span></span></a></li><li><a href="research.html#g7"><span><span class="en">Services in orbit</span><span class="zh">在軌服務</span></span><span class="x"><span class="en">5 · after Ch. 9</span><span class="zh">5 篇 · 第 9 章後</span></span></a></li><li><a href="research.html#g8"><span><span class="en">AI clusters and inference in orbit</span><span class="zh">在軌 AI 叢集與推論</span></span><span class="x"><span class="en">6 · after Ch. 11</span><span class="zh">6 篇 · 第 11 章後</span></span></a></li></ul>
+<a class="more" href="research.html"><span class="en">See all 48 digests →</span><span class="zh">看全部 48 篇 →</span></a></div>
+<div class="box"><h3><span class="en">How to use this primer</span><span class="zh">使用說明</span></h3>
+<p class="d"><span class="en">Where the numbers come from, how sources are tagged, how the chapters connect, and a question-driven entry table.</span><span class="zh">數字從哪裡來、來源如何標記、各章如何相連，以及從問題出發的入口表。</span></p>
+<ul><li><a href="about.html#sources"><span><span class="en">Source tags and the number policy</span><span class="zh">來源標記與數字政策</span></span></a></li><li><a href="about.html#questions"><span><span class="en">Start with a question</span><span class="zh">從一個問題開始</span></span></a></li><li><a href="about.html#map"><span><span class="en">How the chapters connect</span><span class="zh">各章的關係</span></span></a></li><li><a href="about.html#companion"><span><span class="en">Companion: the AI Training Network Primer</span><span class="zh">姊妹篇：AI 訓練網路入門</span></span></a></li></ul></div>
+</div>
+</section>
+<nav aria-label="More" class="foot"><a href="references.html"><span class="en">References</span><span class="zh">參考文獻</span></a>
+<a href="about.html"><span class="en">How to use</span><span class="zh">使用說明</span></a>
+<a href="glossary.html"><span class="en">Glossary</span><span class="zh">名詞表</span></a>
+<a href="research.html"><span class="en">Paper digests</span><span class="zh">論文導讀</span></a>
+<a href="/ai-training-network-primer/" rel="noopener" target="_blank"><span class="en">AI Training Network Primer ↗</span><span class="zh">AI 訓練網路入門 ↗</span></a>
+<p><span class="en">Numbers in Parts I and II come from peer-reviewed papers, standards and regulatory filings. Numbered superscripts give source locations, with full details on hover. Company statements and preprints carry separate tags. The figures are original drawings for this primer.</span><span class="zh">第一、二部的數字來自經同儕審查的論文、標準與監管申報文件。上標引文標明來源位置，滑鼠移入即可查看完整書目。公司聲明與預印本各有標記，圖則由本教材繪製。</span></p>
+</nav>
+</main></div>
+<script src="assets/site.js"></script>
+<script src="assets/citations-data.js"></script>
+<script src="assets/citations.js"></script>
+</body></html>
+
+</body></html>

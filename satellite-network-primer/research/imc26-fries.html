@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Fries IMC 2026 · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/katex/katex.min.css" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+</head>
+<body data-slug="imc26-fries">
+<div class="topbar">
+<div class="topbar-in">
+<a class="backlink" href="../research.html"><span>←</span><span class="en">All paper digests</span><span class="zh">論文導讀總表</span></a>
+<div class="brand"><span class="dot"></span><span class="en">Paper digest</span><span class="zh">論文導讀</span></div>
+<a class="cite-nav" href="../references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group">
+<button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button>
+<button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</div>
+<div class="frame single">
+<main>
+<header class="paper-hero reading rhero">
+<div class="eyebrow en">Digest · Transport and congestion control · read after Chapter 6</div><div class="eyebrow zh">導讀 · 傳輸層與壅塞控制 · 第 6 章後閱讀</div>
+<h1><span class="en">Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink</span><span class="zh">仰望星空：分析 Starlink 上的即時視訊會議</span></h1>
+<div class="byline"><span class="venue">ACM IMC 2026</span>Fries, Matezki, Bose (TU Munich), Mohan (TU Delft) · <a href="https://doi.org/10.1145/3777912.3839805"><span class="en">paper</span><span class="zh">論文</span></a> <span class="src-tag pr">peer-reviewed</span></div>
+<p class="lede"><span class="en">This digest explains how Starlink reconfiguration misleads WebRTC’s delay estimator and lowers Teams’ uplink bitrate despite spare capacity. It also places handover-alignment statistics within the paper’s video-conferencing study.</span><span class="zh">讀完後，你能說明為什麼一個輕鬆容納在 Starlink 終端容量內的 2.5 Mbps Teams 上行仍會掉到目標以下、WebRTC 基於延遲的壅塞估計器如何把 15 秒重組誤認為壅塞，以及為什麼這篇論文常被單獨引用的換手對齊統計，其實是一項視訊會議研究的副產品。</span></p>
+<div class="metarow"><span class="en">≈ 10 min · 5-question quiz</span><span class="zh">≈ 10 分鐘 · 5 題測驗</span><a class="en" href="../chapters/c06-transport.html">Chapter 6 ↗</a><a class="zh" href="../chapters/c06-transport.html">第 6 章 ↗</a><a class="en" href="#quiz">Jump to the quiz ↓</a><a class="zh" href="#quiz">跳到測驗 ↓</a></div>
+</header>
+<section class="reading">
+<div class="key"><div class="eyebrow en">Main result</div><div class="eyebrow zh">主要結果</div>
+<p class="en">Fries and colleagues show that WebRTC’s delay estimator mistakes Starlink reconfiguration for congestion. Teams then reduces its bitrate despite spare uplink capacity.</p><p class="zh">Fries 等人顯示，WebRTC 的延遲估計器會把 Starlink 重組誤判為壅塞，讓 Teams 在上行容量仍有餘裕時降速。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>2025 · 2026 · 2.5</td><td>Fries, Matezki, Bose and Mohan tested original Teams and instrumented LibWebRTC senders from Munich, Delft, Oslo and McMurdo between November 2025 and April 2026. They examine below-target bitrate on a 2.5 Mbps uplink despite ample link capacity <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3–4" data-original="§3–4" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3–4]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>The answer is that WebRTC's Google Congestion Control (GCC) is steered almost entirely by its delay-based estimator</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>96.4–99.6%</td><td>which held the bandwidth estimate 96.4–99.6% of the time across the four sites</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>15 · 60.7–100% · 0.8 · 1–2 s</td><td>The estimator interprets Starlink's 15-second latency steps as congestion. Reconfiguration or handover coincides with 60.7–100% of overuse transitions. Teams loses about 0.8 Mbps within 1–2 s and recovers only partly over ten seconds <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1–4.2" data-original="§4.1–4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1–4.2]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>89% · 1 s · 12 · 27 · 42 · 57 · 97.6° · 208 · 678 · 30.7%</td><td>Handover alignment is a secondary result. At least 89% of European handovers fall within ±1 s of :12/:27/:42/:57 boundaries. McMurdo uses the 97.6° shell and ISLs to Sydney, with 208 of 678 handovers (30.7%) off-boundary <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The study measures the uplink only and leaves combined the polar shell, the ISL path and Antarctic weather as causes of McMurdo's weaker alignment.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2025 · 11 · 2026 · 4 · 2.5</td><td>Fries、Matezki、Bose 與 Mohan 在 2025 年 11 月至 2026 年 4 月間，從慕尼黑、台夫特、奧斯陸與南極麥克默多站，透過 Starlink 執行原版 Microsoft Teams 與一個加裝量測的 LibWebRTC 傳送端，探問為什麼一條只需 Starlink 上行容量一小部分的 2.5 Mbps 上行視訊串流，仍會跌到目標位元率以下<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3–4" data-original="§3–4" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3–4]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>96.4–99.6% · 15 · 60.7–100% · 1–2 · 0.8</td><td>答案是 WebRTC 的 Google 壅塞控制（GCC）幾乎完全由其基於延遲的估計器主導，在四個站點中該估計器有 96.4–99.6% 的時間掌控頻寬估計值，而這個估計器會把 Starlink 15 秒重組造成的延遲階躍讀成壅塞，因為它 60.7–100% 的過載轉換與重組或天線換手同時發生，而 Teams 上行位元率在重組後 1–2 秒內下降約 0.8 Mbps，接下來十秒也只部分恢復<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1–4.2" data-original="§4.1–4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1–4.2]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>89% · 12 · 27 · 42 · 57 · 1 · 97.6° · 678 · 208 · 30.7%</td><td>換手對齊是論文的副結果，主題則是視訊會議：在三個歐洲站點，至少 89% 的天線換手落在 :12/:27/:42/:57 邊界的 ±1 秒內，而由 97.6° 極地殼層服務、經星間鏈路送到雪梨 PoP 的麥克默多站，678 次換手中有 208 次（30.7%）偏離排程邊界的<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這項研究只量測上行，也將極地殼層、ISL 路徑與南極天氣分開，作為麥克默多對齊較弱的原因。</td></tr></tbody></table></div>
+</div>
+<h2><span class="en">1. Where this paper sits</span><span class="zh">1. 這篇論文的位置</span></h2>
+<p class="en">Earlier Starlink transport work focused on bulk TCP. This study examines real-time GCC behavior and distinguishes scheduled reconfiguration, dish handover and queue effects.</p><p class="zh">早期 Starlink 傳輸研究著重大量 TCP 傳輸，本研究轉向即時 GCC 行為，並區分排程重組、天線換手及佇列效應。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>2024</td><td>Earlier work examines bulk TCP. Kassem et al. find BBR using about half the UDP-measured capacity. SaTCP, HotNets patches and LeoCC add reconfiguration awareness, while Mohan et al. provide an early media study.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>52 · 14 ms · 27 · 7 ms · 146 · 99 · 2</td><td><sup class="cite"><a aria-label="Mohan, Ferguson, Cech, Bose, Renatin, Marina, Ott · A Multifaceted Look at Starlink Performance · ACM WWW 2024 · 2024" class="cite-ref" data-cite="49" data-locator="" data-original="WWW 2024" data-ref="www24-mohan" href="../references.html#ref-49">[49]</a></sup> gives Zoom uplink delay of 52 ± 14 ms, versus terrestrial 27 ± 7 ms. FEC rates are 146 ± 99 versus 2 ± 2 kbps <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="Fig. 10" data-original="Fig. 10 of Mohan et al." data-ref="imc26-fries" href="../references.html#ref-51">[51, Fig. 10]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>Qualitative scope</td><td>Fries et al. examine GCC, the WebRTC controller used in Teams, Meet and most browser calls. The modest encoder cap usually leaves spare link capacity.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>2022 · 12 · 27 · 42 · 57</td><td>Earlier studies disagree on attribution. Kassem et al. linked 2022 loss clusters to handover. Tanveer et al. located latency changes at :12/:27/:42/:57 boundaries.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>and Mohan et al. saw those shifts even with a single satellite in view</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>35</td><td>which led the fact base to record scheduled reconfiguration, dish handover and the drop-front queue as three separate phenomena (factbase Part C item 35).</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>8</td><td>Fries et al. separate handover effects in a video-conferencing study. The fact base identifies that application context as the appropriate citation scope (Part C item 8).</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2024</td><td>早期關於 Starlink 的傳輸層研究集中在大量傳輸的 TCP 上：Kassem 等人發現 BBR 只達到 UDP 量得容量的一半左右，SaTCP、HotNets 2024 修補與 LeoCC 則各自打造了能感知重組的傳送端。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>52 · 14 ms · 27 · 7 ms · 146 · 99 · 2 · 10</td><td>即時媒體只在 Mohan 等人<sup class="cite"><a aria-label="Mohan, Ferguson, Cech, Bose, Renatin, Marina, Ott · A Multifaceted Look at Starlink Performance · ACM WWW 2024 · 2024" class="cite-ref" data-cite="49" data-locator="" data-original="WWW 2024" data-ref="www24-mohan" href="../references.html#ref-49">[49]</a></sup>有過初步觀察，其 Zoom 上行單向延遲 52 ± 14 ms 對地面網路 27 ± 7 ms，同時前向錯誤更正達 146 ± 99 kbps 對 2 ± 2 kbps（Mohan 等人 Fig. 10）。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>Fries 等人把問題帶到另一種應用：它的壅塞控制器採用內建於 WebRTC、因而也內建於 Teams、Meet 與大多數瀏覽器通話中的 GCC，而它的編碼器被限制在較低速率，使容量很少成為真正的限制。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2022 · 12 · 27 · 42 · 57 · 35</td><td>這篇論文也承接了一場關於成因的爭論：Kassem 等人在 2022 年把遺失叢歸因於衛星換手，Tanveer 等人隨後把延遲狀態轉變定位在每分鐘的第 12、27、42 與 57 秒，Mohan 等人則在只有一顆衛星可見時仍看到這些轉變，使事實庫把排程重組、天線換手與丟前端佇列記錄為三個相異的現象（事實庫 Part C 第 35 項）。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>8</td><td>Fries 等人補上了這個區分中換手的那一環，這也是它有時被當成換手研究引用的原因。事實庫 Part C 第 8 項記載，它應該以其本質，即一篇視訊會議論文，被引用。</td></tr></tbody></table></div>
+<h2><span class="en">2. The problem, measured</span><span class="zh">2. 問題，用量測說話</span></h2>
+<p class="en">Median performance stays near the Teams target, while tail samples reveal repeated shortfalls. Their timing points to sender decisions as the immediate cause.</p><p class="zh">中位數接近 Teams 目標，尾端樣本卻顯示反覆降速，其發生時序指向傳送端決策這個直接原因。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>2.5 · 720 · 30 · 2.51 · 2.52 · 75%</td><td>Teams targets 2.5 Mbps at 720p and 30 frames/s. Median rates are 2.51 Mbps on Starlink and 2.52 Mbps terrestrially. Both reach 30 FPS about 75% of the time <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, App. B.3" data-original="§4.1, App. B.3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, App. B.3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Dataset and workload</th><td>0.375 · 34.9% · 24.8% · 5.7% · 2.7%</td><td>The shortfall measure counts samples more than 0.375 Mbps below target. Shares are McMurdo 34.9%, Oslo 24.8%, Munich 5.7% and Delft 2.7% <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, Figs. 2–3" data-original="§4.1, Figs. 2–3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, Figs. 2–3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>46.3% · 32.0% · 5.5% · 4.9%</td><td>The share of that below-target time attributable to reconfigurations was 46.3% at McMurdo, 32.0% in Oslo, 5.5% in Delft and 4.9% in Munich. Thus, the reconfiguration explains almost half of the shortfall where the shortfall is largest and little of it where the call is already healthy.</td></tr>
+<tr class="en"><th scope="row">Reliability and accuracy</th><td>0.8 · 1–2 s · 1.65</td><td>Reconfiguration cuts bitrate by about 0.8 Mbps within 1–2 s. Recovery remains partial after ten seconds, when McMurdo's median is still 1.65 Mbps <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>30 · 2.5</td><td>European saturating uplinks reach about 30 Mbps. A 2.5 Mbps call uses roughly one-twelfth of capacity, so sender rate reduction explains the shortfall despite spare capacity.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>720 · 30 · 2.5 · 2.51 · 2.52 · 75%</td><td>中位數顯示整體表現接近正常，因為 Teams 在 720p、每秒 30 幀時把上行限制在 2.5 Mbps，而 Starlink 上的位元率中位數是 2.51 Mbps，地面線路是 2.52 Mbps，兩者約有 75% 的時間達到 30 FPS<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, App. B.3" data-original="§4.1，App. B.3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, App. B.3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>0.375 · 34.9% · 24.8% · 5.7% · 2.7%</td><td>困難藏在尾端：作者以低於目標超過 0.375 Mbps 的樣本比例來量測，這個比例在麥克默多達 34.9%、奧斯陸 24.8%、慕尼黑 5.7%、台夫特 2.7%<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, Figs. 2–3" data-original="§4.1，Figs. 2–3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, Figs. 2–3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>46.3% · 32.0% · 5.5% · 4.9%</td><td>這些低於目標的時間中可歸因於重組的比例，在麥克默多是 46.3%、奧斯陸 32.0%、台夫特 5.5%、慕尼黑 4.9%，所以在缺口最大的地方，重組解釋了將近一半的缺口，而在通話本來就健康的地方只解釋了一小部分。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1–2 · 0.8 · 1.65</td><td>典型事件是位元率在重組後 1–2 秒內下降約 0.8 Mbps，接著的恢復在十秒後仍只是部分恢復，麥克默多的中位數此時仍停在 1.65 Mbps<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>30 · 2.5</td><td>由於同一篇論文中，飽和其配額的歐洲上行流可達約 30 Mbps，一通 2.5 Mbps 的通話只用了可用上行的大約十二分之一（見下方計算），這表示下降來自傳送端自行降速，鏈路容量仍有餘裕。</td></tr></tbody></table></div>
+<h2><span class="en">3. The design</span><span class="zh">3. 設計</span></h2>
+<p class="en">Instrumented WebRTC exposes the bandwidth estimators alongside live packet probes. Reconfiguration creates a delay gradient that can trigger GCC’s overuse state.</p><p class="zh">加裝量測的 WebRTC 配合實際封包探測，揭露頻寬估計器的狀態。重組造成的延遲梯度可能觸發 GCC 過載判定。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The study is built to see inside the congestion controller as well as at the wire.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>143 · 142 · 8593</td><td>Original Teams runs in headless Chromium 143 through DevTools. Instrumented Chromium 142 LibWebRTC exposes GCC state. Pion sends synthetic RFC 8593 video with congestion control disabled or SCReAMv1 enabled.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>50 ms</td><td>WebRTC statistics are logged every 50 ms alongside IRTT and ICMP probes <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3" data-original="§3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>Qualitative scope</td><td>GCC itself keeps two estimates of available bandwidth and sends at the lower of them.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>The loss estimate follows receiver-reported loss. The delay estimate follows one-way delay variation between packet groups. It reduces rate in the overuse state because rising delay suggests queue growth.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>That design is sound on a wired path, where delay rises only when a queue grows</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>15</td><td>but on Starlink the 15-second reconfiguration reallocates satellites and frames and moves the latency in a step</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>74 ms · 140 ms</td><td>which Casparsen et al. measure as a start-of-period spike averaging about 74 ms above the period mean within the first 140 ms <sup class="cite"><a aria-label="Andreas Casparsen, Jonas Ellegaard Jakobsen, Jimmy Jessen Nielsen, Petar Popovski, Israel Leyva-Mayorga · Statistical Characterization and Prediction of E2E Latency over LEO Satellite Networks · arXiv 2601.08439" class="cite-ref" data-cite="57" data-locator="Fig. 3" data-original="Fig. 3 of arXiv 2601.08439" data-ref="casparsen2026" href="../references.html#ref-57">[57, Fig. 3]</a></sup> <span class="src-tag pp">preprint</span></td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>so the trend filter sees a delay gradient that arises from reconfiguration and declares overuse at a moment when capacity may be unchanged or larger.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這項研究的設計是要同時看進壅塞控制器內部與線路上。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>143 · 142 · 8593</td><td>Teams 在背景執行的 Chromium 143 中原版地執行，由 DevTools 協定驅動，另一個以 Chromium 142 自建的 LibWebRTC 則揭露 GCC 的內部狀態，而以 Pion 為基礎、各自停用壅塞控制與採用 SCReAMv1 的傳送端，發送合成的 RFC 8593 視訊流量作為基準。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>50 ms</td><td>WebRTC 統計每 50 ms 記錄一次，並搭配 IRTT 與 ICMP 探測<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3" data-original="§3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>GCC 本身維持兩個可用頻寬估計，並以兩者中較低者發送。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>基於遺失的估計對接收端回報的封包遺失比例做出反應，基於延遲的估計則觀察封包群組之間單向延遲變化的趨勢，在過載、正常與欠載三種狀態間移動，並在宣告過載時降低速率，因為延遲梯度上升是它判斷佇列正在累積的訊號。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>這個設計在有線路徑上是合理的，因為延遲只會在佇列增長時上升。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>15 · 140 ms · 74 ms</td><td>但在 Starlink 上，15 秒重組會重新分配衛星與幀，讓延遲以階躍方式移動，Casparsen 等人量得週期起始的前 140 ms 內平均比週期均值高約 74 ms 的尖峰<sup class="cite"><a aria-label="Andreas Casparsen, Jonas Ellegaard Jakobsen, Jimmy Jessen Nielsen, Petar Popovski, Israel Leyva-Mayorga · Statistical Characterization and Prediction of E2E Latency over LEO Satellite Networks · arXiv 2601.08439" class="cite-ref" data-cite="57" data-locator="Fig. 3" data-original="arXiv 2601.08439 Fig. 3" data-ref="casparsen2026" href="../references.html#ref-57">[57, Fig. 3]</a></sup><span class="src-tag pp">預印本</span>，於是趨勢濾波器看到一個來自重組的延遲梯度，在容量可能維持固定甚至更大的時刻宣告過載。</td></tr></tbody></table></div>
+<p class="en">The study labels reconfiguration from earlier timing evidence and detects dish handovers from obstruction maps. Its attribution window is a stated heuristic.</p><p class="zh">研究依先前時序證據標記重組，並從遮蔽圖辨識天線換手，事件歸因窗口則採用明列的啟發式方法。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Two event labels make this testable.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>12 · 27 · 42 · 57 · 1 · 1 s</td><td>Prior work supplies the synchronized :12/:27/:42/:57 labels. Dish handovers come from angular shifts in consecutive obstruction maps, polled through gRPC at 1 Hz. Alignment means within ±1 s of reconfiguration <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3, §4.2" data-original="§3, §4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3, §4.2]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>1.5 s · 15%</td><td>Attribution uses a 1.5 s event window and a 15% threshold. The authors identify this rule as a heuristic.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>5–10</td><td>A satellite remains visible for 5–10 minutes, so only a few of the four reconfigurations per minute involve handover. Separate labels allow separate effect comparisons.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>50 ms · 0.31 · 0.18 · 0.15 · 0.12</td><td>Handovers cause longer overuse and larger rate cuts. Duration gaps exceed 50 ms at McMurdo and Munich. Median cuts are Oslo 0.31, McMurdo 0.18, Munich 0.15 and Delft 0.12 Mbps <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, Fig. 6" data-original="§4.2, Fig. 6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, Fig. 6]</a></sup>.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>兩種事件標籤讓這件事可以被檢驗。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>12 · 27 · 42 · 57</td><td>重組錨定在先前研究得出、全球同步的 :12、:27、:42 與 :57 邊界，其依據是先前研究。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1</td><td>天線換手則從終端 gRPC 介面以 1 Hz 輪詢所回傳的連續遮蔽圖之間的角度位移來辨識，換手落在某次重組的 ±1 秒內時稱為規則換手，窗口之外則為偏離排程邊界的換手<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3, §4.2" data-original="§3、§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3, §4.2]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>1.5 · 15%</td><td>過載轉換與低於目標的時段，若落在某事件的 1.5 秒窗口內並超過 15% 門檻，就歸因於該事件，這是作者公開說明的啟發式方法。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>5–10</td><td>由於一顆衛星通常在天線換手前保持可見 5–10 分鐘，每分鐘四次重組中只有極少數伴隨換手，因此兩種標籤對應相異事件，論文也才能各自探問換手與單純重組何者傷害較大。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>50 ms · 0.31 · 0.18 · 0.15 · 0.12</td><td>結果顯示換手造成較長的過載期與較大的發送速率削減，在麥克默多與慕尼黑的持續時間差距超過 50 ms，發送速率變化中位數在奧斯陸為 0.31 Mbps、麥克默多 0.18、慕尼黑 0.15、台夫特 0.12<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, Fig. 6" data-original="§4.2，Fig. 6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, Fig. 6]</a></sup>。</td></tr></tbody></table></div>
+<figure class="plate"><div class="img" style="background:var(--paper)">
+<svg aria-label="One minute of a Teams call over Starlink: reconfiguration boundaries, handovers and the bitrate drop" class="halo" role="img" viewbox="0 0 760 300">
+<style>svg.halo text{paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}</style>
+<rect fill="var(--paper)" height="300" width="760"></rect>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="20">One minute of an uplink call over Starlink (schematic from §4.1–4.2 numbers)</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="20">Starlink 上一通上行通話的一分鐘（依 §4.1–4.2 數字繪製的示意圖）</text>
+<!-- ±1 s windows -->
+<g fill="var(--accent)" opacity="0.13">
+<rect height="228" width="22.7" x="164.7" y="36"></rect><rect height="228" width="22.7" x="334.7" y="36"></rect><rect height="228" width="22.7" x="504.7" y="36"></rect><rect height="228" width="22.7" x="674.7" y="36"></rect>
+</g>
+<g stroke="var(--accent)" stroke-dasharray="4 3" stroke-width="1.2">
+<line x1="176" x2="176" y1="36" y2="264"></line><line x1="346" x2="346" y1="36" y2="264"></line><line x1="516" x2="516" y1="36" y2="264"></line><line x1="686" x2="686" y1="36" y2="264"></line>
+</g>
+<text class="en" fill="var(--accent)" font-size="10.5" x="40" y="50">scheduled reconfiguration at :12 :27 :42 :57, shaded ±1 s</text>
+<text class="zh" fill="var(--accent)" font-size="10.5" x="40" y="50">排程重組於 :12 :27 :42 :57，陰影為 ±1 秒</text>
+<!-- handover track -->
+<text class="en" fill="var(--ink-2)" font-size="10.5" x="40" y="78">dish handovers (angular shift of 1 Hz obstruction maps)</text>
+<text class="zh" fill="var(--ink-2)" font-size="10.5" x="40" y="78">天線換手（1 Hz 遮蔽圖的角度位移）</text>
+<line stroke="var(--rule)" x1="40" x2="720" y1="96" y2="96"></line>
+<circle cx="349" cy="96" fill="var(--good)" r="6"></circle>
+<circle cx="448" cy="96" fill="var(--bad)" r="6"></circle>
+<text class="en" fill="var(--good)" font-size="9.5" x="236" y="116">aligned: within ±1 s (≥89% DE/NL/NO)</text>
+<text class="zh" fill="var(--good)" font-size="9.5" x="236" y="116">規則：在 ±1 秒內（DE/NL/NO ≥89%）</text>
+<text class="en" fill="var(--bad)" font-size="9.5" x="460" y="116">off-boundary: outside (30.7% at McMurdo)</text>
+<text class="zh" fill="var(--bad)" font-size="9.5" x="460" y="116">偏離排程邊界的：在窗口外（麥克默多 30.7%）</text>
+<!-- GCC state -->
+<text class="en" fill="var(--ink-2)" font-size="10.5" x="40" y="140">GCC delay-based detector</text>
+<text class="zh" fill="var(--ink-2)" font-size="10.5" x="40" y="140">GCC 基於延遲的偵測器</text>
+<rect fill="var(--warn)" height="12" width="14" x="346" y="131"></rect>
+<text class="en" fill="var(--warn)" font-size="9.5" x="366" y="141">overuse declared: latency step read as a growing queue</text>
+<text class="zh" fill="var(--warn)" font-size="9.5" x="366" y="141">宣告過載：延遲階躍被讀成正在增長的佇列</text>
+<!-- bitrate -->
+<text class="en" fill="var(--ink-2)" font-size="10.5" x="40" y="164">Teams uplink bitrate</text>
+<text class="zh" fill="var(--ink-2)" font-size="10.5" x="40" y="164">Teams 上行位元率</text>
+<line stroke="var(--ink-3)" stroke-dasharray="2 3" x1="40" x2="720" y1="180" y2="180"></line>
+<text class="en" fill="var(--ink-3)" font-size="9" text-anchor="end" x="722" y="176">2.5 Mbps cap</text>
+<text class="zh" fill="var(--ink-3)" font-size="9" text-anchor="end" x="722" y="176">2.5 Mbps 上限</text>
+<path d="M40 181 L346 181 L357 196 L369 209 L400 211 L459 211 L516 205 L600 198 L686 192 L720 191" fill="none" stroke="var(--cool)" stroke-width="2.2"></path>
+<text class="en" fill="var(--ink)" font-size="9.5" x="375" y="230">−0.8 Mbps within 1–2 s</text>
+<text class="zh" fill="var(--ink)" font-size="9.5" x="375" y="230">1–2 秒內 −0.8 Mbps</text>
+<text class="en" fill="var(--ink-2)" font-size="9.5" x="470" y="246">partial recovery. McMurdo median 1.65 Mbps at t = 10 s</text>
+<text class="zh" fill="var(--ink-2)" font-size="9.5" x="470" y="246">部分恢復。麥克默多中位數在 t = 10 秒時為 1.65 Mbps</text>
+<line stroke="var(--ink-3)" x1="459" x2="459" y1="214" y2="238"></line>
+<!-- axis -->
+<line stroke="var(--ink-3)" x1="40" x2="720" y1="264" y2="264"></line>
+<g fill="var(--ink-3)" font-size="9.5" text-anchor="middle">
+<text class="en" x="40" y="280">0 s</text><text class="zh" x="40" y="280">0 秒</text>
+<text class="en" x="176" y="280">12</text><text class="zh" x="176" y="280">12</text>
+<text class="en" x="346" y="280">27</text><text class="zh" x="346" y="280">27</text>
+<text class="en" x="516" y="280">42</text><text class="zh" x="516" y="280">42</text>
+<text class="en" x="686" y="280">57</text><text class="zh" x="686" y="280">57</text>
+</g>
+<text class="en" fill="var(--ink-3)" font-size="9.5" text-anchor="end" x="720" y="294">seconds past the minute</text>
+<text class="zh" fill="var(--ink-3)" font-size="9.5" text-anchor="end" x="720" y="294">每分鐘內的秒數</text>
+</svg></div>
+<figcaption><span class="en"><b class="fignum">Figure A. </b>Reconfiguration at second 27 changes latency and triggers GCC overuse. The schematic bitrate falls about 0.8 Mbps within 1–2 s, then recovers partly over ten seconds. European alignment is at least 89% within ±1 s, while McMurdo has 30.7% off-boundary handovers. The trace illustrates reported drop and recovery values.</span><span class="zh"><b class="fignum">圖 A。</b>第 27 秒的重組讓延遲一次跳動，GCC 內部基於延遲的偵測器宣告過載，Teams 上行在 1–2 秒內下降約 0.8 Mbps，接下來十秒只部分恢復。天線換手若落在邊界周圍 ±1 秒的帶內稱為規則換手，慕尼黑、台夫特與奧斯陸至少 89% 屬於此類，窗口之外則為偏離排程邊界的換手，麥克默多有 30.7% 屬於此類。位元率曲線是依論文回報的下降與恢復數值繪製的示意，屬於示意軌跡。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3, §4.1–4.2, Figs. 2–3, 6" data-original="Drawn for this primer from Fries, Matezki, Bose &amp; Mohan, IMC 2026, §3, §4.1–4.2, Figs. 2–3, 6; boundary seconds from Tanveer et al., CoNEXT 2023 Companion." data-ref="imc26-fries" href="../references.html#ref-51">[51, §3, §4.1–4.2, Figs. 2–3, 6]</a></sup> <sup class="cite"><a aria-label="Tanveer, Puchol, Singh, Bianchi, Nithyanand · Making Sense of Constellations: Methodologies for Understanding Starlink&#x27;s Scheduling Algorithms · CoNEXT 2023 Companion · 2023" class="cite-ref" data-cite="13" data-locator="" data-original="Drawn for this primer from Fries, Matezki, Bose &amp; Mohan, IMC 2026, §3, §4.1–4.2, Figs. 2–3, 6; boundary seconds from Tanveer et al., CoNEXT 2023 Companion." data-ref="conext23-tanveer" href="../references.html#ref-13">[13]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Fries, Matezki, Bose &amp; Mohan, IMC 2026, §3, §4.1–4.2, Figs. 2–3, 6. Boundary seconds from Tanveer et al., CoNEXT 2023 Companion.</details></span></figcaption></figure>
+<figure class="plate"><div class="img" style="background:var(--paper)">
+<svg aria-label="Four per-site statistics: handover alignment, delay-based control, attributable overuse, below-target time from reconfigurations" role="img" viewbox="0 0 760 230">
+<rect fill="var(--paper)" height="230" width="760"></rect>
+<text class="en" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="20">Four sites, four statistics (% , bar length to scale, 100% = 100 px)</text>
+<text class="zh" fill="var(--ink)" font-size="12" font-weight="600" x="20" y="20">四個站點、四項統計（%，長條長度依比例，100% = 100 px）</text>
+<!-- panel titles -->
+<text class="en" fill="var(--ink-2)" font-size="10" font-weight="600" x="20" y="50">handovers within ±1 s</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" font-weight="600" x="20" y="50">±1 秒內的換手</text>
+<text class="en" fill="var(--ink-2)" font-size="10" font-weight="600" x="205" y="50">delay-based estimator in control</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" font-weight="600" x="205" y="50">基於延遲的估計器掌控</text>
+<text class="en" fill="var(--ink-2)" font-size="10" font-weight="600" x="390" y="50">overuse at reconfig./handover</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" font-weight="600" x="390" y="50">過載發生於重組/換手</text>
+<text class="en" fill="var(--ink-2)" font-size="10" font-weight="600" x="575" y="50">below-target time from reconfig.</text>
+<text class="zh" fill="var(--ink-2)" font-size="10" font-weight="600" x="575" y="50">低於目標時間中歸因重組</text>
+<!-- panel 1 -->
+<g fill="var(--ink-2)" font-size="9.5">
+<text class="en" x="20" y="82">DE·NL·NO</text><text class="zh" x="20" y="82">DE·NL·NO</text>
+<text class="en" x="20" y="112">AQ</text><text class="zh" x="20" y="112">AQ</text>
+</g>
+<rect fill="var(--good)" height="14" opacity="0.8" width="89" x="72" y="72"></rect>
+<rect fill="var(--bad)" height="14" opacity="0.75" width="69.3" x="72" y="102"></rect>
+<g fill="var(--ink)" font-size="9.5">
+<text class="en" x="165" y="83">≥89</text><text class="zh" x="165" y="83">≥89</text>
+<text class="en" x="145" y="113">69.3</text><text class="zh" x="145" y="113">69.3</text>
+</g>
+<!-- panels 2-4 site labels -->
+<g fill="var(--ink-2)" font-size="9.5">
+<text class="en" x="205" y="82">AQ</text><text class="zh" x="205" y="82">AQ</text>
+<text class="en" x="205" y="112">DE</text><text class="zh" x="205" y="112">DE</text>
+<text class="en" x="205" y="142">NL</text><text class="zh" x="205" y="142">NL</text>
+<text class="en" x="205" y="172">NO</text><text class="zh" x="205" y="172">NO</text>
+<text class="en" x="390" y="82">AQ</text><text class="zh" x="390" y="82">AQ</text>
+<text class="en" x="390" y="112">DE</text><text class="zh" x="390" y="112">DE</text>
+<text class="en" x="390" y="142">NL</text><text class="zh" x="390" y="142">NL</text>
+<text class="en" x="390" y="172">NO</text><text class="zh" x="390" y="172">NO</text>
+<text class="en" x="575" y="82">AQ</text><text class="zh" x="575" y="82">AQ</text>
+<text class="en" x="575" y="112">DE</text><text class="zh" x="575" y="112">DE</text>
+<text class="en" x="575" y="142">NL</text><text class="zh" x="575" y="142">NL</text>
+<text class="en" x="575" y="172">NO</text><text class="zh" x="575" y="172">NO</text>
+</g>
+<!-- panel 2 bars -->
+<g fill="var(--cool)" opacity="0.8">
+<rect height="14" width="99" x="230" y="72"></rect><rect height="14" width="99.6" x="230" y="102"></rect><rect height="14" width="99.1" x="230" y="132"></rect><rect height="14" width="96.4" x="230" y="162"></rect>
+</g>
+<g fill="var(--ink)" font-size="9.5">
+<text class="en" x="333" y="83">99.0</text><text class="zh" x="333" y="83">99.0</text>
+<text class="en" x="333" y="113">99.6</text><text class="zh" x="333" y="113">99.6</text>
+<text class="en" x="333" y="143">99.1</text><text class="zh" x="333" y="143">99.1</text>
+<text class="en" x="333" y="173">96.4</text><text class="zh" x="333" y="173">96.4</text>
+</g>
+<!-- panel 3 bars -->
+<g fill="var(--warn)" opacity="0.8">
+<rect height="14" width="60.7" x="415" y="72"></rect><rect height="14" width="100" x="415" y="102"></rect><rect height="14" width="97.4" x="415" y="132"></rect><rect height="14" width="91" x="415" y="162"></rect>
+</g>
+<g fill="var(--ink)" font-size="9.5">
+<text class="en" x="479" y="83">60.7 (n=140)</text><text class="zh" x="479" y="83">60.7（n=140）</text>
+<text class="en" x="519" y="113">100 (35)</text><text class="zh" x="519" y="113">100（35）</text>
+<text class="en" x="516" y="143">97.4 (78)</text><text class="zh" x="516" y="143">97.4（78）</text>
+<text class="en" x="510" y="173">91.0 (78)</text><text class="zh" x="510" y="173">91.0（78）</text>
+</g>
+<!-- panel 4 bars -->
+<g fill="var(--accent)" opacity="0.8">
+<rect height="14" width="46.3" x="600" y="72"></rect><rect height="14" width="4.9" x="600" y="102"></rect><rect height="14" width="5.5" x="600" y="132"></rect><rect height="14" width="32" x="600" y="162"></rect>
+</g>
+<g fill="var(--ink)" font-size="9.5">
+<text class="en" x="650" y="83">46.3</text><text class="zh" x="650" y="83">46.3</text>
+<text class="en" x="609" y="113">4.9</text><text class="zh" x="609" y="113">4.9</text>
+<text class="en" x="609" y="143">5.5</text><text class="zh" x="609" y="143">5.5</text>
+<text class="en" x="636" y="173">32.0</text><text class="zh" x="636" y="173">32.0</text>
+</g>
+<text class="en" fill="var(--ink-3)" font-size="9.5" x="20" y="206">AQ = McMurdo (97.6° shell, ISLs to Sydney PoP). DE = Munich, NL = Delft, NO = Oslo (Frankfurt PoP). n = overuse transitions.</text>
+<text class="zh" fill="var(--ink-3)" font-size="9.5" x="20" y="206">AQ = 麥克默多（97.6° 殼層，經 ISL 到雪梨 PoP）。DE = 慕尼黑、NL = 台夫特、NO = 奧斯陸（法蘭克福 PoP）。n = 過載轉換次數。</text>
+<text class="en" fill="var(--ink-3)" font-size="9.5" x="20" y="222">The European handover figure is reported only as a lower bound for the three sites together.</text>
+<text class="zh" fill="var(--ink-3)" font-size="9.5" x="20" y="222">歐洲站點的換手數字只以三站合併的下限形式回報。</text>
+</svg></div>
+<figcaption><span class="en"><b class="fignum">Figure B. </b>The delay estimator usually controls Teams bandwidth. Most European overuse transitions coincide with labeled events. McMurdo has weaker handover alignment and a smaller attributed overuse share, despite more transitions and more reconfiguration-attributed shortfall.</span><span class="zh"><b class="fignum">圖 B。</b>在每個站點，基於延遲的估計器幾乎全程掌控 Teams 的頻寬估計，而歐洲站點的過載轉換幾乎全都與重組或換手同時發生。麥克默多在每個面向上都與眾相異：換手對齊最弱、過載轉換次數最多但可歸因比例最低，而低於目標的時間中被重組解釋的比例最大。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1–4.2, Figs. 2–3" data-original="Drawn for this primer from Fries, Matezki, Bose &amp; Mohan, IMC 2026, §4.1–4.2, Figs. 2–3." data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1–4.2, Figs. 2–3]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Fries, Matezki, Bose &amp; Mohan, IMC 2026, §4.1–4.2, Figs. 2–3.</details></span></figcaption></figure>
+<div class="tbl calc"><table><thead><tr><th class="en">Question</th><th class="zh">問題</th><th class="en">Formula</th><th class="zh">公式</th><th class="en">Result</th><th class="zh">結果</th></tr></thead><tbody>
+<tr><td><span class="en">How often would a randomly timed handover land within ±1 s of a 15-s boundary by chance?</span><span class="zh">隨機時間點發生的換手，偶然落在 15 秒邊界 ±1 秒內的機率是多少？</span></td><td>\( p = \dfrac{2\ \text{s}}{15\ \text{s}} \)</td><td>13.3% <span class="cn" style="white-space:normal;min-width:16em"><span class="en">computed. Window from §4.2, period from Tanveer et al. Both the ≥89% European and the 69.3% McMurdo alignment are far above this chance level.</span><span class="zh">計算值。窗口取自 §4.2，週期取自 Tanveer 等人。歐洲 ≥89% 與麥克默多 69.3% 的對齊率都遠高於這個偶然水準。</span></span></td></tr>
+<tr><td><span class="en">What share of McMurdo handovers was aligned?</span><span class="zh">麥克默多的換手有多少比例是對齊的？</span></td><td>\( \dfrac{678 - 208}{678} \)</td><td>69.3% <span class="cn" style="white-space:normal;min-width:16em"><span class="en">computed from the 208 of 678 off-boundary handovers in §4.2.</span><span class="zh">由 §4.2 的 678 次中 208 次偏離排程邊界的換手計算。</span></span></td></tr>
+<tr><td><span class="en">What fraction of the Teams target is lost in a 0.8 Mbps drop?</span><span class="zh">0.8 Mbps 的下降佔 Teams 目標的多少比例？</span></td><td>\( \dfrac{0.8}{2.5} \)</td><td>32% <span class="cn" style="white-space:normal;min-width:16em"><span class="en">computed. Cap and drop from §4.1. The call falls to about 1.7 Mbps.</span><span class="zh">計算值。上限與下降量取自 §4.1。通話降到約 1.7 Mbps。</span></span></td></tr>
+<tr><td><span class="en">How many reconfiguration boundaries pass during one satellite's 5–10 min visibility?</span><span class="zh">一顆衛星 5–10 分鐘的可見期間會經過多少次重組邊界？</span></td><td>\( (5\text{–}10\ \text{min}) \times 4\ \text{min}^{-1} \)</td><td>20–40 <span class="cn" style="white-space:normal;min-width:16em"><span class="en">computed. Dwell from Fries et al., four boundaries per minute from Tanveer et al. Most reconfigurations therefore retain the dish’s serving satellite.</span><span class="zh">計算值。停留時間取自 Fries 等人，每分鐘四次邊界取自 Tanveer 等人。因此對某一天線而言，大多數重組只涉及排程重組。</span></span></td></tr>
+<tr><td><span class="en">What fraction of a saturated European uplink does a Teams call use?</span><span class="zh">一通 Teams 通話佔飽和的歐洲上行多少比例？</span></td><td>\( \dfrac{2.5\ \text{Mbps}}{\approx 30\ \text{Mbps}} \)</td><td>≈ 8% <span class="cn" style="white-space:normal;min-width:16em"><span class="en">computed. Both values from Fries et al. The shortfall comes from the sender’s decision while link capacity remains available.</span><span class="zh">計算值。兩個數值皆取自 Fries 等人。缺口是傳送端的決定，，容量仍有餘裕。</span></span></td></tr>
+</tbody></table></div>
+<h2><span class="en">4. Evaluation setup</span><span class="zh">4. 實驗設定</span></h2>
+<p class="en">The measurement covers uplink conferencing traffic at European and Antarctic LEOScope sites. The Antarctic path additionally carries traffic over ISLs to a distant PoP.</p><p class="zh">量測涵蓋歐洲與南極 LEOScope 站點的上行會議流量，南極路徑還經 ISL 將流量送往遠端 PoP。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>48 · 52 · 60 · 78 · 2025 · 2026</td><td>LEOScope provides live measurements from Munich (≈48°N), Delft (≈52°N), Oslo (≈60°N) and McMurdo (≈78°S), spanning November 2025–April 2026 <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3" data-original="§3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>97.6°</td><td>European sites use bent-pipe access to Frankfurt. McMurdo uses the 97.6° shell and ISLs to Sydney, making it the study's sole ISL call path.</td></tr>
+<tr class="en"><th scope="row">Latency comparison</th><td>Qualitative scope</td><td>The study measures the live network. ISL rate, latency, topology and hop count on the McMurdo path remain unspecified.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>15 · 30 s · 10 · 7 · 2.5 · 13 · 19</td><td>Runs last 15 minutes, with the first and last 30 s discarded. At 2.5 Mbps, video exceeds ten hours per site except Oslo's seven hours. Munich adds 13 hours at 10 Mbps, and Pion baselines add 19 hours.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>5 · 10</td><td>The Delft node, a Raspberry Pi 5, was excluded from the 10 Mbps runs.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Every measurement is on the uplink, from the terminal toward the conferencing service.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2025 · 11 · 2026 · 4 · 48° · 52° · 60° · 78°</td><td>這是在正式網路上的實地量測，於 2025 年 11 月至 2026 年 4 月間在慕尼黑（約北緯 48°）、台夫特（約北緯 52°）、奧斯陸（約北緯 60°）與麥克默多（約南緯 78°）的 LEOScope 節點上進行<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§3" data-original="§3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>97.6°</td><td>三個歐洲站點經彎管抵達法蘭克福 PoP，麥克默多則由 97.6° 殼層服務，流量經星間鏈路送到雪梨 PoP，使它成為研究中唯一由 ISL 承載通話的路徑。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>論文待建立星座模型，因此陳述待補充 ISL 速率、ISL 延遲或拓樸，也回報待補充麥克默多路徑上的 ISL 跳數。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>15 · 30 · 2.5 · 10 · 7 · 13 · 19</td><td>每次執行 15 分鐘，捨棄頭尾各 30 秒，在 2.5 Mbps 下得到麥克默多、慕尼黑與台夫特各超過 10 小時、奧斯陸超過 7 小時的視訊，另有慕尼黑 10 Mbps 的 13 小時與 Pion 基準的 19 小時。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>5 · 10</td><td>台夫特節點是一台 Raspberry Pi 5，列於範圍之外 10 Mbps 的實驗。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>所有量測都在上行，即從終端往會議服務的方向。</td></tr></tbody></table></div>
+<p class="en">Higher-rate Munich runs amplify the same controller response. A sender with congestion control disabled demonstrates spare capacity on the tested link.</p><p class="zh">慕尼黑的較高速率實驗放大了相同控制器反應，停用壅塞控制的傳送端則顯示測試鏈路仍有可用容量。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Capacity and rate</th><td>10</td><td>The 10 Mbps runs in Munich show the same mechanism at a rate where it bites harder.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>9.5% · 41.5% · 4.62% · 0.25% · 2.5 · 3.5% · 100 · 1.0% · 0% · 10</td><td>At 10 Mbps, Teams meets bitrate targets 9.5% of time and frame-rate targets 41.5%. Loss-driven reductions rise from 0.25% to 4.62%. Loss affects 3.5% of 100-ms intervals versus 1.0%, yet median reconfiguration loss is 0%. A sender with congestion control disabled delivers 10 Mbps on the same link <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, App. B.5–B.6, Fig. 8" data-original="§4.2, App. B.5–B.6, Fig. 8" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, App. B.5–B.6, Fig. 8]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>Qualitative scope</td><td>The link can carry the rate, so the gap between what it carries and what Teams sends is the price of the controller's interpretation.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>10</td><td>慕尼黑的 10 Mbps 實驗在一個影響更明顯的速率下展現了同一機制。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>9.5% · 41.5% · 2.5 · 0.25% · 4.62% · 100 ms · 1.0% · 3.5% · 0% · 10</td><td>Teams 只有 9.5% 的時間達到目標位元率、41.5% 的時間達到目標幀率，基於遺失的降速從 2.5 Mbps 時的 0.25% 時間升到 4.62%，有遺失的 100 ms 區間從 1.0% 升到 3.5%，但重組周圍的遺失中位數是 0%，而一個停用壅塞控制的傳送端在同一條鏈路上能送出 10 Mbps<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, App. B.5–B.6, Fig. 8" data-original="§4.2，App. B.5–B.6，Fig. 8" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, App. B.5–B.6, Fig. 8]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>鏈路承載得了這個速率，所以鏈路能承載的與 Teams 實際送出的之間的差距，就是控制器解讀方式的代價。</td></tr></tbody></table></div>
+<h2><span class="en">5. What was measured</span><span class="zh">5. 量到了什麼</span></h2>
+<div class="tbl"><table>
+<thead><tr><th><span class="en">Claim</span><span class="zh">宣稱</span></th><th><span class="en">Setup and caveat</span><span class="zh">設定與附註</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">Delay-based GCC estimator controls the bandwidth estimate 96.4–99.6% of the time (AQ 99.0, DE 99.6, NL 99.1, NO 96.4) <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span><span class="zh">基於延遲的 GCC 估計器有 96.4–99.6% 的時間掌控頻寬估計（AQ 99.0、DE 99.6、NL 99.1、NO 96.4）<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span></td><td><span class="en">Instrumented LibWebRTC, 2.5 Mbps, uplink only</span><span class="zh">加裝量測的 LibWebRTC，2.5 Mbps，僅上行</span></td></tr>
+<tr><td><span class="en">60.7–100% of overuse transitions attributable to reconfigurations or handovers (AQ 60.7% of 140, DE 100% of 35, NL 97.4% of 78, NO 91.0% of 78) <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span><span class="zh">60.7–100% 的過載轉換可歸因於重組或換手（AQ 140 次中 60.7%、DE 35 次中 100%、NL 78 次中 97.4%、NO 78 次中 91.0%）<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span></td><td><span class="en">Heuristic attribution with a 1.5 s window and 15% threshold. Time in overuse only 0.07–0.40%</span><span class="zh">以 1.5 秒窗口與 15% 門檻的啟發式歸因。處於過載的時間只有 0.07–0.40%</span></td></tr>
+<tr><td><span class="en">Teams uplink drops ~0.8 Mbps within 1–2 s of a reconfiguration, partial recovery over 10 s (McMurdo median 1.65 Mbps at t = 10 s) <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></span><span class="zh">Teams 上行在重組後 1–2 秒內下降約 0.8 Mbps，十秒內只部分恢復（麥克默多 t = 10 秒時中位數 1.65 Mbps）<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></span></td><td><span class="en">Unmodified Teams at 720p30 with a 2.5 Mbps cap</span><span class="zh">原版 Teams，720p30，上限 2.5 Mbps</span></td></tr>
+<tr><td><span class="en">Below-target share 34.9% AQ, 24.8% NO, 5.7% DE, 2.7% NL, of which reconfigurations explain 46.3%, 32.0%, 4.9%, 5.5% <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></span><span class="zh">低於目標比例 AQ 34.9%、NO 24.8%、DE 5.7%、NL 2.7%，其中重組各自解釋 46.3%、32.0%、4.9%、5.5%<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></span></td><td><span class="en">Margin of 0.375 Mbps below target. Median bitrate 2.51 vs 2.52 Mbps terrestrial</span><span class="zh">以低於目標 0.375 Mbps 為界。位元率中位數 2.51 對地面 2.52 Mbps</span></td></tr>
+<tr><td><span class="en">≥89% of handovers within ±1 s of a boundary at DE/NL/NO. 208 of 678 (30.7%) off-boundary at McMurdo <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span><span class="zh">DE/NL/NO 至少 89% 的換手在邊界 ±1 秒內。麥克默多 678 次中 208 次（30.7%）偏離排程邊界的<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></span></td><td><span class="en">Handovers inferred from 1 Hz obstruction maps. Boundaries assumed from prior work, taken from prior work</span><span class="zh">換手由 1 Hz 遮蔽圖推斷。邊界取自先前研究的時程假設</span></td></tr>
+<tr><td><span class="en">Handovers cause longer overuse (gap &gt;50 ms at AQ, DE) and larger send-rate cuts (medians 0.12–0.31 Mbps) than plain reconfigurations <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, Fig. 6" data-original="§4.2, Fig. 6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, Fig. 6]</a></sup></span><span class="zh">換手比單純重組造成更長的過載（AQ、DE 差距 &gt;50 ms）與更大的發送速率削減（中位數 0.12–0.31 Mbps）<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, Fig. 6" data-original="§4.2，Fig. 6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, Fig. 6]</a></sup></span></td><td><span class="en">21 of McMurdo's off-boundary handovers triggered delay-based overuse</span><span class="zh">麥克默多的偏離排程邊界的換手中有 21 次觸發基於延遲的過載</span></td></tr>
+<tr><td><span class="en">At 10 Mbps (Munich), target bitrate met 9.5% of the time while a sender with congestion control disabled delivers 10 Mbps <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, App. B.5–B.6" data-original="§4.2, App. B.5–B.6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, App. B.5–B.6]</a></sup></span><span class="zh">在 10 Mbps（慕尼黑）下只有 9.5% 的時間達到目標位元率，而停用壅塞控制的傳送端能送出 10 Mbps<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2, App. B.5–B.6" data-original="§4.2，App. B.5–B.6" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2, App. B.5–B.6]</a></sup></span></td><td><span class="en">One site only. Delft excluded</span><span class="zh">只有一個站點。台夫特列於範圍之外</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">6. Limits and open questions</span><span class="zh">6. 範圍與待解問題</span></h2>
+<ul>
+<li><span class="en"><strong>McMurdo combines several changed conditions.</strong> Its polar shell, ISL path to Sydney and weather differ from the European sites. Their effects remain combined. Attributing the 30.7% off-boundary share or 46.3% reconfiguration-related shortfall specifically to ISLs therefore needs additional evidence.</span><span class="zh"><strong>麥克默多的成因相互混淆。</strong>南極站點與歐洲站點在殼層（97.6° ，歐洲使用中傾角殼層）、路徑（經 ISL 到雪梨，歐洲則經彎管到法蘭克福）與天氣上都相異，論文將這些因素合併觀察，所以 30.7% 的偏離排程邊界的比例與 46.3% 歸因於重組的缺口，歸因於 ISL 路由仍需各自證據。</span></li>
+<li><span class="en"><strong>Labels combine coarse observations and assumed timing.</strong> One-hertz polling gives the same time resolution as the ±1 s alignment window. Boundaries come from Tanveer et al., so schedule changes could invalidate the labels. Attribution also uses a stated 1.5 s window and 15% heuristic threshold. A random event enters the alignment band about 13.3% of the time. Observed alignment exceeds that baseline, while attribution percentages still need an equivalent comparison.</span><span class="zh"><strong>事件標籤粗略，且部分出於假設。</strong>換手是透過 1 Hz 輪詢的遮蔽圖觀察的，因此偵測解析度與決定換手如何規則的 ±1 秒窗口同樣大小。而邊界取自 Tanveer 等人，其量測來源是先前研究，這表示 15 秒排程後續若改變，就需要更新事件標籤。過載與缺口的歸因使用作者自稱為啟發式的 1.5 秒窗口與 15% 門檻，而隨機事件約有 13.3% 的時間會落在 ±1 秒帶內（見計算表），對齊百分比遠高於這個基準，但歸因百分比與此基準的比較則待補充。</span></li>
+<li><span class="en"><strong>The measurement covers uplink Teams traffic and one controller family.</strong> The downlink, where Garcia et al. Characterised the queue, remains outside the measurement scope, Zoom and Meet remain outside the measurement scope. The Pion and SCReAM baselines send synthetic RFC 8593 traffic rather than a real encoder's output. A reconfiguration-aware controller remains to be tested. A controller in the style of LeoCC is tried for real-time media. The detector the authors sketch would need more frequent RTCP feedback than Teams sends, so the remedy remains a proposal.</span><span class="zh"><strong>量測範圍涵蓋 Teams 上行與單一控制器家族。</strong>下行，也就是 Garcia 等人刻畫佇列的方向，量測待完成。Zoom 與 Meet 量測待完成。Pion 與 SCReAM 基準發送的是合成的 RFC 8593 流量，，實際編碼器輸出則待另行測試。即時媒體採用 LeoCC 式重組感知控制器的測試仍待完成，而作者勾勒的偵測器需要比 Teams 更頻繁的 RTCP 回饋，所以解方仍停留在提議階段。</span></li>
+<li><span class="en"><strong>Rare events have large effects.</strong> Delay-based overuse occupies 0.07–0.40% of time, with 35–140 transitions per site. This demonstrates clustering but gives limited samples for site comparisons. The 10 Mbps test uses Munich alone.</span><span class="zh"><strong>罕見的事件，巨大的影響。</strong>基於延遲的過載只佔 0.07–0.40% 的時間，因此結論建立在每站 35 到 140 次過載轉換上，足以顯示過載聚集在重組時刻，但用來比較站點則顯得單薄，而 10 Mbps 的結果只來自慕尼黑。</span></li>
+<li><span class="en"><strong>The citation scope is video conferencing.</strong> Handover alignment gives timing, while direct handover delay and loss effects remain open measurements. The fact base records this application scope in Part C item 8.</span><span class="zh"><strong>依其本質引用。</strong>由於換手對齊數字常被單獨流傳，事實庫記載這篇論文必須以 WebRTC 視訊會議研究的身分被引用（事實庫 Part C 第 8 項）。±1 秒對齊統計說的是換手何時發生，，一次換手增加的延遲與遺失則需另行量測，後者的直接量測待補充。</span></li>
+</ul>
+<h2><span class="en">7. How it connects</span><span class="zh">7. 與其他內容的關聯</span></h2>
+<ul>
+<li><span class="en"><a href="../chapters/c06-transport.html#s6-5">Section 6.5</a> compares GCC's 96.4–99.6% delay-based share and 0.8 Mbps drop with earlier Zoom delay and FEC measurements.</span><span class="zh"><a href="../chapters/c06-transport.html#s6-5">第 6.5 節</a>：應用一節，GCC 96.4–99.6% 的延遲主導比例與 0.8 Mbps 的下降，在此與 Mohan 等人的 Zoom 延遲與 FEC 數字並列。</span></li>
+<li><span class="en"><a href="../chapters/c06-transport.html#s6-1">Section 6.1</a> relates GCC's latency steps to the scheduled changes that affect BBR and Copa bulk transfers.</span><span class="zh"><a href="../chapters/c06-transport.html#s6-1">第 6.1 節</a>：傳送端看到什麼，因為誤導 GCC 的延遲階躍，正是大量傳輸研究中誤導 BBR 與 Copa 的同一個 15 秒階躍。</span></li>
+<li><span class="en"><a href="../chapters/c03-ground.html#s3-5">Section 3.5</a> distinguishes handover from scheduled reconfiguration using alignment results, alongside Tanveer's boundaries and Casparsen's initial spikes.</span><span class="zh"><a href="../chapters/c03-ground.html#s3-5">第 3.5 節</a>：15 秒排程與換手，≥89% 對 30.7% 的對齊統計在此與 Tanveer 等人的邊界及 Casparsen 等人的週期起始尖峰一起，把天線換手與排程重組區分開來。</span></li>
+<li><span class="en">Related studies: <a href="imc26-garcia-queue.html">Garcia et al.</a> examines queues, <a href="conext23-tanveer.html">Tanveer et al.</a> supplies boundaries, and <a href="www24-mohan.html">Mohan et al.</a> measures earlier video performance. <a href="imc22-kassem.html">Kassem et al.</a> supplies handover attribution, while <a href="hotnets24-lai-cc.html">Lai et al. <sup class="cite"><a aria-label="Lai, Li, Wu, Li, Liu, Liu, Xie, Li, Liu · Mind the Misleading Effects of LEO Mobility on End-to-End Congestion Control · ACM HotNets 2024 · 2024" class="cite-ref" data-cite="56" data-locator="" data-original="HotNets 2024" data-ref="hotnets24-lai-cc" href="../references.html#ref-56">[56]</a></sup></a> and <a href="sigcomm25-leocc.html">LeoCC</a> develop bulk-transfer controllers.</span><span class="zh">同組導讀：<a href="imc26-garcia-queue.html">Garcia 等人</a>談完成三方區分的下行佇列，<a href="conext23-tanveer.html">Tanveer 等人</a>談本文假設的邊界，<a href="www24-mohan.html">Mohan 等人</a>談最早的視訊會議數字，<a href="imc22-kassem.html">Kassem 等人</a>談本文細化的換手歸因，<a href="hotnets24-lai-cc.html">Lai 等人<sup class="cite"><a aria-label="Lai, Li, Wu, Li, Liu, Liu, Xie, Li, Liu · Mind the Misleading Effects of LEO Mobility on End-to-End Congestion Control · ACM HotNets 2024 · 2024" class="cite-ref" data-cite="56" data-locator="" data-original="HotNets 2024" data-ref="hotnets24-lai-cc" href="../references.html#ref-56">[56]</a></sup></a>與 <a href="sigcomm25-leocc.html">LeoCC</a> 則是迄今針對大量傳輸打造，即時媒體的適用性則待研究的重組感知控制器。</span></li>
+</ul>
+<h2><span class="en">Key numbers</span><span class="zh">關鍵數字</span></h2>
+<div class="tbl"><table><thead><tr><th class="en">Number</th><th class="zh">數字</th><th class="en">Meaning (setup)</th><th class="zh">意義（設定）</th></tr></thead><tbody>
+<tr><td class="num">96.4–99.6%</td><td class="en">Time the delay-based GCC estimator controls the bandwidth estimate, four sites <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td><td class="zh">基於延遲的 GCC 估計器掌控頻寬估計的時間比例，四個站點<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td></tr>
+<tr><td class="num">60.7–100%</td><td class="en">Overuse transitions attributable to reconfigurations or handovers, AQ lowest, DE highest <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td><td class="zh">可歸因於重組或換手的過載轉換，AQ 最低、DE 最高<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td></tr>
+<tr><td class="num">−0.8 Mbps · 1–2 s</td><td class="en">Teams uplink drop after a reconfiguration, from a 2.5 Mbps cap <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></td><td class="zh">重組後 Teams 上行從 2.5 Mbps 上限下降的幅度與時間<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></td></tr>
+<tr><td class="num">≥89%</td><td class="en">Handovers within ±1 s of :12/:27/:42/:57 at Munich, Delft, Oslo <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td><td class="zh">慕尼黑、台夫特、奧斯陸落在 :12/:27/:42/:57 ±1 秒內的換手比例<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td></tr>
+<tr><td class="num">208 / 678 = 30.7%</td><td class="en">Iraligned handovers at McMurdo, 97.6° shell with ISLs to the Sydney PoP <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td><td class="zh">麥克默多的偏離排程邊界的換手，97.6° 殼層、經 ISL 到雪梨 PoP<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.2" data-original="§4.2" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.2]</a></sup></td></tr>
+<tr><td class="num">34.9% · 46.3%</td><td class="en">McMurdo samples below target, and the share of that time attributable to reconfigurations <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></td><td class="zh">麥克默多低於目標的樣本比例，以及其中可歸因於重組的比例<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1" data-original="§4.1" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1]</a></sup></td></tr>
+<tr><td class="num">2.51 vs 2.52 Mbps</td><td class="en">Median Teams bitrate, Starlink vs terrestrial <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, App. B.3" data-original="§4.1, App. B.3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, App. B.3]</a></sup></td><td class="zh">Teams 位元率中位數，Starlink 對地面網路<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="§4.1, App. B.3" data-original="§4.1，App. B.3" data-ref="imc26-fries" href="../references.html#ref-51">[51, §4.1, App. B.3]</a></sup></td></tr>
+<tr><td class="num">9.5%</td><td class="en">Time the 10 Mbps target is met in Munich, while a sender with congestion control disabled delivers 10 Mbps <sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="App. B.5–B.6" data-original="App. B.5–B.6" data-ref="imc26-fries" href="../references.html#ref-51">[51, App. B.5–B.6]</a></sup></td><td class="zh">慕尼黑 10 Mbps 目標被達成的時間比例，而停用壅塞控制的傳送端能送出 10 Mbps<sup class="cite"><a aria-label="Fries, Matezki, Bose, Mohan · Looking at Stars: Analyzing Real-Time Video Conferencing over Starlink · ACM IMC 2026 · 2026" class="cite-ref" data-cite="51" data-locator="App. B.5–B.6" data-original="App. B.5–B.6" data-ref="imc26-fries" href="../references.html#ref-51">[51, App. B.5–B.6]</a></sup></td></tr>
+<tr><td class="num">13.3%</td><td class="en">Chance that a random event falls within ±1 s of a 15-s boundary (computed, calc table)</td><td class="zh">隨機事件落在 15 秒邊界 ±1 秒內的機率（計算值，見計算表）</td></tr>
+</tbody></table></div>
+</section>
+<section class="quiz reading" id="quiz"><h2><span class="en">Check your understanding</span><span class="zh">檢驗你的理解</span></h2><div id="quiz-root"></div></section>
+<script id="quiz-data" type="application/json">[
+  {
+    "q": {
+      "en": "Why does a 2.5 Mbps Teams uplink fall below target over Starlink even though the uplink can carry far more?",
+      "zh": "為什麼 Starlink 上行能承載的遠多於此，2.5 Mbps 的 Teams 上行仍會跌到目標以下？"
+    },
+    "o": [
+      {
+        "en": "The link runs out of capacity at every reconfiguration",
+        "zh": "每次重組時鏈路容量都會耗盡"
+      },
+      {
+        "en": "Teams switches to a lower resolution every 15 s by design",
+        "zh": "Teams 依設計每 15 秒切換到較低解析度"
+      },
+      {
+        "en": "GCC's delay-based estimator reads the latency step of a reconfiguration as a growing queue, declares overuse and cuts the rate",
+        "zh": "GCC 基於延遲的估計器把重組的延遲階躍讀成正在增長的佇列，宣告過載並降低速率"
+      },
+      {
+        "en": "Packet loss at reconfigurations triggers the loss-based estimator",
+        "zh": "重組時的封包遺失觸發基於遺失的估計器"
+      }
+    ],
+    "a": 2,
+    "why": {
+      "en": "§2–3: the delay-based estimator controls the estimate 96.4–99.6% of the time, and median loss around reconfigurations is 0%.",
+      "zh": "§2–3：基於延遲的估計器有 96.4–99.6% 的時間掌控估計，而重組周圍的遺失中位數是 0%。"
+    }
+  },
+  {
+    "q": {
+      "en": "Why does the median bitrate (2.51 vs 2.52 Mbps) fail to reveal the problem?",
+      "zh": "位元率中位數（2.51 對 2.52 Mbps）會遺漏哪些短暫問題？"
+    },
+    "o": [
+      {
+        "en": "Because the drops are brief and occupy a minority of samples, so they live in the tail of the distribution",
+        "zh": "因為下降短暫且只佔少數樣本，所以它們存在於分佈的尾端"
+      },
+      {
+        "en": "Because Starlink is faster than terrestrial",
+        "zh": "因為 Starlink 比地面網路快"
+      },
+      {
+        "en": "Because Teams reports bitrate incorrectly",
+        "zh": "因為 Teams 回報的位元率有誤"
+      },
+      {
+        "en": "Because the median was computed only at night",
+        "zh": "因為中位數只在夜間計算"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "§2: the below-target share (2.7–34.9%) and its attribution to reconfigurations show the effect that the median hides.",
+      "zh": "§2：低於目標的比例（2.7–34.9%）及其對重組的歸因，呈現了中位數所隱藏的效應。"
+    }
+  },
+  {
+    "q": {
+      "en": "What do the ≥89% (Europe) and 69.3% (McMurdo) alignment figures tell you, given that chance alignment is about 13.3%?",
+      "zh": "已知偶然對齊約 13.3%，≥89%（歐洲）與 69.3%（麥克默多）的對齊數字告訴你什麼？"
+    },
+    "o": [
+      {
+        "en": "That handovers are random",
+        "zh": "換手是隨機的"
+      },
+      {
+        "en": "That handovers are strongly tied to the scheduled boundaries everywhere, but less tightly at McMurdo, with the cause left open by the study",
+        "zh": "換手在各地都與排程邊界強烈綁定，但在麥克默多較鬆，原因則仍待分離"
+      },
+      {
+        "en": "That ISLs cause all off-boundary handovers",
+        "zh": "ISL 造成所有偏離排程邊界的換手"
+      },
+      {
+        "en": "That reconfigurations and handovers are the same event",
+        "zh": "重組與換手是同一事件"
+      }
+    ],
+    "a": 1,
+    "why": {
+      "en": "Calc table and §6: both values are far above chance, and the polar shell, the ISL path and weather are confounded at McMurdo.",
+      "zh": "計算表與 §6：兩個數值都遠高於偶然水準，而麥克默多的極地殼層、ISL 路徑與天氣相互混淆。"
+    }
+  },
+  {
+    "q": {
+      "en": "Why does this study distinguish reconfiguration from antenna handover?",
+      "zh": "這項研究如何區分重組與天線換手？"
+    },
+    "o": [
+      {
+        "en": "Because handovers happen only at night",
+        "zh": "因為換手只在夜間發生"
+      },
+      {
+        "en": "Because reconfigurations are inferred from obstruction maps",
+        "zh": "因為重組是從遮蔽圖推斷的"
+      },
+      {
+        "en": "Because handovers occur exclusively between boundaries",
+        "zh": "因為換手只發生在邊界之間"
+      },
+      {
+        "en": "A satellite stays visible for 5–10 min, giving one handover per roughly 20–40 boundaries for a dish. Handovers cause longer overuse and larger rate cuts.",
+        "zh": "因為一顆衛星保持可見 5–10 分鐘，所以對某一天線而言大約每 20–40 次邊界才有一次換手，而換手造成較長的過載與較大的速率削減"
+      }
+    ],
+    "a": 3,
+    "why": {
+      "en": "§3 and the calc table: the two events differ in frequency and in effect (Fig. 6 of the paper).",
+      "zh": "§3 與計算表：兩種事件在頻率與影響上都相異（論文 Fig. 6）。"
+    }
+  },
+  {
+    "q": {
+      "en": "What does the 10 Mbps Munich experiment add to the argument?",
+      "zh": "慕尼黑的 10 Mbps 實驗為論證增加了什麼？"
+    },
+    "o": [
+      {
+        "en": "GCC met the target 9.5% of the time, while an uncontrolled sender delivered 10 Mbps on the same link. This comparison implicates the controller’s interpretation.",
+        "zh": "它顯示缺口來自控制器的解讀，因為 GCC 只有 9.5% 的時間達標，停用控制器的傳送端在同一鏈路上送出了 10 Mbps"
+      },
+      {
+        "en": "It places Starlink’s uplink capacity below 10 Mbps",
+        "zh": "它顯示 Starlink 的上行容量低於 10 Mbps"
+      },
+      {
+        "en": "It shows that loss is the main cause of rate cuts at all rates",
+        "zh": "它顯示遺失在所有速率下都是降速的主因"
+      },
+      {
+        "en": "It proves the polar shell is the cause of McMurdo's results",
+        "zh": "它證明極地殼層是麥克默多結果的原因"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "§4: App. B.5–B.6 and Fig. 8 of the paper. Median loss around reconfigurations stays 0%.",
+      "zh": "§4：論文 App. B.5–B.6 與 Fig. 8。重組周圍的遺失中位數維持 0%。"
+    }
+  }
+]</script>
+<nav class="pager"><a href="imc26-garcia-queue.html"><span class="eyebrow en">← Previous digest</span><span class="eyebrow zh">← 上一篇導讀</span><span class="en">Starlink's queue configuration</span><span class="zh">Starlink 的佇列組態</span></a><a href="../chapters/c06-transport.html" style="margin-left:auto;text-align:right"><span class="eyebrow en">↩ Chapter</span><span class="eyebrow zh">↩ 章節</span><span class="en">Back to Chapter 6</span><span class="zh">回到第 6 章</span></a></nav>
+</main>
+</div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/contrib/auto-render.min.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/citations-data.js"></script><script src="../assets/citations.js"></script></body>
+</html>

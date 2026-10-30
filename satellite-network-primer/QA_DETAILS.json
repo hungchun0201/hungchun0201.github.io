@@ -1,0 +1,45 @@
+{
+  "completed_utc": "2026-10-30T00:51:31Z",
+  "metrics": {
+    "html_pages": 66,
+    "chapters": 13,
+    "research_digests": 48,
+    "support_pages": 5,
+    "added_tables": 543,
+    "quiz_questions": 344,
+    "chromium_pages": 66,
+    "chromium_widths": [
+      375,
+      414,
+      768,
+      1440
+    ],
+    "chromium_language_layout_states": 528,
+    "webkit_pages": 19,
+    "webkit_widths": [
+      375,
+      768,
+      1440
+    ],
+    "arxiv_references": 32,
+    "arxiv_digest_headers": 15,
+    "arxiv_tooltip_states": 4,
+    "english_sentence_candidates": 0,
+    "ordinary_prose_lexical_residue": 0,
+    "classified_literal_text_nodes": 322,
+    "formula_id_link_script_preservation": "passed",
+    "citation_source_attributes": "preserved, accessible names include arXiv identifiers",
+    "original_sha256": "2a5c5b7a26c4306bc5843341ca70c6e4b50884ed81af10c3855020fc442142c0"
+  },
+  "skills": [
+    "humanizer",
+    "humanizer-zh",
+    "asd-ste100-english"
+  ],
+  "review_reports": [
+    "code-review.json",
+    "review-final-qa.json",
+    "typescript-review-qa.json"
+  ],
+  "arxiv_display": "arXiv <full identifier>"
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>FedSat (IEEE WCL 2022) · Satellite Network Primer</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/katex/katex.min.css" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<script>try{var l=localStorage.getItem("satn-lang");document.documentElement.setAttribute("data-lang",l==="zh"?"zh":"en");}catch(e){}</script>
+</head>
+<body data-slug="wcl22-fedsat">
+<div class="topbar">
+<div class="topbar-in">
+<a class="backlink" href="../research.html"><span>←</span><span class="en">All paper digests</span><span class="zh">論文導讀總表</span></a>
+<div class="brand"><span class="dot"></span><span class="en">Paper digest</span><span class="zh">論文導讀</span></div>
+<a class="cite-nav" href="../references.html"><span class="en">References</span><span class="zh">文獻</span></a><span class="spacer"></span>
+<div aria-label="Language" class="lang" role="group">
+<button aria-pressed="true" data-lang="en" id="lang-en" type="button">EN</button>
+<button aria-pressed="false" data-lang="zh" id="lang-zh" type="button">中文</button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</div>
+<div class="frame single">
+<main>
+<header class="paper-hero reading rhero">
+<div class="eyebrow en">Digest · Services in orbit · read after Chapter 9</div><div class="eyebrow zh">導讀 · 在軌服務 · 第 9 章後閱讀</div>
+<h1><span class="en">Ground-Assisted Federated Learning in LEO Satellite Constellations</span><span class="zh">地面輔助的 LEO 衛星星座聯邦學習</span></h1>
+<div class="byline"><span class="venue">IEEE WCL 2022 · arXiv 2109.01348</span>Nasrin Razmi, Bho Matthiesen, Armin Dekorsy (University of Bremen), Petar Popovski (Aalborg University) · <a href="https://arxiv.org/abs/2109.01348"><span class="en">paper</span><span class="zh">論文</span></a> <span class="src-tag pr">peer-reviewed</span></div>
+<p class="lede"><span class="en">This digest explains how ground visibility limits satellite federated learning under the stated small-model assumptions. FedSat uses predictable contacts for asynchronous aggregation. AsyncFLEO and FedRings extend this approach with intra-plane links.</span><span class="zh">本導讀說明在所設小模型條件下，地面可見性如何限制跨衛星聯邦學習。FedSat 利用可預測接觸進行異步彙總，AsyncFLEO 與 FedRings 再透過同軌道面鏈路縮短等待。</span></p>
+<div class="metarow"><span class="en">≈ 9 min · 5-question quiz</span><span class="zh">≈ 9 分鐘 · 5 題測驗</span><a class="en" href="../chapters/c09-services.html">Chapter 9 ↗</a><a class="zh" href="../chapters/c09-services.html">第 9 章 ↗</a><a class="en" href="#quiz">Jump to the quiz ↓</a><a class="zh" href="#quiz">跳到測驗 ↓</a></div>
+</header>
+<section class="reading">
+<div class="key"><div class="eyebrow en">Main result and scope</div><div class="eyebrow zh">只讀這一段也可以</div>
+<p class="en">FedSat uses predictable contacts to replace each satellite’s weighted model contribution as soon as it returns. Small-model results show how visibility controls aggregation time.</p><p class="zh">FedSat 利用可預測接觸，在衛星回傳時立即替換其加權模型貢獻。小模型結果顯示，可見性會主導彙總時間。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Razmi et al. study federated learning across predictable ground contacts. Gaps between contacts dominate the short online periods. An update can take one orbital period to half a day to return. Orbital mechanics makes these contact times predictable <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§I" data-original="Razmi et al., IEEE WCL 2022, §I" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §I]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Model and compute</th><td>Qualitative scope</td><td>FedSat converts synchronous FedAvg into contact-driven aggregation. At each contact, the ground station replaces that satellite’s previous model contribution with its latest contribution. Each contribution retains the satellite’s data-share weight.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>10 · 500 · 2,000 km · 80° · 10°</td><td>The test constellation has ten satellites in Walker-Delta shells at 500 and 2,000 km. It uses 80° inclination, a 10° elevation mask, and one ground station.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>96.2% · 99.4–99.6%</td><td>The model uses ground contacts, with link rate left open. FedSat reaches 96.2% of centralized MNIST logistic-regression accuracy with IID data. It reaches 99.4–99.6% with non-IID data. The authors describe a training-time saving of several hours over FedAvg.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>127</td><td>with time measured in multiples of the longest orbital period, about 127 min <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV, Figs. 1–3" data-original="§IV, Figs. 1–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV, Figs. 1–3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>2026</td><td>Visibility controls round duration under these transfer assumptions. AsyncFLEO <sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="" data-original="IEEE BigData 2022" data-ref="elmahallawy2022" href="../references.html#ref-92">[92]</a></sup> and FedRings, a 2026 preprint, examine how intra-plane ISLs change this contact constraint.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>Razmi 等人觀察到，與地面站一起做聯邦學習的衛星幾乎所有時間都處於兩次地面接觸之間，因為「接觸之間的時間遠長於實際在線時間」，一個任務從指派到回傳可能要一個軌道週期到半天，但這些接觸可以由軌道力學預測<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§I" data-original="Razmi et al., IEEE WCL 2022, §I" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §I]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>FedSat 利用這個可預測性，把同步的 FedAvg 展開成異步方案：地面站在每次接觸時，把該衛星先前對全局模型的貢獻換成新的貢獻，並依它所占的資料比例加權。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>500 · 2,000 km · 10 · 80° · 10° · 96.2% · 99.4–99.6% · 127</td><td>在一個玩具星座上（兩層 Walker-Delta，500 與 2,000 km，共 10 顆衛星，80° 傾角，10° 仰角遮罩，單一地面站，僅有地面接觸，鏈路速率待指定），FedSat 達到集中式 MNIST 邏輯迴歸準確率的 96.2%（IID）與 99.4–99.6%（non-IID），而用作者的話說，它把 FedAvg 的訓練時間縮短「數小時」，時間以最長軌道週期（約 127 min）的倍數計<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV, Figs. 1–3" data-original="§IV, Figs. 1–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV, Figs. 1–3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2026</td><td>延伸到整個文獻的教訓是：在這些傳輸假設下，可見性決定回合時間，而 AsyncFLEO<sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="" data-original="IEEE BigData 2022" data-ref="elmahallawy2022" href="../references.html#ref-92">[92]</a></sup>與 FedRings（預印本，2026）則展示了同軌道面 ISL 移除等待之後會有什麼改變。</td></tr></tbody></table></div>
+</div>
+<h2><span class="en">1. Where this paper sits</span><span class="zh">1. 這篇論文的位置</span></h2>
+<p class="en">This letter introduces the contact constraint in Section 9.3’s satellite federated-learning sequence. Participants download a shared model, train locally, and return updates while retaining their data. Chapter 8 explains why Earth-observation satellites benefit from reducing large image collections to updates of a few kilobytes. FedAsync models phone availability as random, while satellite contacts follow orbital timing. Razmi et al. build their aggregation rule around that predictable timing.</p>
+<p class="zh">這篇短論文是第 9.3 節衛星聯邦學習主線的起點，清楚說明後續研究沿用的接觸限制。聯邦學習在保有各自資料的參與者之間訓練一個共享模型，每個參與者下載目前的全局模型、跑本地梯度步驟，只回傳更新，由彙總者取平均。地球觀測衛星天然適合這個模式，因為如第 8 章的軌道邊緣運算所示，它們的影像的完整下傳量超出可用容量，而在機上訓練能把儲存的影像轉成只有幾 KB 的模型更新。FedAsync 等異步 FL 方法原本針對可用性隨機的手機設計，衛星則遵循可預測的軌道接觸時程。衛星與地面站的接觸短暫、稀少且事先已知，而 Razmi 等人是第一個把彙總規則建立在這種可預測性上、，將接觸視為已知時程。</p>
+<p class="en">AsyncFLEO and FedRings add intra-plane links to reduce waiting for ground contacts. Their constellation and rate assumptions define the scope of their comparisons.</p><p class="zh">AsyncFLEO 與 FedRings 加入同軌道面鏈路，縮短等待地面接觸的時間。星座與速率假設界定了各自比較的範圍。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Two later papers are folded into this digest because they extend the same line by adding links.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>40 · 5 · 2,000 km · 80° · 16 Mb/s</td><td>AsyncFLEO <sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="" data-original="Elmahallawy &amp; Luo, IEEE BigData 2022" data-ref="elmahallawy2022" href="../references.html#ref-92">[92]</a></sup> models 40 satellites in five orbits at 2,000 km and 80°. ISLs connect same-orbit neighbors because the study identifies high relative velocity across orbits. Every RF link has a 16 Mb/s rate. High-altitude platforms can act as aggregators <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§III, Tab. I" data-original="§III, Table I" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §III, Tab. I]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>6 · 15 · 550 km · 65°</td><td>FedRings <sup class="cite"><a aria-label="Ziwu Liu, Inês Pinto Gouveia, Rehana Yasmin, Paulo Esteves-Verissimo, Ali Shoker · FedRings: A Scalable and Topology-Aware Federated Learning Framework for LEO Satellite Constellations · arXiv 2608.03436" class="cite-ref" data-cite="93" data-locator="" data-original="Liu et al., arXiv 2026" data-ref="fedrings2026" href="../references.html#ref-93">[93]</a></sup> <span class="src-tag pp">preprint</span> uses a Walker Star model with six planes of 15 satellites at 550 km and 65°. Each plane forms a logical ring through two intra-plane neighbors. Inter-plane links operate within visibility windows. Link rates use Shannon expressions with symbolic bandwidth <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§3–4, Eqs. 2–3" data-original="§3–4, Eqs. 2–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §3–4, Eqs. 2–3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>11</td><td>Both designs retain intra-plane link restrictions. Chapter 11 contrasts this geometry with a formation whose members have relative speeds measured in meters per second.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>本導讀併入兩篇後續論文，因為它們沿著同一路線、以加入鏈路的方式延伸。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>2,000 km · 80° · 5 · 40</td><td>AsyncFLEO<sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="" data-original="Elmahallawy &amp; Luo, IEEE BigData 2022" data-ref="elmahallawy2022" href="../references.html#ref-92">[92]</a></sup>建模 2,000 km、80° 的 5 條軌道共 40 顆衛星，ISL 只存在於同一軌道的鄰居之間，因為相異軌道的衛星相對速度很高。</td></tr>
+<tr class="zh"><th scope="row">容量與速率</th><td>16 Mb/s</td><td>它把每條鏈路都建模為單一速率 16 Mb/s 的 RF 鏈路，並以高空平台（HAP）作為可選的彙總者<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§III, Tab. I" data-original="§III, Table I" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §III, Tab. I]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>550 km · 65° · 6 · 15</td><td>FedRings<sup class="cite"><a aria-label="Ziwu Liu, Inês Pinto Gouveia, Rehana Yasmin, Paulo Esteves-Verissimo, Ali Shoker · FedRings: A Scalable and Topology-Aware Federated Learning Framework for LEO Satellite Constellations · arXiv 2608.03436" class="cite-ref" data-cite="93" data-locator="" data-original="Liu et al., arXiv 2026" data-ref="fedrings2026" href="../references.html#ref-93">[93]</a></sup><span class="src-tag pp">預印本</span>把 550 km、65°、6 個軌道面 × 15 顆的 Walker Star 星座中每個軌道面組成邏輯環，同軌道面鏈路連到兩個鄰居，跨軌道面鏈路只在可見窗口內使用，鏈路速率只以 Shannon 形式表示、頻寬以符號表示<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§3–4, Eqs. 2–3" data-original="§3–4, Eqs. 2–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §3–4, Eqs. 2–3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>11</td><td>兩者都保留了「只用同軌道面」的限制，這一點在第 11 章介紹成員之間相對速度只有每秒幾公尺的編隊時值得記住。</td></tr></tbody></table></div>
+<h2><span class="en">2. The problem, measured</span><span class="zh">2. 問題，用量測說話</span></h2>
+<p class="en">Synchronous FedAvg waits for the slowest satellite’s return contact. The simulation uses a small model and treats transfer volume as secondary to contact timing.</p><p class="zh">同步 FedAvg 需等待最慢衛星再次接觸，模擬採用小模型，因此以接觸時程作為主導條件。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The study quantifies the problem through orbital geometry.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>10° · 2,000 km · 127</td><td>Ground visibility requires elevation above α_e, set to 10°. The 2,000 km shell has the longest period, T_o,max ≈ 127 min. Result axes use this period as their time unit <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§II, §IV" data-original="Razmi et al., IEEE WCL 2022, §II, §IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §II, §IV]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>2 · 254</td><td>Synchronous FedAvg starts a new round after every satellite downloads, trains, and uploads. The longest contact gap therefore controls round duration. On MNIST, all schemes converge in about 2 T_o,max, roughly 254 min. This result includes a North Pole ground station that sees every polar pass <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 1" data-original="Fig. 1" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 1]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Ground-contact convergence</th><td>Qualitative scope</td><td>With the station moved to Bremen, FedAvg needs a very long initial phase before it converges at all. This occurs because some satellites reach the station only rarely <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 3" data-original="Fig. 3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 3]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>784 · 10 · 7,850</td><td>The model being trained is tiny, a logistic regression with 784 inputs, 10 outputs and 7,850 parameters. Thus, the evaluation treats exchange volume as small and leaves link rate unspecified.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>Its bottleneck therefore comes from contact waiting under those assumptions.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>研究透過軌道幾何量化問題。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>10° · 2,000 km · 127</td><td>衛星只有在仰角超過最小值 α_e（論文設為 10°）時才看得到固定的地面站，而在兩層測試星座中，最長的軌道週期（2,000 km）為 T_o,max ≈ 127 min，這成為所有結果座標軸上的時間單位<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§II, §IV" data-original="Razmi et al., IEEE WCL 2022, §II, §IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §II, §IV]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>同步 FedAvg 必須等每顆衛星都完成下載、訓練與上傳才能開始下一回合，所以一個回合的長度等於最慢那顆衛星兩次接觸之間的空檔。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>2 · 254</td><td>在 MNIST 任務上，即使地面站設在能看到每次極軌過頂的北極，所有方案也需要約 2 T_o,max（約 254 min）才收斂<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 1" data-original="Fig. 1" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 1]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>把地面站移到不來梅後，FedAvg 在收斂之前需要一段很長的初始階段，因為有些衛星很少到達地面站<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 3" data-original="Fig. 3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 3]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>784 · 10 · 7,850</td><td>被訓練的模型規模很小，是一個 784 個輸入、10 個輸出、7,850 個參數的邏輯迴歸，所以評估將交換量視為很小，鏈路速率則待指定。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>所設瓶頸因此來自接觸等待。</td></tr></tbody></table></div>
+<h2><span class="en">3. The design</span><span class="zh">3. 設計</span></h2>
+<p class="en">FedAvg weights satellite models by α_k = n_k/n, each satellite’s share of all data. FedSat stores the latest model from each satellite. When satellite k reconnects, the station adds α_k times the difference between its new and previous models <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="" data-original="Razmi et al., IEEE WCL 2022, Algorithm 5" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90]</a></sup>. The result remains the weighted average of each satellite’s latest model, updated at every contact. Between contacts, minibatch SGD uses an L2 regularizer toward the last received global model to limit local drift. FedSat+ scales updates by satellite data size divided by ground contacts per period.</p>
+<p class="en">Thus, that rarely seen satellites retain representation <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Eq. 8" data-original="Eq. 8" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Eq. 8]</a></sup>. Because contact order is known, the scheme uses exact contribution replacement in place of FedAsync’s staleness heuristic. The authors stress that it has fewer hyperparameters to tune.</p>
+<p class="zh">FedSat 的出發點是：同步 FedAvg 把全局模型算成各衛星模型的加權和，權重 α_k = n_k/n 是該衛星占總資料的比例。地面站保存從每顆衛星收到的最新模型，每當衛星 k 帶著新的本地模型重新連線，就把全局模型加上 α_k 乘以同一顆衛星新舊模型的差值來修正<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="" data-original="Razmi et al., IEEE WCL 2022, Algorithm 5" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90]</a></sup>。因此全局模型永遠等於每顆衛星最新模型的加權平均，正如 FedAvg 會算出的那樣，只是它在每次接觸時更新，同步 FedAvg 則每回合更新一次，這就是論文所說的「展開」。在兩次接觸之間，每顆衛星在自己的資料上跑小批次 SGD，並以 L2 正則項把模型拉向它上次收到的全局模型，限制衛星在長空檔中漂移的程度。FedSat+ 加入權重擴增，把每個更新乘以衛星資料量除以每週期地面站接觸次數，維持接觸稀少衛星的代表性<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Eq. 8" data-original="Eq. 8" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Eq. 8]</a></sup>。由於接觸順序已知，這個方案以精確替換貢獻處理更新，FedAsync 則採用陳舊度經驗規則，作者也強調它需要調整的超參數較少。</p>
+<figure class="plate"><div class="img" style="background:var(--paper)">
+<svg aria-label="Synchronous FedAvg waits for the last satellite. FedSat updates the global model at every predictable contact." role="img" viewbox="0 0 760 360"><rect fill="var(--paper)" height="360" width="760"></rect>
+<text class="en" fill="var(--ink)" font-size="13" font-weight="600" x="20" y="22">Contacts with one ground station over two longest periods (schematic times)</text><text class="zh" fill="var(--ink)" font-size="13" font-weight="600" x="20" y="22">兩個最長週期內與單一地面站的接觸（時間為示意）</text>
+<g fill="var(--ink-2)" font-size="11"><text x="20" y="64">S1</text><text x="20" y="94">S2</text><text x="20" y="124">S3</text><text x="20" y="154">S4</text></g>
+<g stroke="var(--rule)" stroke-width="1"><line x1="60" x2="700" y1="60" y2="60"></line><line x1="60" x2="700" y1="90" y2="90"></line><line x1="60" x2="700" y1="120" y2="120"></line><line x1="60" x2="700" y1="150" y2="150"></line></g>
+<g fill="var(--gnd)"><rect height="16" width="10" x="90" y="52"></rect><rect height="16" width="10" x="250" y="52"></rect><rect height="16" width="10" x="410" y="52"></rect><rect height="16" width="10" x="570" y="52"></rect><rect height="16" width="10" x="150" y="82"></rect><rect height="16" width="10" x="390" y="82"></rect><rect height="16" width="10" x="630" y="82"></rect><rect height="16" width="10" x="200" y="112"></rect><rect height="16" width="10" x="520" y="112"></rect><rect height="16" width="10" x="330" y="142"></rect><rect height="16" width="10" x="660" y="142"></rect></g>
+<line stroke="var(--ink-3)" stroke-width="1.5" x1="60" x2="700" y1="176" y2="176"></line>
+<g fill="var(--ink-3)" font-size="10" text-anchor="middle"><text x="60" y="190">0</text><text x="380" y="190">T_o,max ≈ 127 min</text><text x="700" y="190">2 T_o,max ≈ 254 min</text></g>
+<text class="en" fill="var(--ink-3)" font-size="10" x="705" y="64">■ contact</text><text class="zh" fill="var(--ink-3)" font-size="10" x="705" y="64">■ 接觸</text>
+<text class="en" fill="var(--bad)" font-size="12" font-weight="600" x="20" y="220">FedAvg: the round closes only when the last satellite has returned its model</text><text class="zh" fill="var(--bad)" font-size="12" font-weight="600" x="20" y="220">FedAvg：最後一顆衛星交回模型後，回合才結束</text>
+<rect fill="var(--bad)" fill-opacity=".15" height="18" stroke="var(--bad)" width="245" x="95" y="230"></rect><text class="en" fill="var(--bad)" font-size="10" text-anchor="middle" x="217" y="243">round 1: wait for S4</text><text class="zh" fill="var(--bad)" font-size="10" text-anchor="middle" x="217" y="243">第 1 回合：等 S4</text>
+<rect fill="var(--bad)" fill-opacity=".08" height="18" stroke="var(--bad)" stroke-dasharray="4 3" width="325" x="340" y="230"></rect><text class="en" fill="var(--bad)" font-size="10" text-anchor="middle" x="502" y="243">round 2: wait for S4 again</text><text class="zh" fill="var(--bad)" font-size="10" text-anchor="middle" x="502" y="243">第 2 回合：再等 S4</text>
+<text class="en" fill="var(--good)" font-size="12" font-weight="600" x="20" y="280">FedSat: every contact updates the global model at once</text><text class="zh" fill="var(--good)" font-size="12" font-weight="600" x="20" y="280">FedSat：每次接觸都立即更新全局模型</text>
+<g stroke="var(--good)" stroke-width="2"><line x1="95" x2="95" y1="290" y2="306"></line><line x1="155" x2="155" y1="290" y2="306"></line><line x1="205" x2="205" y1="290" y2="306"></line><line x1="255" x2="255" y1="290" y2="306"></line><line x1="335" x2="335" y1="290" y2="306"></line><line x1="395" x2="395" y1="290" y2="306"></line><line x1="415" x2="415" y1="290" y2="306"></line><line x1="525" x2="525" y1="290" y2="306"></line><line x1="575" x2="575" y1="290" y2="306"></line><line x1="635" x2="635" y1="290" y2="306"></line><line x1="665" x2="665" y1="290" y2="306"></line></g>
+<line stroke="var(--good)" stroke-width="1" x1="60" x2="700" y1="306" y2="306"></line>
+<text class="en" fill="var(--ink)" font-size="11" x="20" y="334">at contact of satellite k:  w ← w + α_k (w_k,new − w_k,old),  α_k = n_k / n  (Algorithm 5)</text><text class="zh" fill="var(--ink)" font-size="11" x="20" y="334">衛星 k 接觸時：w ← w + α_k (w_k,new − w_k,old)，α_k = n_k / n（Algorithm 5）</text>
+<text class="en" fill="var(--ink-3)" font-size="10" x="20" y="352">the global model stays the data-weighted average of each satellite's latest model. Ground-only contacts, rate outside the update rule</text><text class="zh" fill="var(--ink-3)" font-size="10" x="20" y="352">全局模型始終是各衛星最新模型的資料加權平均。彙總規則以地面接觸為輸入，速率則在規則範圍之外</text>
+</svg></div>
+<figcaption><span class="en"><b class="fignum">Figure A. </b>Four satellites contact one ground station at predictable, uneven times. Synchronous FedAvg completes a round when the rarest visitor, S4, returns. FedSat updates the global model at every contact by replacing the arriving satellite’s weighted contribution. The illustrated schedule gives eleven updates for FedSat and about two rounds for FedAvg.</span><span class="zh"><b class="fignum">圖 A。</b>四顆衛星在可預測且間距有差異的時間與單一地面站接觸。同步 FedAvg 要等最少出現的 S4 交回模型才結束一個回合。FedSat 則在每次接觸時把該衛星最新的加權貢獻換進全局模型，所以全局模型前進了十一次，，同步方案則約兩次。</span><span class="src"><span class="en">Sources</span><span class="zh">來源</span>: <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§III, §IV" data-original="Drawn for this primer from Razmi et al., IEEE WCL 2022, §III, Algorithm 5 and §IV; contact times are illustrative, the 127 min period is the paper's." data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §III, §IV]</a></sup> <details class="cite-provenance"><summary><span class="en">Original figure note</span><span class="zh">原始圖說出處</span></summary>Drawn for this primer from Razmi et al., IEEE WCL 2022, §III, Algorithm 5 and §IV. Contact times are illustrative, the 127 min period is the paper's.</details></span></figcaption></figure>
+<h2><span class="en">4. Evaluation setup</span><span class="zh">4. 實驗設定</span></h2>
+<p class="en">The numerical evaluation combines a small constellation, one station and one exchange per pass. Large-update transfer time and contact contention require separate evaluation.</p><p class="zh">數值評估採用小型星座、單一地面站與每次過頂一次交換，大更新的傳輸時間及接觸爭用則待另外評估。</p>
+<div class="tablewrap evidence-table" style="position:relative"><table><caption><span class="en">Parameters, comparisons and evidence scope</span><span class="zh">參數、比較與證據範圍</span></caption><thead><tr><th><span class="en">Item</span><span class="zh">項目</span></th><th><span class="en">Values</span><span class="zh">數值</span></th><th><span class="en">Conditions and source</span><span class="zh">條件與來源</span></th></tr></thead><tbody><tr class="en"><th scope="row">Evidence and scope</th><td>Qualitative scope</td><td>The evaluation is a numerical simulation of a deliberately small system.</td></tr>
+<tr class="en"><th scope="row">Orbital configuration</th><td>500 · 2,000 km · 5 · 80° · 36° · 10 · 10°</td><td>Two Walker-Delta shells orbit at 500 and 2,000 km, each with five satellites in five planes. Inclination is 80°, with a 36° right-ascension offset. The total is ten satellites. One station sits at the North Pole for IID and non-IID tests, or in Bremen for non-IID tests. Minimum elevation is 10° <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="Razmi et al., IEEE WCL 2022, §IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>Qualitative scope</td><td>The model uses ground-only contacts with an unspecified link rate.</td></tr>
+<tr class="en"><th scope="row">Model and compute</th><td>Qualitative scope</td><td>Each pass carries exactly one exchange, so the only network quantity in the model is the contact schedule.</td></tr>
+<tr class="en"><th scope="row">Capacity and rate</th><td>7,850 · 0.1 · 0.001 · 10 · 0.87</td><td>The MNIST task uses logistic regression with 7,850 parameters. Learning rate is 0.1, regularization is 0.001, and batch size is ten. Each contact permits one local pass. Results average ten random seeds, with centralized accuracy of 0.87.</td></tr>
+<tr class="en"><th scope="row">Evidence and scope</th><td>0.01 · 5 · 1</td><td>The baselines are synchronous FedAvg and FedAsync, the latter with ε = 0.01 and a staleness constant a = 5(1+ε)T_o,max <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>.</td></tr>
+<tr class="en"><th scope="row">Transfer and contact scope</th><td>Qualitative scope</td><td>The small model limits transfer demand. Updates that consume much of a pass need further evaluation. The one-station, ten-satellite setup also needs a separate study of contact contention.</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>評估是一個刻意縮小的系統的數值模擬。</td></tr>
+<tr class="zh"><th scope="row">軌道配置</th><td>500 · 2,000 km · 5 · 80° · 36° · 10</td><td>星座有兩層 Walker-Delta，各自在 500 與 2,000 km，每層 5 顆衛星分布在 5 個軌道面，傾角 80°，升交點赤經偏移 36°，總共 10 顆衛星。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>10°</td><td>地面站只有一座，設在北極（IID 與non-IID 資料）或不來梅（non-IID 資料），最小仰角 10°<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="Razmi et al., IEEE WCL 2022, §IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>模型僅有地面接觸，衛星–地面鏈路速率待指定，每次過頂恰好進行一次交換，所以模型中唯一的網路量是接觸時刻表。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>7,850 · 0.1 · 0.001 · 10 · 0.87</td><td>學習任務是 MNIST，用 7,850 參數的邏輯迴歸訓練，學習率 0.1、正則化 0.001、批次大小 10、每次接觸做一次本地遍歷，取 10 個隨機種子的平均，對照的集中式準確率為 0.87。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>0.01 · 5 · 1</td><td>基準是同步 FedAvg 與 FedAsync，後者設 ε = 0.01、陳舊度常數 a = 5(1+ε)T_o,max<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>由於模型很小，更新佔用一次過頂大部分時間的情況需要另外評估。</td></tr>
+<tr class="zh"><th scope="row">證據與範圍</th><td>定性範圍</td><td>而只有一座地面站與十顆衛星，多顆衛星爭用同一次接觸的情況則待評估。</td></tr></tbody></table></div>
+<h2><span class="en">5. What was measured</span><span class="zh">5. 量到了什麼</span></h2>
+<div class="tbl"><table>
+<thead><tr><th><span class="en">Claim</span><span class="zh">宣稱</span></th><th><span class="en">Setup and caveat</span><span class="zh">設定與附註</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">FedSat reaches 96.2% of centralized accuracy with IID data and a North Pole station. All schemes converge after about 2 T_o,max <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 1" data-original="Fig. 1" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 1]</a></sup>.</span><span class="zh">IID 資料、北極地面站時，FedSat 達到集中式準確率的 96.2%。所有方案在約 2 T_o,max 後收斂<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Fig. 1" data-original="Fig. 1" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Fig. 1]</a></sup>。</span></td><td><span class="en">MNIST logistic regression, centralized accuracy 0.87, 10 seeds.</span><span class="zh">MNIST 邏輯迴歸，集中式準確率 0.87，10 個種子。</span></td></tr>
+<tr><td><span class="en">With non-IID data FedSat reaches 99.6% (North Pole) and 99.4% (Bremen) of centralized accuracy, best asymptotically in Bremen <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Figs. 2–3" data-original="Figs. 2–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Figs. 2–3]</a></sup>.</span><span class="zh">non-IID 資料時，FedSat 達到集中式準確率的 99.6%（北極）與 99.4%（不來梅），在不來梅的漸近表現最佳<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Figs. 2–3" data-original="Figs. 2–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Figs. 2–3]</a></sup>。</span></td><td><span class="en">FedSat+ is fastest early but worse asymptotically. FedAsync oscillates and is best at α = 0.1.</span><span class="zh">FedSat+ 早期最快但漸近表現較差。FedAsync 會振盪，α = 0.1 時最佳。</span></td></tr>
+<tr><td><span class="en">Unrolling reduces FedAvg's training time "by several hours" <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV, conclusion" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>.</span><span class="zh">展開使 FedAvg 的訓練時間縮短「數小時」<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV、結論" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup>。</span></td><td><span class="en">Exact hours and tabulated convergence times remain unspecified. The figure is read off accuracy-versus-time curves.</span><span class="zh">確切時數與收斂時間表仍待補充。這個說法是從準確率對時間曲線上讀出的。</span></td></tr>
+<tr><td><span class="en">AsyncFLEO converges in 3 h 20 min with two HAPs. FedISL takes 72 h with an arbitrary ground station, producing the 22× comparison. AsyncFLEO’s separate setup lists FedSat at 12 h <sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="Tab. II" data-original="Elmahallawy &amp; Luo, IEEE BigData 2022, Table II" data-ref="elmahallawy2022" href="../references.html#ref-92">[92, Tab. II]</a></sup>.</span><span class="zh">相關：AsyncFLEO 在兩座 HAP 下 3 h 20 min 收斂，FedISL 配任意地面站則需 72 h，即「22×」的標題。它在自己的設定中把 FedSat 列為 12 h<sup class="cite"><a aria-label="Mohamed Elmahallawy, Tie Luo · AsyncFLEO: Asynchronous Federated Learning for LEO Satellite Constellations with High-Altitude Platforms · IEEE BigData 2022 · 2022" class="cite-ref" data-cite="92" data-locator="Tab. II" data-original="Elmahallawy &amp; Luo, IEEE BigData 2022, Table II" data-ref="elmahallawy2022" href="../references.html#ref-92">[92, Tab. II]</a></sup>。</span></td><td><span class="en">40 satellites, 2,000 km, intra-plane RF ISLs at 16 Mb/s. FedSat is re-implemented by other authors under different assumptions.</span><span class="zh">40 顆衛星、2,000 km、同軌道面 16 Mb/s 的 RF ISL。FedSat 是由其他作者在相異假設下重新實作的。</span></td></tr>
+<tr><td><span class="en">Related: FedRings exceeds 85% accuracy on EuroSAT within 50 rounds with DenseNet-121 <sup class="cite"><a aria-label="Ziwu Liu, Inês Pinto Gouveia, Rehana Yasmin, Paulo Esteves-Verissimo, Ali Shoker · FedRings: A Scalable and Topology-Aware Federated Learning Framework for LEO Satellite Constellations · arXiv 2608.03436" class="cite-ref" data-cite="93" data-locator="§4" data-original="Liu et al., arXiv 2026, §4" data-ref="fedrings2026" href="../references.html#ref-93">[93, §4]</a></sup> <span class="src-tag pp">preprint</span>.</span><span class="zh">相關：FedRings 以 DenseNet-121 在 50 回合內於 EuroSAT 上超過 85% 準確率<sup class="cite"><a aria-label="Ziwu Liu, Inês Pinto Gouveia, Rehana Yasmin, Paulo Esteves-Verissimo, Ali Shoker · FedRings: A Scalable and Topology-Aware Federated Learning Framework for LEO Satellite Constellations · arXiv 2608.03436" class="cite-ref" data-cite="93" data-locator="§4" data-original="Liu et al., arXiv 2026, §4" data-ref="fedrings2026" href="../references.html#ref-93">[93, §4]</a></sup><span class="src-tag pp">預印本</span>。</span></td><td><span class="en">Walker Star 6 × 15 at 550 km. Shannon-form rates with rates expressed symbolically. Compared only with FedAvg-D and DSGD because earlier satellite-FL code remains private.</span><span class="zh">550 km 的 Walker Star 6 × 15。Shannon 形式的速率保留符號輸入。只與 FedAvg-D 與 DSGD 比較，因為先前的衛星 FL 程式碼仍屬私有。</span></td></tr>
+</tbody></table></div>
+<div class="tbl calc"><table>
+<thead><tr><th><span class="en">Question</span><span class="zh">問題</span></th><th><span class="en">Formula</span><span class="zh">公式</span></th><th><span class="en">Result</span><span class="zh">結果</span></th></tr></thead>
+<tbody>
+<tr><td><span class="en">How large is FedSat's model on the wire?</span><span class="zh">FedSat 的模型在線路上有多大？</span></td><td>\( 7{,}850 \times 4\,\text{B} \)</td><td>≈ 31 kB<span class="cn en">computed. 7,850 parameters from §IV, assuming 32-bit floats, a precision assumption for this calculation</span><span class="cn zh">計算值。7,850 個參數來自 §IV，假設 32 位元浮點數（論文將此項留待指定）</span></td></tr>
+<tr><td><span class="en">How long do all schemes take to converge on MNIST?</span><span class="zh">在 MNIST 上所有方案要多久收斂？</span></td><td>\( 2 \times 127\,\text{min} \)</td><td>≈ 254 min ≈ 4.2 h<span class="cn en">computed. 2 T_o,max from Fig. 1, T_o,max from §IV</span><span class="cn zh">計算值。2 T_o,max 來自 Fig. 1，T_o,max 來自 §IV</span></td></tr>
+<tr><td><span class="en">How long would a ResNet-18 take over AsyncFLEO's link?</span><span class="zh">ResNet-18 在 AsyncFLEO 的鏈路上要傳多久？</span></td><td>\( 45 \times 8\,\text{Mb} / 16\,\text{Mb/s} \)</td><td>22.5 s<span class="cn en">computed. ~45 MB ResNet-18 as in the fact base, 16 Mb/s from AsyncFLEO Table I</span><span class="cn zh">計算值。約 45 MB 的 ResNet-18 依事實庫，16 Mb/s 來自 AsyncFLEO Table I</span></td></tr>
+<tr><td><span class="en">What share of the longest period is that transfer?</span><span class="zh">這次傳輸占最長週期的多少？</span></td><td>\( 22.5\,\text{s} / (127 \times 60\,\text{s}) \)</td><td>≈ 0.3%<span class="cn en">computed from the row above and §IV</span><span class="cn zh">由上一列與 §IV 計算</span></td></tr>
+<tr><td><span class="en">What speed-up does AsyncFLEO's Table II imply?</span><span class="zh">AsyncFLEO 的 Table II 隱含多少加速？</span></td><td>\( 72\,\text{h} / 3.33\,\text{h},\quad 12\,\text{h} / 3.33\,\text{h} \)</td><td>≈ 21.6× vs FedISL, ≈ 3.6× vs FedSat<span class="cn en">computed from Table II. The paper rounds the first to 22×</span><span class="cn zh">由 Table II 計算。論文把前者四捨五入為 22×</span></td></tr>
+</tbody></table></div>
+<h2><span class="en">6. Limits and open questions</span><span class="zh">6. 範圍與待解問題</span></h2>
+<ul>
+<li><span class="en"><strong>Contact scheduling defines the model scope.</strong> The paper models only the contact schedule, so the bandwidth threshold requires a transfer-time model. Its assumption of ground-only aggregation, shared with FedSpace, dates from before laser ISLs were common on commercial satellites (fact base Part C, item 59).</span><span class="zh"><strong>模型範圍是接觸排程。</strong>論文只建模接觸時刻表，頻寬影響的門檻則需要傳輸時間模型。它只靠地面彙總的假設與 FedSpace 相同，出自雷射 ISL 在商用衛星上普及之前（事實庫 Part C 第 59 項）。</span></li>
+<li><span class="en"><strong>A toy system.</strong> Ten satellites, one station, a 31 kB model and one exchange per pass leave scheduling, contention among satellites and large models for further evaluation. The authors' follow-up scheduler claims a threefold faster convergence by exploiting the same predictability <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Scheduling for Ground-Assisted Federated Learning in LEO Satellite Constellations · EUSIPCO 2022 · arXiv 2206.01952" class="cite-ref" data-cite="109" data-locator="" data-original="Razmi et al., arXiv 2206.01952, EUSIPCO 2022" data-ref="eusipco22-razmi-scheduling" href="../references.html#ref-109">[109]</a></sup>.</span><span class="zh"><strong>玩具系統。</strong>十顆衛星、一座地面站、31 kB 的模型、每次過頂一次交換，使評估聚焦於簡化接觸流程，排程、衛星爭用與大模型則待測試。作者的後續排程器宣稱利用同樣的可預測性可讓收斂加快三倍<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Scheduling for Ground-Assisted Federated Learning in LEO Satellite Constellations · EUSIPCO 2022 · arXiv 2206.01952" class="cite-ref" data-cite="109" data-locator="" data-original="Razmi et al., arXiv 2206.01952, EUSIPCO 2022" data-ref="eusipco22-razmi-scheduling" href="../references.html#ref-109">[109]</a></sup>。</span></li>
+<li><span class="en"><strong>The original time saving is qualitative.</strong> Cross-paper numerical comparisons depend on later implementations. AsyncFLEO reports 12 h for its FedSat implementation under a different constellation and link model.</span><span class="zh"><strong>原始時間節省以定性方式表達。</strong>時間節省只是定性描述，所以跨論文比較只能依賴其他作者的重新實作，例如 AsyncFLEO 給 FedSat 的 12 h，而那是在相異的星座與鏈路模型上跑的。</span></li>
+<li><span class="en"><strong>Related work retains intra-plane restrictions.</strong> AsyncFLEO uses 16 Mb/s RF ISLs, while FedRings uses symbolic Shannon rates. FedRings gives 12 satellites per constellation in Table 1 and 6 × 15 in Section 4. This digest uses the Section 4 scenario, as Part C, item 51 records.</span><span class="zh"><strong>相關研究繼承了同軌道面限制。</strong>AsyncFLEO 的 16 Mb/s RF ISL 與 FedRings 的符號式 Shannon 速率都把鏈路侷限在軌道面內。FedRings 對自己的星座各節存在差異，Table 1 寫每個星座 12 顆，§4 卻是 6 × 15，本導讀引用 §4 的情境（Part C 第 51 項）。</span></li>
+<li><span class="en"><strong>Workload sizes differ from AI clusters.</strong> Models in this sequence range from kilobytes to tens of megabytes. Chapter 10’s training workloads move gigabytes per step. They require links three to five orders of magnitude faster than those assumed here.</span><span class="zh"><strong>距離 AI 叢集的區間很遠。</strong>這條研究線中的模型都只有幾 KB 到幾十 MB，而第 10 章的訓練工作負載每一步要搬移數 GB，所需鏈路比這裡假設的快三到五個數量級。</span></li>
+</ul>
+<h2><span class="en">7. How it connects</span><span class="zh">7. 與其他內容的關聯</span></h2>
+<ul>
+<li><span class="en"><a href="../chapters/c09-services.html#s9-3">Section 9.3</a>: the visibility argument, with Figure 9.3's contact timeline and Panel 9.2, which lets you trade contacts per orbit against link rate.</span><span class="zh"><a href="../chapters/c09-services.html#s9-3">第 9.3 節</a>：可見性論證，搭配圖 9.3 的接觸時間軸與面板 9.2，讓你在每軌道接觸次數與鏈路速率之間取捨。</span></li>
+<li><span class="en"><a href="../chapters/c09-services.html#s9-5">Section 9.5</a>: FedSat sits at the bottom of the link-rate ladder using ground-only contacts, AsyncFLEO at 16 Mb/s and FedRings with a symbolic rate.</span><span class="zh"><a href="../chapters/c09-services.html#s9-5">第 9.5 節</a>：FedSat 位於鏈路速率之梯的最底層，僅有地面接觸，AsyncFLEO 是 16 Mb/s，FedRings 只有符號式速率。</span></li>
+<li><span class="en"><a href="../chapters/c09-services.html#s9-1">Section 9.1</a>, <a href="../chapters/c09-services.html#s9-2">Section 9.2</a>, and <a href="../chapters/c09-services.html#s9-4">Section 9.4</a> describe CDN and inference services in the same chapter. Their workloads require greater link capacity.</span><span class="zh"><a href="../chapters/c09-services.html#s9-1">第 9.1 節</a>、<a href="../chapters/c09-services.html#s9-2">第 9.2 節</a>與<a href="../chapters/c09-services.html#s9-4">第 9.4 節</a>：同一章的 CDN 與推論服務，它們需要的鏈路遠多於本文。</span></li>
+<li><span class="en"><a href="../chapters/c03-ground.html#s3-3">Section 3.3</a>: ground stations and gateways, the only aggregation point FedSat has.</span><span class="zh"><a href="../chapters/c03-ground.html#s3-3">第 3.3 節</a>：地面站與閘道，也就是 FedSat 唯一的彙總點。</span></li>
+<li><span class="en"><a href="../chapters/c10-training-needs.html#s10-6">Section 10.6</a>: the three regimes, in which satellite FL belongs to the constellation-wide one under ground-contact-driven learning assumptions.</span><span class="zh"><a href="../chapters/c10-training-needs.html#s10-6">第 10.6 節</a>：三種區間，衛星 FL 屬於星座尺度的那一種，，採用由地面接觸驅動的學習假設。</span></li>
+<li><span class="en"><a href="arxiv22-fedspace.html">FedSpace</a> scales ground-assisted aggregation to Planet's 191 satellites. <a href="nines26-orbitalbrain.html">OrbitalBrain</a> adds ~100 Mbps ISLs. <a href="asplos20-oec.html">Orbital Edge Computing <sup class="cite"><a aria-label="Bradley Denby, Brandon Lucia · Orbital Edge Computing: Nanosatellite Constellations as a New Class of Computer System · ASPLOS 2020 · 2020" class="cite-ref" data-cite="60" data-locator="" data-original="ASPLOS 2020" data-ref="asplos20-oec" href="../references.html#ref-60">[60]</a></sup></a> is the downlink wall seen from the inference side. <a href="joule26-suncatcher.html">Suncatcher</a> is the formation that removes the relative-velocity argument for intra-plane-only links.</span><span class="zh"><a href="arxiv22-fedspace.html">FedSpace</a> 把地面輔助彙總放大到 Planet 的 191 顆衛星。<a href="nines26-orbitalbrain.html">OrbitalBrain</a> 加入約 100 Mbps 的 ISL。<a href="asplos20-oec.html">軌道邊緣運算<sup class="cite"><a aria-label="Bradley Denby, Brandon Lucia · Orbital Edge Computing: Nanosatellite Constellations as a New Class of Computer System · ASPLOS 2020 · 2020" class="cite-ref" data-cite="60" data-locator="" data-original="ASPLOS 2020" data-ref="asplos20-oec" href="../references.html#ref-60">[60]</a></sup></a>從推論的角度看同一道下行牆。<a href="joule26-suncatcher.html">Suncatcher</a> 的編隊則移除了「只能用同軌道面鏈路」的相對速度理由。</span></li>
+</ul>
+<h2><span class="en">Key numbers</span><span class="zh">關鍵數字</span></h2>
+<div class="tbl"><table><thead><tr><th class="en">Number</th><th class="zh">數字</th><th class="en">Meaning (setup)</th><th class="zh">意義（設定）</th></tr></thead><tbody>
+<tr><td class="num">96.2% · 99.4–99.6%</td><td class="en">FedSat accuracy as a share of centralized MNIST accuracy (0.87), IID vs non-IID <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Figs. 1–3" data-original="Figs. 1–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Figs. 1–3]</a></sup></td><td class="zh">FedSat 準確率占集中式 MNIST 準確率（0.87）的比例，IID 對non-IID<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Figs. 1–3" data-original="Figs. 1–3" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Figs. 1–3]</a></sup></td></tr>
+<tr><td class="num">T_o,max ≈ 127 min</td><td class="en">Longest orbital period (2,000 km shell), the time unit of every result <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup></td><td class="zh">最長軌道週期（2,000 km 那一層），所有結果的時間單位<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup></td></tr>
+<tr><td class="num">10 satellites · 1 station</td><td class="en">Two Walker-Delta shells at 500 and 2,000 km, 80°, 10° mask. Ground-only contacts, rate unspecified <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup></td><td class="zh">兩層 Walker-Delta，500 與 2,000 km，80°，10° 遮罩。僅地面接觸、速率待指定<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§IV" data-original="§IV" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §IV]</a></sup></td></tr>
+<tr><td class="num">7,850</td><td class="en">Parameters in the MNIST logistic-regression model, about 31 kB at 32 bits (computed)</td><td class="zh">MNIST 邏輯迴歸模型的參數數，以 32 位元計約 31 kB（計算值）</td></tr>
+<tr><td class="num">"several hours"</td><td class="en">Training time FedSat saves against FedAvg. Exact value unspecified (conclusion)</td><td class="zh">FedSat 相對 FedAvg 節省的訓練時間。確切值待指定（結論）</td></tr>
+<tr><td class="num">16 Mb/s · 72 h → 3 h 20 min</td><td class="en">AsyncFLEO's RF ISL rate and convergence range, FedISL vs two HAPs <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Tab. II" data-original="Table II" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Tab. II]</a></sup></td><td class="zh">AsyncFLEO 的 RF ISL 速率與收斂時間範圍，FedISL 對兩座 HAP<sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="Tab. II" data-original="Table II" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, Tab. II]</a></sup></td></tr>
+<tr><td class="num">6 × 15 · &gt;85%</td><td class="en">FedRings' Walker Star at 550 km and EuroSAT accuracy within 50 rounds <sup class="cite"><a aria-label="Nasrin Razmi, Bho Matthiesen, Armin Dekorsy, Petar Popovski · Ground-Assisted Federated Learning in LEO Satellite Constellations · IEEE WCL 2022 · arXiv 2109.01348" class="cite-ref" data-cite="90" data-locator="§4" data-original="preprint, §4" data-ref="wcl22-fedsat" href="../references.html#ref-90">[90, §4]</a></sup></td><td class="zh">FedRings 的 550 km Walker Star 與 50 回合內的 EuroSAT 準確率（預印本，§4）</td></tr>
+</tbody></table></div>
+</section>
+<section class="quiz reading" id="quiz"><h2><span class="en">Check your understanding</span><span class="zh">檢驗你的理解</span></h2><div id="quiz-root"></div></section>
+<script id="quiz-data" type="application/json">[
+  {
+    "q": {
+      "en": "Why is satellite federated learning in this paper limited by visibility rather than bandwidth?",
+      "zh": "為什麼本文的衛星聯邦學習受可見性主導的原因？"
+    },
+    "o": [
+      {
+        "en": "The satellite-ground link is too slow to carry a 7,850-parameter model",
+        "zh": "衛星–地面鏈路太慢，傳送 7,850 參數模型的時間超出接觸窗口"
+      },
+      {
+        "en": "ISLs are saturated by other traffic",
+        "zh": "ISL 被其他流量塞滿"
+      },
+      {
+        "en": "Ground stations can serve only one satellite per day",
+        "zh": "地面站一天只能服務一顆衛星"
+      },
+      {
+        "en": "The time between contacts is far longer than the contacts themselves, while the model fits easily into one pass",
+        "zh": "接觸之間的時間遠長於接觸本身，而模型很容易在一次過頂內傳完"
+      }
+    ],
+    "a": 3,
+    "why": {
+      "en": "Section 2 and the calculation table compare transfers with contact duration. A ~31 kB model uses a small fraction of a pass. Even a 45 MB ResNet-18 transfer at 16 Mb/s occupies a small fraction.",
+      "zh": "一個回合要等相隔最多一個軌道週期的接觸，而約 31 kB 的模型、甚至以 16 Mb/s 傳送的 45 MB ResNet-18，都只占一次過頂的極小部分（第 2 節與計算表）。"
+    }
+  },
+  {
+    "q": {
+      "en": "What does the ground station do in FedSat when satellite k reconnects?",
+      "zh": "在 FedSat 中，衛星 k 重新連線時地面站會做什麼？"
+    },
+    "o": [
+      {
+        "en": "It waits until all other satellites have also reconnected",
+        "zh": "等所有其他衛星也重新連線"
+      },
+      {
+        "en": "It adds α_k times the difference between satellite k’s new and previous models. The global model remains the weighted average of all latest models.",
+        "zh": "把全局模型加上 α_k 乘以衛星 k 新舊模型的差值，使全局模型始終等於所有衛星最新模型的加權平均"
+      },
+      {
+        "en": "It replaces the global model with satellite k's model",
+        "zh": "用衛星 k 的模型取代全局模型"
+      },
+      {
+        "en": "It discards the update if it is more than one round stale",
+        "zh": "若更新陳舊超過一回合就丟棄"
+      }
+    ],
+    "a": 1,
+    "why": {
+      "en": "That is the unrolling of FedAvg in Algorithm 5: the same weighted average, updated at every contact instead of once per round (Section 3).",
+      "zh": "這就是 Algorithm 5 中對 FedAvg 的展開：同樣的加權平均，只是在每次接觸時更新，，同步 FedAvg 則每回合一次（第 3 節）。"
+    }
+  },
+  {
+    "q": {
+      "en": "How does FedSat handle updates in place of FedAsync’s staleness heuristic?",
+      "zh": "FedSat 如何取代 FedAsync 的陳舊度經驗規則來處理更新？"
+    },
+    "o": [
+      {
+        "en": "Because all satellites train for the same number of steps",
+        "zh": "因為所有衛星訓練的步數相同"
+      },
+      {
+        "en": "Because the ground station is at the North Pole",
+        "zh": "因為地面站設在北極"
+      },
+      {
+        "en": "Because satellite contacts are predictable, so each satellite's contribution can be swapped exactly rather than damped by a guessed staleness weight",
+        "zh": "因為衛星接觸可預測，每顆衛星的貢獻可以精確替換，，FedAsync 則以估計的陳舊度權重衰減更新"
+      },
+      {
+        "en": "Because ISLs keep all models synchronized",
+        "zh": "因為 ISL 讓所有模型保持同步"
+      }
+    ],
+    "a": 2,
+    "why": {
+      "en": "FedAsync was designed for random availability and must down-weight stale updates with tuned constants. FedSat exploits known contact order and has fewer hyperparameters (Section 3).",
+      "zh": "FedAsync 是為隨機可用性設計的，必須用調好的常數降低陳舊更新的權重。FedSat 利用已知的接觸順序，超參數也較少（第 3 節）。"
+    }
+  },
+  {
+    "q": {
+      "en": "What do AsyncFLEO and FedRings change relative to FedSat, and what do they keep?",
+      "zh": "AsyncFLEO 與 FedRings 相對 FedSat 改了什麼，又保留了什麼？"
+    },
+    "o": [
+      {
+        "en": "They add ISLs but only within an orbital plane, keeping the view that inter-plane relative velocity makes cross-plane links impractical",
+        "zh": "它們加入 ISL，但只在同一軌道面內，保留了跨軌道面相對速度使跨面鏈路難以實用的看法"
+      },
+      {
+        "en": "They add laser links between all satellites at 100 Gbps",
+        "zh": "它們在所有衛星之間加入 100 Gbps 雷射鏈路"
+      },
+      {
+        "en": "They replace federated averaging with model distillation",
+        "zh": "它們用模型蒸餾取代聯邦平均"
+      },
+      {
+        "en": "They remove the ground station and train on a single satellite",
+        "zh": "它們移除地面站，只在單顆衛星上訓練"
+      }
+    ],
+    "a": 0,
+    "why": {
+      "en": "AsyncFLEO uses 16 Mb/s RF links to same-orbit neighbors and FedRings builds intra-plane rings with inter-plane links only in windows (Section 1 and Section 6).",
+      "zh": "AsyncFLEO 使用連到同軌道鄰居的 16 Mb/s RF 鏈路，FedRings 建立同軌道面環，跨軌道面鏈路只在窗口內使用（第 1 與第 6 節）。"
+    }
+  },
+  {
+    "q": {
+      "en": "Why does AsyncFLEO’s 12 h FedSat result require its own setup label?",
+      "zh": "為什麼引用 AsyncFLEO 的 FedSat 12 h 結果時需要標註其設定？"
+    },
+    "o": [
+      {
+        "en": "It was measured on a flown satellite",
+        "zh": "因為它是在飛行中的衛星上量到的"
+      },
+      {
+        "en": "It comes from a re-implementation on a different 40-satellite constellation with a 16 Mb/s link model. In comparison, the WCL paper gives only \"several hours\" on its own 10-satellite setup",
+        "zh": "它來自在相異的 40 顆衛星星座、16 Mb/s 鏈路模型上的重新實作，而 WCL 論文在自己的 10 顆衛星設定上只給「數小時」"
+      },
+      {
+        "en": "It uses CIFAR-10 instead of EuroSAT",
+        "zh": "它的資料集由 EuroSAT 改為 CIFAR-10"
+      },
+      {
+        "en": "It counts only the time spent in contact",
+        "zh": "它只計算接觸中的時間"
+      }
+    ],
+    "a": 1,
+    "why": {
+      "en": "Cross-paper numbers carry the re-implementer's assumptions. The original letter gives a qualitative time saving (Sections 5 and 6).",
+      "zh": "跨論文的數字帶著重新實作者的假設。原始論文以定性方式描述時間節省（第 5 與第 6 節）。"
+    }
+  }
+]</script>
+<nav class="pager"><a href="sigcomm25-starcdn.html"><span class="eyebrow">←</span><span class="en">Previous digest: StarCDN (SIGCOMM 2025)</span><span class="zh">上一篇導讀：StarCDN（SIGCOMM 2025）</span></a><a href="arxiv22-fedspace.html" style="margin-left:auto;text-align:right"><span class="eyebrow">→</span><span class="en">Next digest: FedSpace (arXiv 2202.01267)</span><span class="zh">下一篇導讀：FedSpace（arXiv 2202.01267）</span></a></nav>
+</main>
+</div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/contrib/auto-render.min.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/citations-data.js"></script><script src="../assets/citations.js"></script></body>
+</html>
